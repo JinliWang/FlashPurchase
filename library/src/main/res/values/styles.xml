@@ -1,0 +1,109 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/title_bg</item>
+        <item name="colorPrimary">@color/title_bg</item>
+        <!--<item name="android:windowAnimationStyle">@style/AnimationActivity</item>-->
+    </style>
+
+    <style name="Dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!-- Main popWindow avatar theme. -->
+    <style name="PopStyle">
+        <item name="android:windowEnterAnimation">@anim/popup_anim_u2d</item>
+        <item name="android:windowExitAnimation">@anim/popup_anim_u2d</item>
+    </style>
+
+    <!-- Main popWindow avatar theme. -->
+    <style name="PopStyle_UT">
+        <item name="android:windowEnterAnimation">@anim/popup_anim_d2u</item>
+        <item name="android:windowExitAnimation">@anim/popup_anim_u2d</item>
+    </style>
+
+    <!--by ding 刚进页面 取消EditText焦点-->
+    <style name="cancel_edittext_style">
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <!--更换地区 侧边滑动-->
+    <declare-styleable name="WaveSideBarView">
+        <attr name="sidebarTextColor" format="color|reference" />
+        <attr name="sidebarBackgroundColor" format="color|reference" />
+        <attr name="sidebarChooseTextColor" format="color|reference" />
+        <attr name="sidebarTextSize" format="float" />
+    </declare-styleable>
+
+    <style name="DialogHeadPick" parent="android:Theme.Holo.Light.Dialog.NoActionBar">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">false</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 没有标题 -->
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 设置dialog的背景 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 背景是否模糊显示 -->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.InputMethod</item>
+    </style>
+
+
+    <style name="form_main">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+    </style>
+
+    <style name="form_cell_img">
+        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_height">25dp</item>
+    </style>
+
+    <style name="form_cell_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minEms">5</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:textColor">@color/title_text_color</item>
+        <item name="android:textSize">@dimen/text_content</item>
+    </style>
+
+    <style name="form_cell_content">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">@dimen/text_content</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+    </style>
+
+    <style name="form_cell_et" parent="form_cell_content">
+        <item name="android:background">@null</item>
+        <item name="android:gravity">right</item>
+        <item name="android:maxLines">1</item>
+    </style>
+</resources>

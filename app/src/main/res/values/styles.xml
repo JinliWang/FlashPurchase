@@ -1,0 +1,20 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!--<item name="android:windowAnimationStyle">@style/AnimationActivity</item>-->
+    </style>
+
+    <style name="BackActivityTheme" parent="AppTheme"></style>
+
+    <!--欢迎页 使用背景-->
+    <style name="LaunchTheme" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <item name="colorPrimary">@color/transparent</item>
+        <item name="android:windowBackground">@mipmap/ic_launch</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+</resources>
