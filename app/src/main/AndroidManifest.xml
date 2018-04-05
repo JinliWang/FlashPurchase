@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.nqi.app">
+    package="com.flashpurchase.app">
 
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -46,7 +46,7 @@
 
 
     <application
-        android:name="com.nqi.app.MyApplication"
+        android:name="com.flashpurchase.app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -55,7 +55,7 @@
         android:theme="@style/BackActivityTheme"
         tools:replace="name">
 
-        <activity android:name="com.nqi.app.activity.login.LauncherActivity"
+        <activity android:name="com.flashpurchase.app.activity.login.LauncherActivity"
             android:theme="@style/LaunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,7 +65,7 @@
         </activity>
 
         <activity
-            android:name="com.nqi.app.activity.MainActivity"
+            android:name="com.flashpurchase.app.activity.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BackActivityTheme" />
