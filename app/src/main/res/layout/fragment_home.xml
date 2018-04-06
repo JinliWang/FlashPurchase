@@ -1,11 +1,435 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
+    <RelativeLayout
+        android:id="@+id/home_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="闪电拍卖"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_10"
+            android:src="@mipmap/ic_home_message_default" />
+
+    </RelativeLayout>
+
+
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello"/>
+        android:background="@color/main_color"
+        android:orientation="vertical">
 
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_color"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll">
+
+                <com.github.wanglu1209.bannerlibrary.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/home_menu_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableTop="@drawable/icon_app"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_5"
+                        android:text="@string/home_menu1" />
+
+                    <TextView
+                        android:id="@+id/home_menu_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableTop="@drawable/icon_app"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_5"
+                        android:text="@string/home_menu2" />
+
+                    <TextView
+                        android:id="@+id/home_menu_3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableTop="@drawable/icon_app"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_5"
+                        android:text="@string/home_menu3" />
+
+                    <TextView
+                        android:id="@+id/home_menu_4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableTop="@drawable/icon_app"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_5"
+                        android:text="@string/home_menu4" />
+
+                    <TextView
+                        android:id="@+id/home_menu_5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableTop="@drawable/icon_app"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_5"
+                        android:text="@string/home_menu5" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_20"
+                        android:layout_marginRight="@dimen/margin_20"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/ic_launcher" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rel_recomend"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/title_height"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawableLeft="@mipmap/ic_home_message_default"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:gravity="center"
+                        android:text="@string/t_home_recommend" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableRight="@mipmap/ic_home_message_default"
+                        android:gravity="center"
+                        android:text="@string/t_home_more" />
+
+                </RelativeLayout>
+
+                <View style="@style/style_dividing_line" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recomend_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:id="@+id/rel_sale"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/title_height"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawableLeft="@mipmap/ic_home_message_default"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:gravity="center"
+                        android:text="@string/t_home_sale" />
+
+                </RelativeLayout>
+
+                <View style="@style/style_dividing_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center_horizontal"
+                                android:background="@drawable/shape_new_recomend_bg"
+                                android:gravity="center"
+                                android:paddingBottom="@dimen/margin_5"
+                                android:paddingLeft="@dimen/margin_10"
+                                android:paddingRight="@dimen/margin_10"
+                                android:paddingTop="@dimen/margin_5"
+                                android:text="新手推荐"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="人气榜单TOP10" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:layout_marginRight="@dimen/margin_10"
+                            android:src="@mipmap/ic_launcher" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="@dimen/margin_10">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_10"
+                                android:text="热门好货"
+                                android:textColor="@color/title_color"
+                                android:textSize="@dimen/text_title" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_10"
+                                android:layout_marginTop="@dimen/margin_5"
+                                android:text="大家都在抢 >>"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/text_content" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@mipmap/ic_launcher" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_10"
+                                android:text="本周新品"
+                                android:textColor="@color/title_color"
+                                android:textSize="@dimen/text_title" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_10"
+                                android:layout_marginTop="@dimen/margin_5"
+                                android:text="阿玛尼石英表"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/text_content" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@mipmap/ic_launcher" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_10"
+                                android:text="竞拍大神"
+                                android:textColor="@color/title_color"
+                                android:textSize="@dimen/text_title" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_10"
+                                android:layout_marginTop="@dimen/margin_5"
+                                android:text="看大神拍iphoneX"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/text_content" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@mipmap/ic_launcher" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rel_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/title_height"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawableLeft="@mipmap/ic_home_message_default"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:gravity="center"
+                        android:text="@string/t_home_phone" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableRight="@mipmap/ic_home_message_default"
+                        android:gravity="center"
+                        android:text="@string/t_home_more" />
+
+                </RelativeLayout>
+
+                <View style="@style/style_dividing_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rel_computer"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/title_height"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawableLeft="@mipmap/ic_home_message_default"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:gravity="center"
+                        android:text="@string/t_home_computer" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableRight="@mipmap/ic_home_message_default"
+                        android:gravity="center"
+                        android:text="@string/t_home_more" />
+
+                </RelativeLayout>
+
+                <View style="@style/style_dividing_line" />
+            </LinearLayout>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/red"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/red"
+                app:tabTextColor="@color/black" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_page"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
 </LinearLayout>

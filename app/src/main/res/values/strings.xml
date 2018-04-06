@@ -5,4 +5,21 @@
     <string name="fragment_new_state">最新动态</string>
     <string name="fragment_goods_type">商品分类</string>
     <string name="fragment_mine">个人中心</string>
+
+    <!--首页-->
+    <string name="home_menu1">100变200</string>
+    <string name="home_menu2">签到</string>
+    <string name="home_menu3">充值中心</string>
+    <string name="home_menu4">限时秒</string>
+    <string name="home_menu5">帮助</string>
+    <string name="t_home_recommend">为你推荐</string>
+    <string name="t_home_more">更多</string>
+    <string name="t_home_sale">拍卖研究中心</string>
+    <string name="t_home_phone">大牌手机</string>
+    <string name="t_home_computer">品牌电脑</string>
+    <string name="t_home_now">当前：</string>
+    <string name="t_home_like">猜你喜欢</string>
+    <string name="t_home_shopping">我在拍</string>
+    <string name="t_home_favorites">我收藏</string>
+
 </resources>
