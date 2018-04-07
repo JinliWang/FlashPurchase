@@ -5,4 +5,9 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="gray">#EEEEEE</color>
+    <color name="colorSixF">#FFFFFF</color>
+    <color name="text_color">#333</color>
+    <color name="content_color9">#999</color>
+    <color name="colorSixA">#aaaaaa</color>
+    <color name="content_color6">#666</color>
 </resources>

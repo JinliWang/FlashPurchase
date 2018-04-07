@@ -38,4 +38,11 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <!-- 圆形ImageView -->
+    <declare-styleable name="RoundImageView">
+        <attr name="border_thickness" format="dimension" />
+        <attr name="border_inside_color" format="color" />
+        <attr name="border_outside_color" format="color" />
+    </declare-styleable>
+
 </resources>
