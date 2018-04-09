@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -361,7 +362,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_10"
                         android:drawablePadding="@dimen/margin_5"
-                        android:drawableRight="@drawable/ic_home_message_default"
+                        android:drawableRight="@drawable/icon_right_arrow"
                         android:gravity="center"
                         android:text="@string/t_home_more" />
 
@@ -369,11 +370,11 @@
 
                 <View style="@style/style_dividing_line" />
 
-                <LinearLayout
-                    android:id="@+id/lin_phone"
+                <com.app.library.view.ScrollGridView
+                    android:id="@+id/phone_grid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
+                    android:numColumns="3"/>
 
                 <RelativeLayout
                     android:id="@+id/rel_computer"
@@ -398,7 +399,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_10"
                         android:drawablePadding="@dimen/margin_5"
-                        android:drawableRight="@drawable/ic_home_message_default"
+                        android:drawableRight="@drawable/icon_right_arrow"
                         android:gravity="center"
                         android:text="@string/t_home_more" />
 
@@ -406,11 +407,11 @@
 
                 <View style="@style/style_dividing_line" />
 
-                <LinearLayout
-                    android:id="@+id/lin_computer"
+                <com.app.library.view.ScrollGridView
+                    android:id="@+id/computer_grid"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal" />
+                    android:layout_height="wrap_content"
+                    android:numColumns="3"/>
 
                 <RelativeLayout
                     android:id="@+id/rel_jewel"
@@ -435,7 +436,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_10"
                         android:drawablePadding="@dimen/margin_5"
-                        android:drawableRight="@drawable/ic_home_message_default"
+                        android:drawableRight="@drawable/icon_right_arrow"
                         android:gravity="center"
                         android:text="@string/t_home_more" />
 
@@ -443,11 +444,11 @@
 
                 <View style="@style/style_dividing_line" />
 
-                <LinearLayout
-                    android:id="@+id/lin_jewel"
+                <com.app.library.view.ScrollGridView
+                    android:id="@+id/jewel_grid"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal" />
+                    android:layout_height="wrap_content"
+                    android:numColumns="3"/>
             </LinearLayout>
 
             <android.support.design.widget.TabLayout

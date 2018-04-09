@@ -15,8 +15,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.library.base.BaseFragment;
+import com.app.library.view.ScrollGridView;
 import com.flashpurchase.app.R;
 import com.flashpurchase.app.adapter.HomeBannerAdapter;
+import com.flashpurchase.app.adapter.PhoneListAdapter;
 import com.flashpurchase.app.adapter.RecomendListAdapter;
 import com.flashpurchase.app.model.HomeBanner;
 import com.flashpurchase.app.model.HomeList;
@@ -61,10 +63,18 @@ public class HomeFragment extends BaseFragment {
     TabLayout mTabLayout;
     @BindView(R.id.view_page)
     ViewPager mViewPage;
+    @BindView(R.id.phone_grid)
+    ScrollGridView mPhoneGrid;
+    @BindView(R.id.computer_grid)
+    ScrollGridView mCompterGrid;
+    @BindView(R.id.jewel_grid)
+    ScrollGridView mJewelGrid;
 
     private List<HomeList> mLists;
+    private List<HomeList> mList2;
     private RecomendListAdapter mAdapter;
     private HomeBannerAdapter mBannerAdapter;
+    private PhoneListAdapter mPhoneListAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -135,6 +145,16 @@ public class HomeFragment extends BaseFragment {
                     }
                 }).
                 startAutoPlay();
+
+        //初始化手机列表
+        mList2 = new ArrayList<>();
+        mList2.add(mLists.get(0));
+        mList2.add(mLists.get(1));
+        mList2.add(mLists.get(2));
+        mPhoneListAdapter = new PhoneListAdapter(mList2);
+        mPhoneGrid.setAdapter(mPhoneListAdapter);
+        mCompterGrid.setAdapter(mPhoneListAdapter);
+        mJewelGrid.setAdapter(mPhoneListAdapter);
     }
 
     private static class HomeListAdapter extends FragmentPagerAdapter {

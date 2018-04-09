@@ -34,28 +34,28 @@
                 android:checked="true"
                 android:drawableTop="@drawable/select_fragment_home"
                 android:text="@string/fragment_home"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <RadioButton
                 android:id="@+id/rb_new_state"
                 style="@style/main_tab_style"
                 android:drawableTop="@drawable/select_fragment_new_state"
                 android:text="@string/fragment_new_state"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <RadioButton
                 android:id="@+id/rb_goods_type"
                 style="@style/main_tab_style"
                 android:drawableTop="@drawable/select_fragment_goods_type"
                 android:text="@string/fragment_goods_type"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <RadioButton
                 android:id="@+id/rb_me"
                 style="@style/main_tab_style"
                 android:drawableTop="@drawable/select_fragment_me"
                 android:text="@string/fragment_mine"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
         </RadioGroup>
     </RelativeLayout>
 

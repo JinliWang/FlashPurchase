@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyBaseProject</string>
+    <string name="app_name">闪拍</string>
 
     <string name="fragment_home">主页</string>
     <string name="fragment_new_state">最新动态</string>
