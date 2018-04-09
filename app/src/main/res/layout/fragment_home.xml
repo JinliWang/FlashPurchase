@@ -28,7 +28,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_10"
-            android:src="@mipmap/ic_home_message_default" />
+            android:src="@drawable/icon_msg" />
 
     </RelativeLayout>
 
@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawablePadding="@dimen/margin_5"
-                        android:drawableTop="@drawable/icon_app"
+                        android:drawableTop="@drawable/icon_new"
                         android:gravity="center"
                         android:padding="@dimen/margin_5"
                         android:text="@string/home_menu1" />
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawablePadding="@dimen/margin_5"
-                        android:drawableTop="@drawable/icon_app"
+                        android:drawableTop="@drawable/icon_sign"
                         android:gravity="center"
                         android:padding="@dimen/margin_5"
                         android:text="@string/home_menu2" />
@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawablePadding="@dimen/margin_5"
-                        android:drawableTop="@drawable/icon_app"
+                        android:drawableTop="@drawable/icon_chong"
                         android:gravity="center"
                         android:padding="@dimen/margin_5"
                         android:text="@string/home_menu3" />
@@ -101,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawablePadding="@dimen/margin_5"
-                        android:drawableTop="@drawable/icon_app"
+                        android:drawableTop="@drawable/icon_second"
                         android:gravity="center"
                         android:padding="@dimen/margin_5"
                         android:text="@string/home_menu4" />
@@ -112,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawablePadding="@dimen/margin_5"
-                        android:drawableTop="@drawable/icon_app"
+                        android:drawableTop="@drawable/icon_question"
                         android:gravity="center"
                         android:padding="@dimen/margin_5"
                         android:text="@string/home_menu5" />
@@ -131,7 +131,7 @@
                         android:layout_marginLeft="@dimen/margin_20"
                         android:layout_marginRight="@dimen/margin_20"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@drawable/icon_shop" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -144,7 +144,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:drawableLeft="@mipmap/ic_home_message_default"
+                        android:drawableLeft="@drawable/icon_zan"
                         android:drawablePadding="@dimen/margin_5"
                         android:gravity="center"
                         android:text="@string/t_home_recommend" />
@@ -156,7 +156,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_10"
                         android:drawablePadding="@dimen/margin_5"
-                        android:drawableRight="@mipmap/ic_home_message_default"
+                        android:drawableRight="@drawable/icon_right_arrow"
                         android:gravity="center"
                         android:text="@string/t_home_more" />
 
@@ -180,7 +180,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:drawableLeft="@mipmap/ic_home_message_default"
+                        android:drawableLeft="@drawable/icon_favoriter"
                         android:drawablePadding="@dimen/margin_5"
                         android:gravity="center"
                         android:text="@string/t_home_sale" />
@@ -228,19 +228,18 @@
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_10"
-                            android:layout_marginRight="@dimen/margin_10"
-                            android:src="@mipmap/ic_launcher" />
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/icon_shop" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="@dimen/margin_10">
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -266,10 +265,11 @@
                                 android:textSize="@dimen/text_content" />
 
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:scaleType="fitXY"
                                 android:layout_gravity="center_horizontal"
-                                android:src="@mipmap/ic_launcher" />
+                                android:src="@drawable/icon_iphonex" />
                         </LinearLayout>
 
 
@@ -297,10 +297,11 @@
                                 android:textSize="@dimen/text_content" />
 
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:scaleType="fitXY"
                                 android:layout_gravity="center_horizontal"
-                                android:src="@mipmap/ic_launcher" />
+                                android:src="@drawable/icon_watch" />
                         </LinearLayout>
 
 
@@ -328,10 +329,11 @@
                                 android:textSize="@dimen/text_content" />
 
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:scaleType="fitXY"
                                 android:layout_gravity="center_horizontal"
-                                android:src="@mipmap/ic_launcher" />
+                                android:src="@drawable/icon_iphonex" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -347,7 +349,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:drawableLeft="@mipmap/ic_home_message_default"
+                        android:drawableLeft="@drawable/ic_home_message_default"
                         android:drawablePadding="@dimen/margin_5"
                         android:gravity="center"
                         android:text="@string/t_home_phone" />
@@ -359,7 +361,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_10"
                         android:drawablePadding="@dimen/margin_5"
-                        android:drawableRight="@mipmap/ic_home_message_default"
+                        android:drawableRight="@drawable/ic_home_message_default"
                         android:gravity="center"
                         android:text="@string/t_home_more" />
 
@@ -368,25 +370,23 @@
                 <View style="@style/style_dividing_line" />
 
                 <LinearLayout
+                    android:id="@+id/lin_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
-
-
-                </LinearLayout>
+                    android:orientation="horizontal" />
 
                 <RelativeLayout
                     android:id="@+id/rel_computer"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/title_height"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:background="@color/white">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:drawableLeft="@mipmap/ic_home_message_default"
+                        android:drawableLeft="@drawable/ic_home_message_default"
                         android:drawablePadding="@dimen/margin_5"
                         android:gravity="center"
                         android:text="@string/t_home_computer" />
@@ -398,13 +398,56 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_10"
                         android:drawablePadding="@dimen/margin_5"
-                        android:drawableRight="@mipmap/ic_home_message_default"
+                        android:drawableRight="@drawable/ic_home_message_default"
                         android:gravity="center"
                         android:text="@string/t_home_more" />
 
                 </RelativeLayout>
 
                 <View style="@style/style_dividing_line" />
+
+                <LinearLayout
+                    android:id="@+id/lin_computer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/rel_jewel"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/title_height"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawableLeft="@drawable/ic_home_message_default"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:gravity="center"
+                        android:text="@string/t_home_jewel" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableRight="@drawable/ic_home_message_default"
+                        android:gravity="center"
+                        android:text="@string/t_home_more" />
+
+                </RelativeLayout>
+
+                <View style="@style/style_dividing_line" />
+
+                <LinearLayout
+                    android:id="@+id/lin_jewel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" />
             </LinearLayout>
 
             <android.support.design.widget.TabLayout

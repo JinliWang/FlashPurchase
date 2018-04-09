@@ -3,7 +3,7 @@ android {
     compileSdkVersion commonCompileSdkVersion.toInteger()
     buildToolsVersion commonBuildToolsVersion.toString()
     defaultConfig {
-        applicationId "com.nqi.app"
+        applicationId "com.flashPurchase.app"
         minSdkVersion commonMinSdkVersion.toInteger()
         targetSdkVersion commonTargetSdkVersion.toInteger()
         versionCode commonVersionCode.toInteger()

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,12 @@ import android.widget.TextView;
 
 import com.app.library.base.BaseFragment;
 import com.flashpurchase.app.R;
+import com.flashpurchase.app.adapter.HomeBannerAdapter;
+import com.flashpurchase.app.adapter.RecomendListAdapter;
+import com.flashpurchase.app.model.HomeBanner;
+import com.flashpurchase.app.model.HomeList;
 import com.github.wanglu1209.bannerlibrary.Banner;
+import com.github.wanglu1209.bannerlibrary.BannerPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +62,10 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.view_page)
     ViewPager mViewPage;
 
+    private List<HomeList> mLists;
+    private RecomendListAdapter mAdapter;
+    private HomeBannerAdapter mBannerAdapter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_home;
@@ -68,6 +78,63 @@ public class HomeFragment extends BaseFragment {
         mViewPage.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPage);
 
+        //初始化为你推荐列表
+        HomeList homeList1 = new HomeList();
+        homeList1.setGoodsName("iphone 8 256GB");
+        homeList1.setGoodsPrice("￥8288.00");
+        HomeList homeList2 = new HomeList();
+        homeList2.setGoodsName("iphone 6 256GB");
+        homeList2.setGoodsPrice("￥1188.00");
+        HomeList homeList3 = new HomeList();
+        homeList3.setGoodsName("iphone 7 256GB");
+        homeList3.setGoodsPrice("￥8822.00");
+        HomeList homeList4 = new HomeList();
+        homeList4.setGoodsName("iphone X 256GB");
+        homeList4.setGoodsPrice("￥8888.00");
+        mLists = new ArrayList<>();
+        mLists.add(homeList1);
+        mLists.add(homeList2);
+        mLists.add(homeList3);
+        mLists.add(homeList4);
+        mAdapter = new RecomendListAdapter();
+        mAdapter.setDataList(mLists);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecomendList.setLayoutManager(linearLayoutManager);
+        mRecomendList.setAdapter(mAdapter);
+
+        //初始化Banner
+        List<HomeBanner.ListBean> beanList = new ArrayList<>();
+        HomeBanner homeBanner = new HomeBanner();
+        HomeBanner.ListBean banner = new HomeBanner.ListBean();
+        banner.setBannerpic("http://gfs5.gomein.net.cn/T1obZ_BmLT1RCvBVdK.jpg");
+        HomeBanner.ListBean banner1 = new HomeBanner.ListBean();
+        banner1.setBannerpic("http://gfs9.gomein.net.cn/T1C3J_B5LT1RCvBVdK.jpg");
+        HomeBanner.ListBean banner2 = new HomeBanner.ListBean();
+        banner2.setBannerpic("http://gfs5.gomein.net.cn/T1CwYjBCCT1RCvBVdK.jpg");
+        HomeBanner.ListBean banner3 = new HomeBanner.ListBean();
+        banner3.setBannerpic("http://gfs7.gomein.net.cn/T1u8V_B4ET1RCvBVdK.jpg");
+        HomeBanner.ListBean banner4 = new HomeBanner.ListBean();
+        banner4.setBannerpic("http://gfs7.gomein.net.cn/T1zODgB5CT1RCvBVdK.jpg");
+        beanList.add(banner);
+        beanList.add(banner1);
+        beanList.add(banner2);
+        beanList.add(banner3);
+        beanList.add(banner4);
+        homeBanner.setList(beanList);
+        mBannerAdapter = new HomeBannerAdapter(getActivity());
+        mBannerAdapter.setData(homeBanner.getList());
+        mBanner.setDot(R.drawable.banner_white, R.drawable.banner_blue).
+                setDotGravity(Banner.CENTER).
+                setAdapter(mBannerAdapter).
+                setOnItemClickListener(new BannerPagerAdapter.onItemClickListener() {
+                    @Override
+                    public void onClick(int position) {
+//                                        ToastUtil.show("onClick");
+//                                        homeBanner.getList().get(position).getRid();
+                    }
+                }).
+                startAutoPlay();
     }
 
     private static class HomeListAdapter extends FragmentPagerAdapter {

@@ -11,6 +11,7 @@ import com.app.library.util.ActivityManager;
 import com.app.library.view.MyViewPager;
 import com.flashpurchase.app.R;
 import com.flashpurchase.app.fragment.HomeFragment;
+import com.flashpurchase.app.fragment.MineCenterFragment;
 
 import butterknife.BindView;
 
@@ -97,7 +98,7 @@ public class MainActivity extends BaseActivity {
                     return new HomeFragment();
                 case 3:
                     //个人中心
-                    return new HomeFragment();
+                    return new MineCenterFragment();
                 default:
                     return null;
             }
@@ -105,7 +106,7 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override

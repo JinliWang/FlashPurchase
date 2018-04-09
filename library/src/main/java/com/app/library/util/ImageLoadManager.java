@@ -40,6 +40,15 @@ public class ImageLoadManager {
                 .into(iv);
     }
 
+    public void setBannerImage(Context context, String url, ImageView iv) {
+        Glide.with(context) // 绑定Context
+                .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL) //all:缓存源资源和转换后的资源
+                .thumbnail(0.1f)   //先加载缩略图 在加载全图
+                .placeholder(R.drawable.banner)
+                .into(iv);
+    }
+
     public void setImage(Context context, String url, ImageView iv) {
         Glide.with(context) // 绑定Context
                 .load(url)

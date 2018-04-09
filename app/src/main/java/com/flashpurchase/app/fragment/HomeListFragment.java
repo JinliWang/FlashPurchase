@@ -56,6 +56,7 @@ public class HomeListFragment extends BaseFragment {
         mLists.add(homeList3);
         mLists.add(homeList4);
         mHomeListAdapter = new HomeListAdapter();
+        mHomeListAdapter.setDataList(mLists);
         GridLayoutManager gridLayoutManager =
                 new GridLayoutManager(getActivity(), 2);
         mList.setAdapter(mHomeListAdapter);
