@@ -1,10 +1,13 @@
 package com.flashpurchase.app.fragment;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.app.library.base.BaseFragment;
 import com.flashpurchase.app.R;
+import com.flashpurchase.app.activity.minecenter.CenterMessageActivity;
+import com.flashpurchase.app.activity.minecenter.SetUpActivity;
 
 import butterknife.BindView;
 
@@ -25,21 +28,23 @@ public class MineCenterFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-
+        onClick();
     }
 
     private void onClick(){
         ivSetup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(activity, SetUpActivity.class);
             }
         });
         ivMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(activity, CenterMessageActivity.class);
             }
         });
     }
+
+
 }
