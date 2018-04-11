@@ -55,7 +55,8 @@
         android:theme="@style/BackActivityTheme"
         tools:replace="name">
 
-        <activity android:name="com.flashpurchase.app.activity.login.LauncherActivity"
+        <activity
+            android:name="com.flashpurchase.app.activity.login.LauncherActivity"
             android:theme="@style/LaunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -66,6 +67,21 @@
 
         <activity
             android:name="com.flashpurchase.app.activity.MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+
+        <!--消息中心-->
+        <activity
+            android:name="com.flashpurchase.app.activity.minecenter.CenterMessageActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+        <!--设置-->
+        <activity
+            android:name="com.flashpurchase.app.activity.minecenter.SetUpActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BackActivityTheme" />

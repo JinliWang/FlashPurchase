@@ -33,7 +33,7 @@ public class CenterMessageActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.activity_centermsg;
     }
 
     @Override
@@ -87,9 +87,6 @@ public class CenterMessageActivity extends BaseActivity {
                     //最新动态
                     return new HomeFragment();
                 case 2:
-                    //商品分类
-                    return new HomeFragment();
-                case 3:
                     //个人中心
                     return new MineCenterFragment();
                 default:
@@ -99,7 +96,7 @@ public class CenterMessageActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return 4;
+            return 3;
         }
 
         @Override
