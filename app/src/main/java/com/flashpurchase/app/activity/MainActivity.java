@@ -10,8 +10,10 @@ import com.app.library.base.BaseActivity;
 import com.app.library.util.ActivityManager;
 import com.app.library.view.MyViewPager;
 import com.flashpurchase.app.R;
+import com.flashpurchase.app.fragment.GoodsClassificationFragment;
 import com.flashpurchase.app.fragment.HomeFragment;
 import com.flashpurchase.app.fragment.MineCenterFragment;
+import com.flashpurchase.app.fragment.NewNitificaDynamic;
 
 import butterknife.BindView;
 
@@ -92,10 +94,10 @@ public class MainActivity extends BaseActivity {
                     return new HomeFragment();
                 case 1:
                     //最新动态
-                    return new HomeFragment();
+                    return new NewNitificaDynamic();
                 case 2:
                     //商品分类
-                    return new HomeFragment();
+                    return new GoodsClassificationFragment();
                 case 3:
                     //个人中心
                     return new MineCenterFragment();

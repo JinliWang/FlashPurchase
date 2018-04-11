@@ -9,14 +9,6 @@ import android.os.Environment;
 
 public class Constant {
 
-    public static final String MEET_SYSTEM = "cms";
-    public static final String INDEX_SYSTEM = "index";
-    public static final String CRM_SYSTEM = "crm";
-    public static final String DRIVER_SYSTEM = "driver";
-    public static final String TRAVEL_SYSTEM = "travel";
-    public static final String LOGIN_NOTICE = "login";
-
-
     //http请求基础路径
     public static final Integer PAGESIZE = 10;
 
