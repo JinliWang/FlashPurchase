@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
+ * 商品分类
  * Created by 10951 on 2018/4/11.
  */
 
@@ -59,7 +60,7 @@ public class GoodsClassificationFragment extends BaseFragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new HomeListFragment();
+                    return new ClassificationListFragment();
                 case 1:
                     return new HomeListFragment();
                 case 2:
