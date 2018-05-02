@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:src="@drawable/icon_left" />
+
+            <ImageView
+                android:id="@+id/iv_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_20"
+                android:layout_toRightOf="@+id/iv_left"
+                android:src="@drawable/icon_home" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="商品详情"
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/text_title_head" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_10"
+                android:text="竞拍指南"
+                android:textColor="@color/content_gray"
+                android:textSize="@dimen/text_title_second" />
+        </RelativeLayout>
+
+        <View style="@style/style_dividing_line" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.flashpurchase.app.view.RefreshLayout
+                android:id="@+id/refresh_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:id="@+id/rel_saler_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/margin_10">
+
+                        <com.flashpurchase.app.widget.RoundImageView
+                            android:id="@+id/iv_saler"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/tuxiang" />
+
+                        <TextView
+                            android:id="@+id/tv_saler_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:layout_toRightOf="@+id/iv_saler"
+                            android:text="黄跃娥"
+                            android:textColor="@color/title_color"
+                            android:textSize="@dimen/text_title" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_5"
+                            android:layout_toRightOf="@+id/tv_saler_name"
+                            android:background="@drawable/shape_saler_job_bg"
+                            android:padding="2dp"
+                            android:text="中国职业拍卖师"
+                            android:textColor="@color/red"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/tv_saler_code"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_saler_name"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:layout_marginTop="@dimen/margin_5"
+                            android:layout_toRightOf="@+id/iv_saler"
+                            android:text="拍卖师编号2300377" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/margin_10"
+                            android:src="@drawable/icon_right_arrow" />
+
+                    </RelativeLayout>
+
+                    <com.github.wanglu1209.bannerlibrary.Banner
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/red"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/margin_10">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/icon_time"
+                            android:drawablePadding="@dimen/margin_5"
+                            android:text="正在进行"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_content" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_20"
+                            android:text="预计"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_content_second" />
+
+                        <TextView
+                            android:id="@+id/tv_timer_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_5"
+                            android:text="00:00:09"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_title"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_5"
+                            android:text="结束"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_content_second" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_goods_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/margin_10"
+                        android:text="2017款Apple iPad Pro 12.9英寸 256GB WLAN版"
+                        android:textColor="@color/title_color"
+                        android:textSize="@dimen/text_title" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/margin_10">
+
+                        <TextView
+                            android:id="@+id/tv_rmb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RMB"
+                            android:textColor="@color/content_gray"
+                            android:textSize="@dimen/text_title"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_rmb"
+                            android:text="当前价"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/text_content_second" />
+
+                        <TextSwitcher
+                            android:id="@+id/ts_goods_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/tv_rmb"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:layout_centerVertical="true"
+                            android:inAnimation="@anim/push_up_in"
+                            android:outAnimation="@anim/push_up_out"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/ts_goods_price"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:text="市场价1892"
+                            android:layout_centerVertical="true"
+                            android:textSize="@dimen/text_content_second"
+                            android:textColor="@color/text_color"/>
+
+                    </RelativeLayout>
+
+
+
+                </LinearLayout>
+            </com.flashpurchase.app.view.RefreshLayout>
+        </ScrollView>
+    </LinearLayout>
+</FrameLayout>
