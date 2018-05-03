@@ -13,7 +13,7 @@ import com.flashpurchase.app.R;
 import com.flashpurchase.app.fragment.GoodsClassificationFragment;
 import com.flashpurchase.app.fragment.HomeFragment;
 import com.flashpurchase.app.fragment.MineCenterFragment;
-import com.flashpurchase.app.fragment.NewNitificaDynamic;
+import com.flashpurchase.app.fragment.NewNitificaDynamicFragment;
 
 import butterknife.BindView;
 
@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity {
                     return new HomeFragment();
                 case 1:
                     //最新动态
-                    return new NewNitificaDynamic();
+                    return new NewNitificaDynamicFragment();
                 case 2:
                     //商品分类
                     return new GoodsClassificationFragment();
