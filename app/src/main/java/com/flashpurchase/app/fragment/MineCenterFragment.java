@@ -1,13 +1,12 @@
 package com.flashpurchase.app.fragment;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.app.library.base.BaseFragment;
 import com.flashpurchase.app.R;
-import com.flashpurchase.app.activity.minecenter.CenterMessageActivity;
-import com.flashpurchase.app.activity.minecenter.SetUpActivity;
+import com.flashpurchase.app.activity.mine.CenterMessageActivity;
+import com.flashpurchase.app.activity.mine.SetUpActivity;
 
 import butterknife.BindView;
 

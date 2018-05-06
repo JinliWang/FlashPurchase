@@ -74,14 +74,14 @@
 
         <!--消息中心-->
         <activity
-            android:name="com.flashpurchase.app.activity.minecenter.CenterMessageActivity"
+            android:name="com.flashpurchase.app.activity.mine.CenterMessageActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BackActivityTheme" />
 
         <!--设置-->
         <activity
-            android:name="com.flashpurchase.app.activity.minecenter.SetUpActivity"
+            android:name="com.flashpurchase.app.activity.mine.SetUpActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BackActivityTheme" />

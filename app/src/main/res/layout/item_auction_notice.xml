@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:text="2018-05-06"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_content" />
+
+        <TextView
+            android:id="@+id/tv_auction_belong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_time"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/shape_saler_job_bg"
+            android:padding="3dp"
+            android:text="诺诺拍卖行"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text_content" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_time"
+            android:layout_marginLeft="@dimen/margin_5"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/tv_auction_belong"
+            android:text="DW00003期拍卖公告第三期"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title" />
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_10"
+            android:src="@drawable/icon_right_arrow" />
+
+        <View
+            style="@style/style_dividing_line"
+            android:layout_below="@+id/tv_auction_belong"
+            android:layout_marginTop="@dimen/margin_10"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
