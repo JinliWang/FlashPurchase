@@ -10,10 +10,11 @@ import com.app.library.base.BaseActivity;
 import com.app.library.util.ActivityManager;
 import com.app.library.view.MyViewPager;
 import com.flashpurchase.app.R;
-import com.flashpurchase.app.fragment.GoodsClassificationFragment;
-import com.flashpurchase.app.fragment.HomeFragment;
-import com.flashpurchase.app.fragment.MineCenterFragment;
-import com.flashpurchase.app.fragment.NewNitificaDynamicFragment;
+import com.flashpurchase.app.fragment.classification.GoodsClassification2Fragment;
+import com.flashpurchase.app.fragment.classification.GoodsClassificationFragment;
+import com.flashpurchase.app.fragment.home.HomeFragment;
+import com.flashpurchase.app.fragment.mine.MineCenterFragment;
+import com.flashpurchase.app.fragment.dynamic.NewNitificaDynamicFragment;
 
 import butterknife.BindView;
 
@@ -38,7 +39,7 @@ public class MainActivity extends BaseActivity {
         mVpTabContent.setAdapter(mAdapter);
         mVpTabContent.setCurrentItem(0);
         mVpTabContent.setScrollable(false);
-        mVpTabContent.setOffscreenPageLimit(4);
+        mVpTabContent.setOffscreenPageLimit(5);
 
         mRgContainer.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -54,6 +55,9 @@ public class MainActivity extends BaseActivity {
                         selectItem(2);
                         break;
                     case R.id.rb_me:
+                        selectItem(3);
+                        break;
+                    case R.id.rb_buy_again:
                         selectItem(3);
                         break;
 
@@ -97,8 +101,11 @@ public class MainActivity extends BaseActivity {
                     return new NewNitificaDynamicFragment();
                 case 2:
                     //商品分类
-                    return new GoodsClassificationFragment();
+                    return new GoodsClassification2Fragment();
                 case 3:
+                    //拍品回购
+                    return new MineCenterFragment();
+                case 4:
                     //个人中心
                     return new MineCenterFragment();
                 default:
@@ -108,7 +115,7 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
 
         @Override
@@ -121,6 +128,8 @@ public class MainActivity extends BaseActivity {
                 case 2:
                     return "商品分类";
                 case 3:
+                    return "拍品回购";
+                case 4:
                     return "个人中心";
             }
             return "";

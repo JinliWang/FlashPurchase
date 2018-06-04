@@ -51,6 +51,13 @@
                 android:textSize="14sp" />
 
             <RadioButton
+                android:id="@+id/rb_buy_again"
+                style="@style/main_tab_style"
+                android:drawableTop="@drawable/select_fragment_goods_type"
+                android:text="@string/fragment_buy_again"
+                android:textSize="14sp" />
+
+            <RadioButton
                 android:id="@+id/rb_me"
                 style="@style/main_tab_style"
                 android:drawableTop="@drawable/select_fragment_me"

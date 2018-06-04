@@ -12,6 +12,16 @@ public class Dynamics {
     private String currentprice;
     private String rate;
 
+    private String dynamicName;
+
+    public String getDynamicName() {
+        return dynamicName;
+    }
+
+    public void setDynamicName(String dynamicName) {
+        this.dynamicName = dynamicName;
+    }
+
     public String getTime() {
         return time;
     }

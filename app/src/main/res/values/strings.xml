@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">闪拍</string>
+    <string name="app_name">雅德拍卖</string>
 
     <string name="fragment_home">主页</string>
     <string name="fragment_new_state">最新动态</string>
     <string name="fragment_goods_type">商品分类</string>
+    <string name="fragment_buy_again">拍品回购</string>
     <string name="fragment_mine">个人中心</string>
 
     <!--首页-->

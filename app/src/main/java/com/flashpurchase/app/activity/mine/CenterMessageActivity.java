@@ -10,10 +10,9 @@ import android.widget.RadioGroup;
 import com.app.library.base.BaseActivity;
 import com.app.library.view.MyViewPager;
 import com.flashpurchase.app.R;
-import com.flashpurchase.app.activity.mine.fragment.AuctionNoticeFragment;
-import com.flashpurchase.app.activity.mine.fragment.SystemMessageFragment;
-import com.flashpurchase.app.fragment.HomeFragment;
-import com.flashpurchase.app.fragment.MineCenterFragment;
+import com.flashpurchase.app.fragment.mine.AuctionNoticeFragment;
+import com.flashpurchase.app.fragment.mine.SystemMessageFragment;
+import com.flashpurchase.app.fragment.home.HomeFragment;
 
 import butterknife.BindView;
 
