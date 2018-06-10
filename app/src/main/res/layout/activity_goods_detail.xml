@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.flashpurchase.app.view.RefreshLayout
+            <com.flashPurchase.app.view.RefreshLayout
                 android:id="@+id/refresh_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -74,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_10">
 
-                        <com.flashpurchase.app.widget.RoundImageView
+                        <com.flashPurchase.app.widget.RoundImageView
                             android:id="@+id/iv_saler"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
@@ -227,7 +227,7 @@
 
 
                 </LinearLayout>
-            </com.flashpurchase.app.view.RefreshLayout>
+            </com.flashPurchase.app.view.RefreshLayout>
         </ScrollView>
     </LinearLayout>
 </FrameLayout>

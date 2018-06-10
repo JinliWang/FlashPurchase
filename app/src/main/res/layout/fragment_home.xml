@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="闪电拍卖"
+            android:text="雅德拍卖"
             android:textColor="@color/white" />
 
         <ImageView
@@ -29,7 +29,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_10"
-            android:src="@drawable/icon_msg" />
+            android:src="@drawable/icon_message" />
 
     </RelativeLayout>
 
@@ -350,7 +350,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:drawableLeft="@drawable/ic_home_message_default"
+                        android:drawableLeft="@drawable/icon_phone"
                         android:drawablePadding="@dimen/margin_5"
                         android:gravity="center"
                         android:text="@string/t_home_phone" />
@@ -387,7 +387,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:drawableLeft="@drawable/ic_home_message_default"
+                        android:drawableLeft="@drawable/icon_computer"
                         android:drawablePadding="@dimen/margin_5"
                         android:gravity="center"
                         android:text="@string/t_home_computer" />
@@ -424,7 +424,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:drawableLeft="@drawable/ic_home_message_default"
+                        android:drawableLeft="@drawable/icon_jewelry"
                         android:drawablePadding="@dimen/margin_5"
                         android:gravity="center"
                         android:text="@string/t_home_jewel" />

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.flashpurchase.app">
+    package="com.flashPurchase.app">
 
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -46,7 +46,7 @@
 
 
     <application
-        android:name="com.flashpurchase.app.MyApplication"
+        android:name="com.flashPurchase.app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -56,7 +56,7 @@
         tools:replace="name">
 
         <activity
-            android:name="com.flashpurchase.app.activity.login.LauncherActivity"
+            android:name="com.flashPurchase.app.activity.login.LauncherActivity"
             android:theme="@style/LaunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -66,23 +66,64 @@
         </activity>
 
         <activity
-            android:name="com.flashpurchase.app.activity.MainActivity"
+            android:name="com.flashPurchase.app.activity.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BackActivityTheme" />
 
+        <!--登录-->
+        <activity
+            android:name="com.flashPurchase.app.activity.login.LoginActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+        <!--注册-->
+        <activity
+            android:name="com.flashPurchase.app.activity.login.RegisterActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+        <!--找回密码-->
+        <activity
+            android:name="com.flashPurchase.app.activity.login.FindBackPwdActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+        <!--找回密码-->
+        <activity
+            android:name="com.flashPurchase.app.activity.login.ChangePwdActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+        <!--用户协议-->
+        <activity
+            android:name="com.flashPurchase.app.activity.login.AgreementActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
 
         <!--消息中心-->
         <activity
-            android:name="com.flashpurchase.app.activity.mine.CenterMessageActivity"
+            android:name="com.flashPurchase.app.activity.mine.CenterMessageActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BackActivityTheme" />
 
         <!--设置-->
         <activity
-            android:name="com.flashpurchase.app.activity.mine.SetUpActivity"
+            android:name="com.flashPurchase.app.activity.mine.SetUpActivity"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+        <!--微信登录设置-->
+        <activity
+            android:name="com.flashPurchase.app.wxapi.WXEntryActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/BackActivityTheme" />
     </application>

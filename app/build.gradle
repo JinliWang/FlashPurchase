@@ -7,22 +7,42 @@ android {
             storeFile file('E:/FlashPurchase/app/fp.jks')
             storePassword '123456'
         }
+        debug {
+            keyAlias 'release'
+            keyPassword '123456'
+            storeFile file('E:/FlashPurchase/app/fp.jks')
+            storePassword '123456'
+        }
     }
-    compileSdkVersion commonCompileSdkVersion.toInteger()
-    buildToolsVersion commonBuildToolsVersion.toString()
+    compileSdkVersion 25
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.flashPurchase.app"
-        minSdkVersion commonMinSdkVersion.toInteger()
-        targetSdkVersion commonTargetSdkVersion.toInteger()
-        versionCode commonVersionCode.toInteger()
-        versionName commonVersionName.toString()
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionName 'V1.0'
         multiDexEnabled true
         buildTypes {
             release {
+                // 混淆
                 minifyEnabled false
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
         }
+        signingConfig signingConfigs.release
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+        }
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+    productFlavors {
     }
 }
 dependencies {
@@ -33,4 +53,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     annotationProcessor 'com.github.mzule.activityrouter:compiler:1.1.7'
     compile 'com.github.wanglu1209:Banner:1.19'
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.0.2'
+    //微信登录
 }

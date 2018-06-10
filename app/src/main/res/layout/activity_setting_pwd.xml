@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_yzm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/margin_10"
+            android:text="密码"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title" />
+
+        <EditText
+            android:id="@+id/et_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/tv_get_code"
+            android:layout_toRightOf="@+id/tv_yzm"
+            android:hint="输入密码"
+            android:imeOptions="actionNext"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_10"
+            android:background="@null"
+            android:singleLine="true"
+            android:textColor="@color/second_title_text_color"
+            android:textColorHint="#b4b4b4"
+            android:textSize="@dimen/text_content" />
+
+        <TextView
+            android:id="@+id/tv_get_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_10"
+            android:text=""
+            android:textColor="@color/colorPrimary"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/text_title" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_regist"
+        style="@style/btn_bg_color"
+        android:layout_height="46dp"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginRight="@dimen/margin_20"
+        android:layout_marginTop="20dp"
+        android:text="完成注册"
+        android:textSize="@dimen/text_title" />
+
+</LinearLayout>
