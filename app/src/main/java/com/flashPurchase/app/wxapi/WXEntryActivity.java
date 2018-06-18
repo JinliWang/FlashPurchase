@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.app.library.util.LogUtil;
+import com.app.library.util.ToastUtil;
+import com.app.library.util.okhttp.CallBackUtil;
+import com.app.library.util.okhttp.OkhttpUtil;
 import com.flashPurchase.app.activity.login.LoginActivity;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -13,12 +16,20 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import okhttp3.Call;
+import okhttp3.Response;
+
 /**
  * Created by 10951 on 2018/6/10.
  */
 
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
-    private static final String APP_SECRET = "填写自己的AppSecret";
+    private static final String APP_SECRET = "0fe8e5bcf010a156a877f43a7c9d2b01";
     private IWXAPI mWeixinAPI;
     public static final String WEIXIN_APP_ID = "wxc1bcb659fb67c7df";
     private static String uuid;
@@ -86,6 +97,31 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 + code
                 + "&grant_type=authorization_code";
         LogUtil.d("getAccess_token：" + path);
+        HashMap<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("appid",WEIXIN_APP_ID);
+        paramsMap.put("secret",APP_SECRET);
+        paramsMap.put("code",code);
+        paramsMap.put("grant_type","authorization_code");
+        OkhttpUtil.okHttpGet("https://api.weixin.qq.com/sns/oauth2/access_token", paramsMap, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response);
+                    String openid = jsonObject.getString("openid").toString().trim();
+                    ToastUtil.show(openid);
+                    String access_token = jsonObject.getString("access_token").toString().trim();
+                    getUserMesg(access_token, openid);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         //网络请求，根据自己的请求方式
 //        VolleyRequest.get(this, path, "getAccess_token", false, null, new VolleyRequest.Callback() {
 //            @Override
@@ -110,7 +146,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 //        });
     }
 
-
     /**
      * 获取微信的个人信息
      * @param access_token
@@ -123,6 +158,26 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 + openid;
         LogUtil.d("getUserMesg：" + path);
         //网络请求，根据自己的请求方式
+        HashMap<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("access_token",access_token);
+        paramsMap.put("openid",openid);
+        OkhttpUtil.okHttpGet("https://api.weixin.qq.com/sns/userinfo", paramsMap, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response);
+                    ToastUtil.show(jsonObject.getString("nickname").toString().trim());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 //        VolleyRequest.get(this, path, "getAccess_token", false, null, new VolleyRequest.Callback() {
 //            @Override
 //            public void onSuccess(String result) {

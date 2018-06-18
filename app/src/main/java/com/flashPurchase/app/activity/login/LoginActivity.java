@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.app.library.base.BaseActivity;
 import com.app.library.util.ToastUtil;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.activity.MainActivity;
 import com.flashPurchase.app.wxapi.WXEntryActivity;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -49,6 +50,7 @@ public class LoginActivity extends BaseActivity {
         mTvForgetPwd.setOnClickListener(this);
         mTvAgreement.setOnClickListener(this);
         mLoginWx.setOnClickListener(this);
+        mBtnLogin.setOnClickListener(this);
     }
 
     @Override
@@ -63,6 +65,9 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.tv_agreement://用户协议
                 startActivity(AgreementActivity.class);
+                break;
+            case R.id.btn_login:
+                startActivity(MainActivity.class);
                 break;
             case R.id.login_wx:
                 IWXAPI mApi = WXAPIFactory.createWXAPI(this, WXEntryActivity.WEIXIN_APP_ID, true);

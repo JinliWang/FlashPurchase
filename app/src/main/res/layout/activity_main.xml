@@ -16,7 +16,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="3dp"
         android:paddingTop="5dp">
 
         <RadioGroup
@@ -34,35 +34,35 @@
                 android:checked="true"
                 android:drawableTop="@drawable/select_fragment_home"
                 android:text="@string/fragment_home"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
             <RadioButton
                 android:id="@+id/rb_new_state"
                 style="@style/main_tab_style"
                 android:drawableTop="@drawable/select_fragment_new_state"
                 android:text="@string/fragment_new_state"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
             <RadioButton
                 android:id="@+id/rb_goods_type"
                 style="@style/main_tab_style"
                 android:drawableTop="@drawable/select_fragment_goods_type"
                 android:text="@string/fragment_goods_type"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
             <RadioButton
                 android:id="@+id/rb_buy_again"
                 style="@style/main_tab_style"
                 android:drawableTop="@drawable/select_fragment_goods_type"
                 android:text="@string/fragment_buy_again"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
             <RadioButton
                 android:id="@+id/rb_me"
                 style="@style/main_tab_style"
                 android:drawableTop="@drawable/select_fragment_me"
                 android:text="@string/fragment_mine"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
         </RadioGroup>
     </RelativeLayout>
 

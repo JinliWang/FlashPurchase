@@ -120,6 +120,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/tv_voucher"
                     android:layout_width="76dp"
                     android:layout_height="33dp"
                     android:layout_alignParentRight="true"

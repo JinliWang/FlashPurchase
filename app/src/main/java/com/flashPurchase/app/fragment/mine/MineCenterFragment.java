@@ -2,11 +2,13 @@ package com.flashPurchase.app.fragment.mine;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.app.library.base.BaseFragment;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.activity.mine.CenterMessageActivity;
 import com.flashPurchase.app.activity.mine.SetUpActivity;
+import com.flashPurchase.app.activity.mine.VoucherCenterActivity;
 
 import butterknife.BindView;
 
@@ -19,6 +21,8 @@ public class MineCenterFragment extends BaseFragment {
     ImageView ivSetup;              //设置
     @BindView(R.id.iv_maine_msg)
     ImageView ivMsg;                //消息
+    @BindView(R.id.tv_voucher)
+    TextView mTvVoucher;
 
     @Override
     protected int getLayoutId() {
@@ -30,17 +34,23 @@ public class MineCenterFragment extends BaseFragment {
         onClick();
     }
 
-    private void onClick(){
+    private void onClick() {
         ivSetup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(activity, SetUpActivity.class);
+                startActivity(SetUpActivity.class);
             }
         });
         ivMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(activity, CenterMessageActivity.class);
+                startActivity(CenterMessageActivity.class);
+            }
+        });
+        mTvVoucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(VoucherCenterActivity.class);
             }
         });
     }
