@@ -137,6 +137,8 @@ public class VoucherCenterActivity extends BaseActivity {
 
                 }else {
 
+                }
+
                 break;
         }
     }

@@ -1,5 +1,6 @@
 package com.flashPurchase.app.fragment.home;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,11 +8,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.library.base.BaseFragment;
+import com.app.library.util.LogUtil;
+import com.app.library.util.ToastUtil;
 import com.app.library.view.ScrollGridView;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.adapter.HomeBannerAdapter;
@@ -22,6 +26,12 @@ import com.flashPurchase.app.model.HomeList;
 import com.github.wanglu1209.bannerlibrary.Banner;
 import com.github.wanglu1209.bannerlibrary.BannerPagerAdapter;
 
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft_17;
+import org.java_websocket.handshake.ServerHandshake;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +80,9 @@ public class HomeFragment extends BaseFragment {
     private RecomendListAdapter mAdapter;
     private HomeBannerAdapter mBannerAdapter;
     private PhoneListAdapter mPhoneListAdapter;
+
+    public WebSocketClient mWebSocketClient;
+
 
     @Override
     protected int getLayoutId() {
@@ -150,6 +163,46 @@ public class HomeFragment extends BaseFragment {
         mPhoneGrid.setAdapter(mPhoneListAdapter);
         mCompterGrid.setAdapter(mPhoneListAdapter);
         mJewelGrid.setAdapter(mPhoneListAdapter);
+
+        mRelRecomend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mWebSocketClient.send("{\"urlMapping\":\"goods-goodsByCid\",\"parameter\":{\"categoryId\":2}}");
+            }
+        });
+    }
+
+    @Override
+    protected void loadData(Bundle savedInstanceState) {
+        super.loadData(savedInstanceState);
+        try {
+            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=123456"), new Draft_17()) {
+                @Override
+                public void onOpen(ServerHandshake handshakedata) {
+                    LogUtil.d("WebSocket++++++++++",handshakedata.getHttpStatus() + "");
+                }
+
+                @Override
+                public void onMessage(String message) {
+                    LogUtil.d("WebSocket++++++++++",message);
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+
+                }
+
+                @Override
+                public void onError(Exception ex) {
+
+                }
+            };
+            mWebSocketClient.connect();
+//            mWebSocketClient.send("{\"urlMapping\":\"goods-goodsByCid\",\"parameter\":{\"categoryId\":2}}");
+//            mWebSocketClient.close();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     private static class HomeListAdapter extends FragmentPagerAdapter {
