@@ -41,7 +41,7 @@ public class LauncherActivity extends BaseActivity {
         if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            LogUtil.d("request");
+            LogUtil.d("RecommendMoreResponse");
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA,
                     Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_CAMERA);
         } else {

@@ -6,9 +6,11 @@ import android.widget.TextView;
 
 import com.app.library.base.BaseAdapter;
 import com.app.library.base.BaseHolder;
+import com.app.library.util.ImageLoadManager;
 import com.app.library.util.UIUtil;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.model.Dynamics;
+import com.flashPurchase.app.model.bean.RecentDeal;
 
 import java.util.List;
 
@@ -18,8 +20,8 @@ import butterknife.BindView;
  * Created by 10951 on 2018/5/3.
  */
 
-public class DynamicAdapter extends BaseAdapter<Dynamics> {
-    public DynamicAdapter(List<Dynamics> mDatas) {
+public class DynamicAdapter extends BaseAdapter<RecentDeal.ResponseBean.DealRecordsBean> {
+    public DynamicAdapter(List<RecentDeal.ResponseBean.DealRecordsBean> mDatas) {
         super(mDatas);
     }
 
@@ -28,7 +30,7 @@ public class DynamicAdapter extends BaseAdapter<Dynamics> {
         return new Holder();
     }
 
-    class Holder extends BaseHolder<Dynamics> {
+    class Holder extends BaseHolder<RecentDeal.ResponseBean.DealRecordsBean> {
 
         @BindView(R.id.tv_time)
         TextView mTvTime;
@@ -54,12 +56,13 @@ public class DynamicAdapter extends BaseAdapter<Dynamics> {
 
         @Override
         protected void refreshView() {
-            mTvComsumer.setText(getData().getComsumer());
-            mTvCurrentPrice.setText(getData().getCurrentprice());
-            mTvGoodsName.setText(getData().getName());
-            mTvMarketPrice.setText(getData().getMarketprice());
+            ImageLoadManager.getInstance().setImage(getContext(),getData().getPics(),mIvGoods);
+            mTvComsumer.setText("成交人：" + getData().getNickname());
+            mTvCurrentPrice.setText("￥" + getData().getFinalPrice());
+            mTvGoodsName.setText(getData().getGoodsName());
+            mTvMarketPrice.setText("￥" + getData().getMarketPrice());
             mTvTime.setText(getData().getTime());
-            mTvRate.setText(getData().getRate());
+            mTvRate.setText(getData().getSaveRatio());
         }
     }
 }

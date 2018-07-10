@@ -10,7 +10,7 @@ import com.app.library.base.BaseActivity;
 import com.app.library.util.ActivityManager;
 import com.app.library.view.MyViewPager;
 import com.flashPurchase.app.R;
-import com.flashPurchase.app.fragment.classification.GoodsClassification2Fragment;
+import com.flashPurchase.app.fragment.classification.GoodsClassificationFragment;
 import com.flashPurchase.app.fragment.home.HomeFragment;
 import com.flashPurchase.app.fragment.mine.MineCenterFragment;
 import com.flashPurchase.app.fragment.dynamic.NewNitificaDynamicFragment;
@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity {
                     return new NewNitificaDynamicFragment();
                 case 2:
                     //商品分类
-                    return new GoodsClassification2Fragment();
+                    return new GoodsClassificationFragment();
                 case 3:
                     //拍品回购
                     return new MineCenterFragment();

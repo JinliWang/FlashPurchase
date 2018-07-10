@@ -1,6 +1,7 @@
 package com.flashPurchase.app;
 
 import com.app.library.Constant;
+import com.mob.MobSDK;
 
 import java.io.File;
 
@@ -32,6 +33,8 @@ public class MyApplication extends BaseApplication {
         if (!file3.exists()) {
             file3.mkdirs();
         }
+
+        MobSDK.init(this);
     }
 
     // 初始化 JPush。如果已经初始化，但没有登录成功，则执行重新登录。

@@ -55,6 +55,7 @@
                 style="@style/main_tab_style"
                 android:drawableTop="@drawable/select_fragment_goods_type"
                 android:text="@string/fragment_buy_again"
+                android:visibility="gone"
                 android:textSize="13sp" />
 
             <RadioButton

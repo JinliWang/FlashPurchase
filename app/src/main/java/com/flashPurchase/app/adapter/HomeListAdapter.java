@@ -7,8 +7,10 @@ import android.widget.TextView;
 
 import com.app.library.base.BaseRecycleHolder;
 import com.app.library.base.BaseRecyclerAdapter;
+import com.app.library.util.ImageLoadManager;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.model.HomeList;
+import com.flashPurchase.app.model.bean.RecommendMoreResponse;
 
 import butterknife.BindView;
 
@@ -16,13 +18,13 @@ import butterknife.BindView;
  * Created by 10951 on 2018/4/6.
  */
 
-public class HomeListAdapter extends BaseRecyclerAdapter<HomeList> {
+public class HomeListAdapter extends BaseRecyclerAdapter<RecommendMoreResponse.ResponseBean.GoodsBean> {
     @Override
     public BaseRecycleHolder setViewHolder(ViewGroup parent) {
         return new Holder(parent.getContext(), parent);
     }
 
-    class Holder extends BaseRecycleHolder<HomeList> {
+    class Holder extends BaseRecycleHolder<RecommendMoreResponse.ResponseBean.GoodsBean> {
 
         @BindView(R.id.img_goods)
         ImageView mImgGoods;
@@ -38,9 +40,10 @@ public class HomeListAdapter extends BaseRecyclerAdapter<HomeList> {
         }
 
         @Override
-        public void bindData(HomeList homeList) {
-            mTvGoodsName.setText(homeList.getGoodsName());
-            mTvGoodsPrice.setText(homeList.getGoodsPrice());
+        public void bindData(RecommendMoreResponse.ResponseBean.GoodsBean homeList) {
+            ImageLoadManager.getInstance().setImage(getContext(), homeList.getPics(), mImgGoods);
+            mTvGoodsName.setText(homeList.getName());
+            mTvGoodsPrice.setText(homeList.getCurrentPrice());
         }
     }
 }

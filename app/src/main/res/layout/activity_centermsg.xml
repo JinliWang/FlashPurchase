@@ -3,65 +3,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-        <LinearLayout
-            android:id="@+id/ll_mine"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/colorThreeF7">
-            <RelativeLayout
-                android:id="@+id/home_title"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/title_height"
-                android:background="@color/colorPrimary">
-                <LinearLayout
-                    android:id="@+id/ll_setup_msg_back"
-                    android:layout_width="48dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/icon_back_white"/>
-                </LinearLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="消息中心"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorSixF"/>
-            </RelativeLayout>
-            <RadioGroup
-                android:id="@+id/rg_center_msg"
-                android:layout_width="match_parent"
-                android:layout_height="88dp"
-                android:background="@color/colorSixF"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-                <RadioButton
-                    android:id="@+id/rb_cender_msg"
-                    style="@style/center_tab"
-                    android:drawableTop="@drawable/choose_center_msg"
-                    android:text="竞拍消息"/>
-                <RadioButton
-                    android:id="@+id/rb_cender_notice"
-                    style="@style/center_tab"
-                    android:drawableTop="@drawable/choose_center_msg"
-                    android:text="拍卖公告"/>
-                <RadioButton
-                    android:id="@+id/rb_cender_sysmsg"
-                    style="@style/center_tab"
-                    android:drawableTop="@drawable/choose_center_msg"
-                    android:text="系统消息"/>
-            </RadioGroup>
-            <com.app.library.view.MyViewPager
-                android:id="@+id/vp_center_msg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
-            </com.app.library.view.MyViewPager>
-        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_mine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorThreeF7"
+        android:orientation="vertical">
+
+        <include layout="@layout/view_title"/>
+
+        <RadioGroup
+            android:id="@+id/rg_center_msg"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:background="@color/colorSixF"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_cender_msg"
+                style="@style/center_tab"
+                android:checked="true"
+                android:drawableTop="@drawable/message_pai"
+                android:text="竞拍消息" />
+
+            <RadioButton
+                android:id="@+id/rb_cender_notice"
+                style="@style/center_tab"
+                android:drawableTop="@drawable/message_note"
+                android:text="拍卖公告" />
+
+            <RadioButton
+                android:id="@+id/rb_cender_sysmsg"
+                style="@style/center_tab"
+                android:drawableTop="@drawable/message_sys"
+                android:text="系统消息" />
+        </RadioGroup>
+
+        <com.app.library.view.MyViewPager
+            android:id="@+id/vp_center_msg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.app.library.view.MyViewPager>
+    </LinearLayout>
 
 
 </LinearLayout>

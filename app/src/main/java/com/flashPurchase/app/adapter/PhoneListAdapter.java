@@ -1,14 +1,17 @@
 package com.flashPurchase.app.adapter;
 
+import android.media.Image;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.library.base.BaseAdapter;
 import com.app.library.base.BaseHolder;
+import com.app.library.util.ImageLoadManager;
 import com.app.library.util.UIUtil;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.model.HomeList;
+import com.flashPurchase.app.model.bean.HomeBean;
 
 import java.util.List;
 
@@ -18,8 +21,8 @@ import butterknife.BindView;
  * Created by 10951 on 2018/4/9.
  */
 
-public class PhoneListAdapter extends BaseAdapter<HomeList> {
-    public PhoneListAdapter(List<HomeList> mDatas) {
+public class PhoneListAdapter extends BaseAdapter<HomeBean.ResponseBean.PhoneGoodsBean> {
+    public PhoneListAdapter(List<HomeBean.ResponseBean.PhoneGoodsBean> mDatas) {
         super(mDatas);
     }
 
@@ -28,7 +31,7 @@ public class PhoneListAdapter extends BaseAdapter<HomeList> {
         return new Holder();
     }
 
-    class Holder extends BaseHolder<HomeList> {
+    class Holder extends BaseHolder<HomeBean.ResponseBean.PhoneGoodsBean> {
 
         @BindView(R.id.img_goods)
         ImageView mImgGoods;
@@ -44,7 +47,8 @@ public class PhoneListAdapter extends BaseAdapter<HomeList> {
 
         @Override
         protected void refreshView() {
-            mTvGoodsPrice.setText(getData().getGoodsPrice());
+            ImageLoadManager.getInstance().setImage(getContext(), getData().getPics(), mImgGoods);
+            mTvGoodsPrice.setText(getData().getCurrentPrice());
         }
     }
 }

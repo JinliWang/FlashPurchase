@@ -241,6 +241,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/lin_my_auction"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
@@ -284,6 +285,7 @@
                 android:background="@color/colorSixF">
 
                 <LinearLayout
+                    android:id="@+id/lin_aucting"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -292,7 +294,7 @@
 
                     <ImageView
                         android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_height="26dp"
                         android:src="@drawable/icon_pending" />
 
                     <TextView
@@ -305,6 +307,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lin_get"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -326,6 +329,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lin_cjg"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -347,6 +351,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lin_wait_pay"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -368,6 +373,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lin_wait_sign"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -390,6 +396,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/lin_my_collect"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
@@ -428,6 +435,7 @@
                 android:background="@color/colorSixA" />
 
             <RelativeLayout
+                android:id="@+id/lin_my_sign"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@color/colorSixF">
@@ -465,6 +473,7 @@
                 android:background="@color/colorSixA" />
 
             <RelativeLayout
+                android:id="@+id/rel_sign_in"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@color/colorSixF">
@@ -483,7 +492,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/iv_iv5"
-                    android:text="在线客服"
+                    android:text="签到有礼"
                     android:textColor="@color/text_color"
                     android:textSize="14sp" />
 
@@ -502,6 +511,7 @@
                 android:background="@color/colorSixA" />
 
             <RelativeLayout
+                android:id="@+id/lin_advice"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@color/colorSixF">
@@ -539,6 +549,7 @@
                 android:background="@color/colorSixA" />
 
             <RelativeLayout
+                android:id="@+id/rel_share"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@color/colorSixF">

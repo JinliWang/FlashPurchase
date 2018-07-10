@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+// 添加插件
+apply plugin: 'com.mob.sdk'
 android {
     signingConfigs {
         release {
@@ -44,6 +46,12 @@ android {
     }
     productFlavors {
     }
+}
+
+MobSDK {
+    appKey "26bc49ae51064"
+    appSecret "6cedb9634a8c003587e27759dad017a3"
+    SMSSDK {}
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')

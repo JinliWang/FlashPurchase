@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/margin_10"
+            android:minEms="3"
             android:text="手机号"
             android:textColor="@color/title_color"
             android:textSize="@dimen/text_title" />
@@ -40,27 +41,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/margin_10"
-            android:text="手机号"
-            android:textColor="@color/title_color"
-            android:textSize="@dimen/text_title"
-            android:visibility="invisible" />
-
-        <View
-            style="@style/style_dividing_line"
-            android:layout_marginLeft="@dimen/margin_10" />
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -73,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/margin_10"
+            android:minEms="3"
             android:text="验证码"
             android:textColor="@color/title_color"
             android:textSize="@dimen/text_title" />
@@ -106,6 +87,39 @@
             android:textSize="@dimen/text_title" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/margin_10"
+            android:minEms="3"
+            android:text="密    码"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title" />
+
+        <EditText
+            android:id="@+id/et_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:hint="请输入密码"
+            android:imeOptions="actionNext"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_10"
+            android:singleLine="true"
+            android:textColor="@color/second_title_text_color"
+            android:textColorHint="#b4b4b4"
+            android:textSize="@dimen/text_content" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_regist"
@@ -176,8 +190,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_20"
         android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/login_wx"
@@ -202,6 +221,11 @@
             android:text="QQ"
             android:textColor="@color/title_color"
             android:textSize="@dimen/text_title" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 

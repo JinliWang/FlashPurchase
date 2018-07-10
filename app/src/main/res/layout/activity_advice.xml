@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title"/>
+
+    <EditText
+        android:id="@+id/et_advice"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:gravity="start"
+        android:background="@drawable/shape_solid_white"/>
+
+
+    <Button
+        android:id="@+id/btn_submit"
+        style="@style/btn_bg_color"
+        android:layout_height="46dp"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginRight="@dimen/margin_20"
+        android:layout_marginTop="20dp"
+        android:text="提交"
+        android:textSize="@dimen/text_title" />
+
+</LinearLayout>

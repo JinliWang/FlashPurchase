@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/pink">
+
+        <TextView
+            android:id="@+id/tv_gwb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="0 积分"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_integral_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:drawableRight="@drawable/icon_right_arrow"
+        android:padding="10dp"
+        android:text="积分明细"
+        android:textColor="@color/title_color"
+        android:textSize="@dimen/text_title" />
+
+    <View style="@style/style_dividing_line" />
+
+    <TextView
+        android:id="@+id/tv_get_integral"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:drawableRight="@drawable/icon_right_arrow"
+        android:padding="10dp"
+        android:text="如何获得积分？"
+        android:textColor="@color/title_color"
+        android:textSize="@dimen/text_title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_10"
+            android:text="积分兑换"
+            android:textColor="@color/title_color"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_ci"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_10"
+            android:text="次"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_content" />
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_ci"
+            android:text="1"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_num"
+            android:text="今日兑换剩余"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_content" />
+    </RelativeLayout>
+</LinearLayout>

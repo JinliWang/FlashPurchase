@@ -1,16 +1,34 @@
 package com.flashPurchase.app.fragment.dynamic;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.app.library.base.BaseFragment;
+import com.app.library.util.LogUtil;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.adapter.DynamicAdapter;
 import com.flashPurchase.app.model.Dynamics;
+import com.flashPurchase.app.model.bean.GoodClassification;
+import com.flashPurchase.app.model.bean.RecentDeal;
+import com.flashPurchase.app.model.request.MyRequset;
 import com.flashPurchase.app.view.RefreshLayout;
+import com.google.gson.Gson;
+import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft_17;
+import org.java_websocket.handshake.ServerHandshake;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,7 +48,11 @@ public class NewNitificaDynamicFragment extends BaseFragment {
     RefreshLayout mRefreshLayout;
 
     private DynamicAdapter mAdapter;
-    private List<Dynamics> mList;
+    private List<RecentDeal.ResponseBean.DealRecordsBean> mList;
+
+    private WebSocketClient mWebSocketClient;
+    private int pageIndex = 0;
+    private RecentDeal mRecentDeal;
 
     @Override
     protected int getLayoutId() {
@@ -44,24 +66,93 @@ public class NewNitificaDynamicFragment extends BaseFragment {
         mIvRight.setVisibility(View.VISIBLE);
         mIvRight.setImageDrawable(getContext().getResources().getDrawable(R.drawable.icon_message));
 
-        Dynamics dynamics = new Dynamics();
-        dynamics.setComsumer("李元芳");
-        dynamics.setCurrentprice("成交价：￥9.99");
-        dynamics.setMarketprice("市场价：￥9999.99");
-        dynamics.setName("米家智能 米家智能投影机 大屏享受，可远观等等");
-        dynamics.setRate("99.0%");
-        dynamics.setTime("2018-05-03 21:55:59");
-        Dynamics dynamics2 = new Dynamics();
-        dynamics2.setComsumer("李元芳");
-        dynamics2.setCurrentprice("成交价：￥9.99");
-        dynamics2.setMarketprice("市场价：￥9999.99");
-        dynamics2.setName("米家智能 米家智能投影机 大屏享受，可远观等等");
-        dynamics2.setRate("99.0%");
-        dynamics2.setTime("2018-05-03 21:55:59");
+
         mList = new ArrayList<>();
-        mList.add(dynamics);
-        mList.add(dynamics2);
         mAdapter = new DynamicAdapter(mList);
         mNitificateList.setAdapter(mAdapter);
+        mRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
+            @Override
+            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
+                super.onRefresh(refreshLayout);
+                pageIndex = 0;
+                mAdapter.clearData();
+                Message msg = new Message();
+                msg.what = 0;
+                handler.sendMessage(msg);
+            }
+
+            @Override
+            public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
+                super.onLoadMore(refreshLayout);
+                pageIndex++;
+                Message msg = new Message();
+                msg.what = 0;
+                handler.sendMessage(msg);
+            }
+        });
     }
+
+    @Override
+    protected void loadData(Bundle savedInstanceState) {
+        super.loadData(savedInstanceState);
+        try {
+            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=123456"), new Draft_17()) {
+                @Override
+                public void onOpen(ServerHandshake handshakedata) {
+
+                }
+
+                @Override
+                public void onMessage(String message) {
+                    LogUtil.d(message);
+                    if (!message.contains("response")) {
+                        Message msg = new Message();
+                        msg.what = 0;
+                        handler.sendMessage(msg);
+                    } else {
+                        Gson gson = new Gson();
+                        mRecentDeal = gson.fromJson(message, RecentDeal.class);
+                        Message msg = new Message();
+                        msg.what = 1;
+                        handler.sendMessage(msg);
+                    }
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+
+                }
+
+                @Override
+                public void onError(Exception ex) {
+
+                }
+            };
+            mWebSocketClient.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    MyRequset more = new MyRequset();
+                    MyRequset.Parameter parameter = new MyRequset.Parameter();
+                    parameter.setPageNum(String.valueOf(pageIndex));
+                    parameter.setPageSize("10");
+                    parameter.setGoodsId("0");
+                    more.setUrlMapping("goods-recentDeal");
+                    more.setParameter(parameter);
+                    mWebSocketClient.send(more.getRecent());
+                    break;
+                case 1:
+                    mAdapter.addData(mRecentDeal.getResponse().getDealRecords());
+                    mRefreshLayout.setData(mRecentDeal.getResponse().getDealRecords());
+                    break;
+            }
+        }
+    };
 }

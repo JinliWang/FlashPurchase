@@ -1,6 +1,8 @@
 package com.flashPurchase.app.fragment.home;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,23 +10,24 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.library.base.BaseFragment;
 import com.app.library.util.LogUtil;
-import com.app.library.util.ToastUtil;
 import com.app.library.view.ScrollGridView;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.activity.home.RecommendMoreActivity;
+import com.flashPurchase.app.adapter.ComputerListAdapter;
 import com.flashPurchase.app.adapter.HomeBannerAdapter;
 import com.flashPurchase.app.adapter.PhoneListAdapter;
 import com.flashPurchase.app.adapter.RecomendListAdapter;
 import com.flashPurchase.app.model.HomeBanner;
-import com.flashPurchase.app.model.HomeList;
+import com.flashPurchase.app.model.bean.HomeBean;
 import com.github.wanglu1209.bannerlibrary.Banner;
 import com.github.wanglu1209.bannerlibrary.BannerPagerAdapter;
+import com.google.gson.Gson;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
@@ -72,16 +75,16 @@ public class HomeFragment extends BaseFragment {
     ScrollGridView mPhoneGrid;
     @BindView(R.id.computer_grid)
     ScrollGridView mCompterGrid;
-    @BindView(R.id.jewel_grid)
-    ScrollGridView mJewelGrid;
 
-    private List<HomeList> mLists;
-    private List<HomeList> mList2;
+    private List<HomeBean.ResponseBean.PhoneGoodsBean> mList2;
+    private List<HomeBean.ResponseBean.ComputerGoodsBean> mComputerGoodsBeans;
     private RecomendListAdapter mAdapter;
     private HomeBannerAdapter mBannerAdapter;
     private PhoneListAdapter mPhoneListAdapter;
+    private ComputerListAdapter mComputerListAdapter;
 
     public WebSocketClient mWebSocketClient;
+    private HomeBean mHomeBean;
 
 
     @Override
@@ -96,29 +99,11 @@ public class HomeFragment extends BaseFragment {
         mViewPage.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPage);
 
-        //初始化为你推荐列表
-        HomeList homeList1 = new HomeList();
-        homeList1.setGoodsName("iphone 8 256GB");
-        homeList1.setGoodsPrice("￥8288.00");
-        HomeList homeList2 = new HomeList();
-        homeList2.setGoodsName("iphone 6 256GB");
-        homeList2.setGoodsPrice("￥1188.00");
-        HomeList homeList3 = new HomeList();
-        homeList3.setGoodsName("iphone 7 256GB");
-        homeList3.setGoodsPrice("￥8822.00");
-        HomeList homeList4 = new HomeList();
-        homeList4.setGoodsName("iphone X 256GB");
-        homeList4.setGoodsPrice("￥8888.00");
-        mLists = new ArrayList<>();
-        mLists.add(homeList1);
-        mLists.add(homeList2);
-        mLists.add(homeList3);
-        mLists.add(homeList4);
-        mAdapter = new RecomendListAdapter();
-        mAdapter.setDataList(mLists);
+        //初始化为你推荐
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRecomendList.setLayoutManager(linearLayoutManager);
+        mAdapter = new RecomendListAdapter();
         mRecomendList.setAdapter(mAdapter);
 
         //初始化Banner
@@ -156,21 +141,40 @@ public class HomeFragment extends BaseFragment {
 
         //初始化手机列表
         mList2 = new ArrayList<>();
-        mList2.add(mLists.get(0));
-        mList2.add(mLists.get(1));
-        mList2.add(mLists.get(2));
         mPhoneListAdapter = new PhoneListAdapter(mList2);
         mPhoneGrid.setAdapter(mPhoneListAdapter);
-        mCompterGrid.setAdapter(mPhoneListAdapter);
-        mJewelGrid.setAdapter(mPhoneListAdapter);
+
+        //初始化电脑列表
+        mComputerGoodsBeans = new ArrayList<>();
+        mComputerListAdapter = new ComputerListAdapter(mComputerGoodsBeans);
+        mCompterGrid.setAdapter(mComputerListAdapter);
 
         mRelRecomend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mWebSocketClient.send("{\"urlMapping\":\"goods-goodsByCid\",\"parameter\":{\"categoryId\":2}}");
+                startActivity(RecommendMoreActivity.class);
             }
         });
+
+//        mCompterGrid.setAdapter(mPhoneListAdapter);
+//        mJewelGrid.setAdapter(mPhoneListAdapter);
     }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    mWebSocketClient.send("{\"urlMapping\":\"goods-index\"}");
+                    break;
+                case 1:
+                    mAdapter.setDataList(mHomeBean.getResponse().getPreferGoods());
+                    mPhoneListAdapter.addData(mHomeBean.getResponse().getPhoneGoods());
+                    mComputerListAdapter.addData(mHomeBean.getResponse().getComputerGoods());
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void loadData(Bundle savedInstanceState) {
@@ -179,12 +183,22 @@ public class HomeFragment extends BaseFragment {
             mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=123456"), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
-                    LogUtil.d("WebSocket++++++++++",handshakedata.getHttpStatus() + "");
                 }
 
                 @Override
                 public void onMessage(String message) {
-                    LogUtil.d("WebSocket++++++++++",message);
+                    if (!message.contains("response")) {
+                        Message msg = new Message();
+                        msg.what = 0;
+                        handler.sendMessage(msg);
+                    } else {
+                        LogUtil.d(message);
+                        Gson gson = new Gson();
+                        mHomeBean = gson.fromJson(message, HomeBean.class);
+                        Message msg = new Message();
+                        msg.what = 1;
+                        handler.sendMessage(msg);
+                    }
                 }
 
                 @Override
@@ -198,8 +212,6 @@ public class HomeFragment extends BaseFragment {
                 }
             };
             mWebSocketClient.connect();
-//            mWebSocketClient.send("{\"urlMapping\":\"goods-goodsByCid\",\"parameter\":{\"categoryId\":2}}");
-//            mWebSocketClient.close();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -222,11 +234,11 @@ public class HomeFragment extends BaseFragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new HomeListFragment();
+                    return new RecommendFragment();
                 case 1:
-                    return new HomeListFragment();
+                    return new MyOrderFragment();
                 case 2:
-                    return new HomeListFragment();
+                    return new MyFavoriteFragment();
             }
             return null;
         }

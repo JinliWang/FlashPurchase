@@ -9,6 +9,7 @@ import com.app.library.base.BaseHolder;
 import com.app.library.util.UIUtil;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.model.Dynamics;
+import com.flashPurchase.app.model.bean.GoodClassification;
 
 import java.util.List;
 
@@ -18,9 +19,9 @@ import butterknife.BindView;
  * Created by admin on 8/21 0021.
  */
 
-public class ShoppingLeftAdapter extends BaseAdapter<Dynamics> {
+public class ShoppingLeftAdapter extends BaseAdapter<GoodClassification.ResponseBean.GoodsCategoriesBean> {
 
-    public ShoppingLeftAdapter(List<Dynamics> mDatas) {
+    public ShoppingLeftAdapter(List<GoodClassification.ResponseBean.GoodsCategoriesBean> mDatas) {
         super(mDatas);
     }
 
@@ -29,7 +30,7 @@ public class ShoppingLeftAdapter extends BaseAdapter<Dynamics> {
         return new Holder();
     }
 
-    class Holder extends BaseHolder<Dynamics> {
+    class Holder extends BaseHolder<GoodClassification.ResponseBean.GoodsCategoriesBean> {
 
         @BindView(R.id.tv_left_name)
         TextView tvLeftName;
@@ -37,13 +38,12 @@ public class ShoppingLeftAdapter extends BaseAdapter<Dynamics> {
         @Override
         protected View initView() {
             View view = UIUtil.inflate(R.layout.item_shopping_left);
-
             return view;
         }
 
         @Override
         protected void refreshView() {
-            tvLeftName.setText(getData().getDynamicName());
+            tvLeftName.setText(getData().getName());
 
         }
     }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_goods"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
+
+        <LinearLayout
+            android:id="@+id/lin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/btn_pai"
+            android:layout_toRightOf="@+id/iv_goods"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_aucNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_content" />
+
+            <TextView
+                android:id="@+id/tv_goods_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_content" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_goods_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lin"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/iv_goods"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_content" />
+
+        <Button
+            android:id="@+id/btn_pai"
+            android:layout_width="80dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape_solid_bg"
+            android:text="参与竞拍"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_content" />
+    </RelativeLayout>
+</LinearLayout>

@@ -61,11 +61,11 @@ public class ComApiManager extends ApiManager {
 
 //    public static void download(final String id, final String path, final ProcessListener listener) {
 //        Api service = retrofit.create(Api.class);
-//        FinFeeListRequest request = new FinFeeListRequest();
-//        request.setEntid(SpManager.getEntId());
-//        request.setUserName(SpManager.getUserName());
-//        request.setId(id.toString());
-//        service.download(request.getAttach())
+//        FinFeeListRequest RecommendMoreResponse = new FinFeeListRequest();
+//        RecommendMoreResponse.setEntid(SpManager.getEntId());
+//        RecommendMoreResponse.setUserName(SpManager.getUserName());
+//        RecommendMoreResponse.setId(id.toString());
+//        service.download(RecommendMoreResponse.getAttach())
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(Schedulers.io())
 //                .subscribe(new Observer<ResponseBody>() {

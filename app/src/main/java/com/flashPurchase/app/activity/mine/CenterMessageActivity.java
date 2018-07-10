@@ -44,17 +44,6 @@ public class CenterMessageActivity extends BaseActivity {
         viewPager.setScrollable(false);
         viewPager.setOffscreenPageLimit(3);
 
-
-        Drawable drawableMsg = getResources().getDrawable(R.drawable.choose_center_msg);
-        drawableMsg.setBounds(0,0,39,39);
-        rbMsg.setCompoundDrawables(null,drawableMsg,null,null);
-        Drawable drawableNotice = getResources().getDrawable(R.drawable.choose_center_notice);
-        drawableMsg.setBounds(0,0,39,39);
-        rbNotice.setCompoundDrawables(null,drawableNotice,null,null);
-        Drawable drawableSysmsg = getResources().getDrawable(R.drawable.choose_center_sysmsg);
-        drawableMsg.setBounds(0,0,39,39);
-        rbSysmsg.setCompoundDrawables(null,drawableSysmsg,null,null);
-
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {

@@ -161,6 +161,41 @@
             android:screenOrientation="portrait"
             android:theme="@style/BackActivityTheme"/>
 
+        <!-- 我的积分 -->
+        <activity
+            android:name=".activity.mine.MyIntegralActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme"/>
+
+        <!-- 更多推荐 -->
+        <activity
+            android:name=".activity.home.RecommendMoreActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme"/>
+
+        <!-- 建议或意见 -->
+        <activity
+            android:name=".activity.mine.AdviceActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme"/>
+
+        <!-- 我的竞拍 -->
+        <activity
+            android:name=".activity.mine.MyAuctionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme"/>
+
+        <!-- 我的收藏-->
+        <activity
+            android:name=".activity.mine.MyCollectActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme"/>
+
     </application>
 
 </manifest>

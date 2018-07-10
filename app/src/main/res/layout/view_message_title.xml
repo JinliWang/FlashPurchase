@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_back_white" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="70dp"
+            android:layout_marginRight="70dp"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="我的竞拍"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <FrameLayout
+            android:id="@+id/more_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/iv_right"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:paddingLeft="13dp"
+                android:paddingRight="13dp"
+                android:src="@drawable/icon_more" />
+
+            <TextView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="right|top"
+                android:layout_marginRight="@dimen/margin_10"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_message_num_bg"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/colorPrimary" />
+        </FrameLayout>
+    </RelativeLayout>
+
+</LinearLayout>
