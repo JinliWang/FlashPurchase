@@ -3,12 +3,20 @@ package com.flashPurchase.app.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
+import com.app.library.util.ActivityManager;
 import com.app.library.util.LogUtil;
-import com.app.library.util.ToastUtil;
 import com.app.library.util.okhttp.CallBackUtil;
 import com.app.library.util.okhttp.OkhttpUtil;
+import com.flashPurchase.app.Constant.SpManager;
+import com.flashPurchase.app.activity.MainActivity;
 import com.flashPurchase.app.activity.login.LoginActivity;
+import com.flashPurchase.app.model.bean.UserInfo;
+import com.flashPurchase.app.model.request.LoginReq;
+import com.flashPurchase.app.net.manager.ApiManager;
+import com.google.gson.Gson;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -16,13 +24,21 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft_17;
+import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * Created by 10951 on 2018/6/10.
@@ -33,6 +49,12 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     private IWXAPI mWeixinAPI;
     public static final String WEIXIN_APP_ID = "wxc1bcb659fb67c7df";
     private static String uuid;
+    private WebSocketClient mWebSocketClient;
+    private String mClientId;
+    private String mIcon;
+    private String mNickName;
+    private String mOpenId;
+    private UserInfo mUserInfo;
 
 
     @Override
@@ -86,6 +108,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     /**
      * 获取openid accessToken值用于后期操作
+     *
      * @param code 请求码
      */
     private void getAccess_token(final String code) {
@@ -98,10 +121,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 + "&grant_type=authorization_code";
         LogUtil.d("getAccess_token：" + path);
         HashMap<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("appid",WEIXIN_APP_ID);
-        paramsMap.put("secret",APP_SECRET);
-        paramsMap.put("code",code);
-        paramsMap.put("grant_type","authorization_code");
+        paramsMap.put("appid", WEIXIN_APP_ID);
+        paramsMap.put("secret", APP_SECRET);
+        paramsMap.put("code", code);
+        paramsMap.put("grant_type", "authorization_code");
         OkhttpUtil.okHttpGet("https://api.weixin.qq.com/sns/oauth2/access_token", paramsMap, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -114,7 +137,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 try {
                     jsonObject = new JSONObject(response);
                     String openid = jsonObject.getString("openid").toString().trim();
-                    ToastUtil.show(openid);
                     String access_token = jsonObject.getString("access_token").toString().trim();
                     getUserMesg(access_token, openid);
                 } catch (JSONException e) {
@@ -122,32 +144,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 }
             }
         });
-        //网络请求，根据自己的请求方式
-//        VolleyRequest.get(this, path, "getAccess_token", false, null, new VolleyRequest.Callback() {
-//            @Override
-//            public void onSuccess(String result) {
-//                LogUtil.d("getAccess_token_result:" + result);
-//                JSONObject jsonObject = null;
-//                try {
-//                    jsonObject = new JSONObject(result);
-//                    String openid = jsonObject.getString("openid").toString().trim();
-//                    String access_token = jsonObject.getString("access_token").toString().trim();
-//                    getUserMesg(access_token, openid);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onError(String errorMessage) {
-//
-//            }
-//        });
     }
 
     /**
      * 获取微信的个人信息
+     *
      * @param access_token
      * @param openid
      */
@@ -159,8 +160,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         LogUtil.d("getUserMesg：" + path);
         //网络请求，根据自己的请求方式
         HashMap<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("access_token",access_token);
-        paramsMap.put("openid",openid);
+        paramsMap.put("access_token", access_token);
+        paramsMap.put("openid", openid);
         OkhttpUtil.okHttpGet("https://api.weixin.qq.com/sns/userinfo", paramsMap, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -172,38 +173,122 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response);
-                    ToastUtil.show(jsonObject.getString("nickname").toString().trim());
+                    mIcon = jsonObject.getString("headimgurl").toString().trim();
+                    mOpenId = jsonObject.getString("openid").toString().trim();
+                    mNickName = jsonObject.getString("nickname").toString().trim();
+                    ApiManager.getApi().onLogin()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<String>() {
+
+                                @Override
+                                public void onSubscribe(Disposable d) {
+
+                                }
+
+                                @Override
+                                public void onNext(String s) {
+                                    mClientId = s;
+                                    SpManager.setClientId(mClientId);
+                                    LoginReq loginReq = new LoginReq();
+                                    LoginReq.Parameter parameter = new LoginReq.Parameter();
+                                    parameter.setClientId(mClientId);
+                                    parameter.setIcon(mIcon);
+                                    parameter.setOpenId(mOpenId);
+                                    parameter.setNickName(mNickName);
+                                    loginReq.setUrlMapping("user-login");
+                                    loginReq.setParameter(parameter);
+                                    try {
+                                        mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + mClientId), new Draft_17()) {
+                                            @Override
+                                            public void onOpen(ServerHandshake handshakedata) {
+
+                                            }
+
+                                            @Override
+                                            public void onMessage(String message) {
+                                                LogUtil.d(message);
+                                                if(!message.contains("response")) {
+                                                    Message msg = new Message();
+                                                    msg.what = 0;
+                                                    handler.sendMessage(msg);
+                                                }else if(message.contains("user-login")) {
+                                                    Gson gson = new Gson();
+                                                    mUserInfo = gson.fromJson(message,UserInfo.class);
+                                                    mUserInfo.getResponse().setNickName(mNickName);
+                                                    mUserInfo.getResponse().setIcon(mIcon);
+                                                    Message msg = new Message();
+                                                    msg.what = 1;
+                                                    handler.sendMessage(msg);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onClose(int code, String reason, boolean remote) {
+
+                                            }
+
+                                            @Override
+                                            public void onError(Exception ex) {
+
+                                            }
+                                        };
+                                        mWebSocketClient.connect();
+                                    } catch (URISyntaxException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onComplete() {
+
+                                }
+                            });
+
+//                    ToastUtil.show(jsonObject.getString("nickname").toString().trim());
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
-//        VolleyRequest.get(this, path, "getAccess_token", false, null, new VolleyRequest.Callback() {
-//            @Override
-//            public void onSuccess(String result) {
-//                LogUtil.d("getUserMesg_result:" + result);
-//                JSONObject jsonObject = null;
-//                try {
-//                    jsonObject = new JSONObject(result);
-//                    String nickname = jsonObject.getString("nickname");
-//                    int sex = Integer.parseInt(jsonObject.get("sex").toString());
-//                    String headimgurl = jsonObject.getString("headimgurl");
-//
-//                    LogUtil.d("用户基本信息:");
-//                    LogUtil.d("nickname:" + nickname);
-//                    LogUtil.d("sex:" + sex);
-//                    LogUtil.d("headimgurl:" + headimgurl);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                finish();
-//            }
-//
-//            @Override
-//            public void onError(String errorMessage) {
-//
-//            }
-//        });
     }
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    LoginReq loginReq = new LoginReq();
+                    LoginReq.Parameter parameter = new LoginReq.Parameter();
+                    parameter.setClientId(mClientId);
+                    parameter.setIcon(mIcon);
+                    parameter.setOpenId(mOpenId);
+                    parameter.setNickName(mNickName);
+                    loginReq.setUrlMapping("user-login");
+                    loginReq.setParameter(parameter);
+                    mWebSocketClient.send(loginReq.toString());
+                    break;
+                case 1:
+                    SpManager.setUserInfo(mUserInfo);
+                    SpManager.setToken(mUserInfo.getResponse().getToken());
+                    Intent intent = new Intent(WXEntryActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    ActivityManager.getActivityManager().popActivityByClass(LoginActivity.class);
+                    finish();
+                    break;
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mWebSocketClient.close();
+    }
 }

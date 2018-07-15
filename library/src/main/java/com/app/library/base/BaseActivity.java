@@ -1,12 +1,16 @@
 package com.app.library.base;
 
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,11 +18,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.app.library.util.TextViewUtil;
-import com.mls.library.R;
 import com.app.library.util.ActivityManager;
 import com.app.library.util.LogUtil;
+import com.app.library.util.TextViewUtil;
+import com.app.library.util.ToastUtil;
 import com.app.library.view.dialog.LoadingDialog;
+import com.mls.library.R;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,6 +49,27 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public static final String TAG = "JSTI_TAG";
     protected Bundle extraDatas;
     private LoadingDialog loadingDialog;
+
+    private final int RECONNECT_TIME = 5;
+
+    protected String networkErrorTips;
+    /**
+     * 连接时机：</br>
+     * 0 - 刚进入界面时，如果 WebSocket 还未连接，会继续连接，或者由于某些原因 WebSocket 断开，会自动重连，从而会触发连接成功/失败事件；</br>
+     * 1 - onResume() 方法回调时判断 WebSocket 是否连接，如果未连接，则进行连接，从而触发连接成功/失败事件；</br>
+     * 2 - sendText() 方法会判断 WebSocket 是否已经连接，如果未连接，则进行连接，从而触发连接成功/失败事件，此时连接成功后应继续调用 sendText() 方法发送数据。</br>
+     * <p>
+     * 另外，当 connectType != 0 时，每次使用完之后应该设置为 0。因为 0 的状态是无法预知的，随时可能调用。
+     */
+    private int connectType = 0;
+    /**
+     * 需要发送的数据，当 connectType == 2 时会使用。
+     */
+    private String needSendText;
+
+    private boolean isConnected = false;
+    private boolean networkReceiverIsRegister = false;
+    private int connectTime = 0;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -71,18 +100,16 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             e.printStackTrace();
         }
     }
-
 //    @Override
 //    protected void onStart() {
 //        super.onStart();
 //        LogUtil.d("onStart run by : " + this.getClass().getSimpleName());
 //    }
 //
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        LogUtil.d("onResume run by : " + this.getClass().getSimpleName());
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 //
 //    @Override
 //    protected void onPause() {

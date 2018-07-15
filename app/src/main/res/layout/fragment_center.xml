@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_color"
     android:orientation="vertical">
 
     <ScrollView
         android:id="@+id/sv_mine"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/ll_mine"
@@ -52,11 +54,11 @@
                 android:background="@color/colorPrimary"
                 android:gravity="center_vertical">
 
-                <com.flashPurchase.app.widget.RoundImageView
+                <com.app.library.view.CircleImageView
+                    android:id="@+id/iv_photo"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/tuxiang" />
+                    android:layout_marginLeft="15dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -66,17 +68,17 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_nick_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="岁月静好"
                         android:textColor="@color/colorSixF"
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/tv_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="ID:4358742652"
                         android:textColor="@color/colorSixF"
                         android:textSize="14sp" />
 
@@ -133,10 +135,7 @@
                     android:textSize="14sp" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/colorSixA" />
+            <View style="@style/style_dividing_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -152,6 +151,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_pai"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -176,6 +176,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_free"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -200,6 +201,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_shop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -224,6 +226,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_point"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -266,18 +269,15 @@
                     android:textSize="14sp" />
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/skip_arrows" />
+                    android:src="@drawable/icon_right_arrow" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/colorSixA" />
+            <View style="@style/style_dividing_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -421,21 +421,18 @@
                     android:textSize="14sp" />
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/skip_arrows" />
+                    android:src="@drawable/icon_right_arrow" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/colorSixA" />
+            <View style="@style/style_dividing_line" />
 
             <RelativeLayout
-                android:id="@+id/lin_my_sign"
+                android:id="@+id/rel_my_order"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@color/colorSixF">
@@ -454,23 +451,20 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/iv_iv4"
-                    android:text="我的晒单"
+                    android:text="我的订单"
                     android:textColor="@color/text_color"
                     android:textSize="14sp" />
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/skip_arrows" />
+                    android:src="@drawable/icon_right_arrow" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/colorSixA" />
+            <View style="@style/style_dividing_line" />
 
             <RelativeLayout
                 android:id="@+id/rel_sign_in"
@@ -497,18 +491,15 @@
                     android:textSize="14sp" />
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/skip_arrows" />
+                    android:src="@drawable/icon_right_arrow" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/colorSixA" />
+            <View style="@style/style_dividing_line" />
 
             <RelativeLayout
                 android:id="@+id/lin_advice"
@@ -535,18 +526,15 @@
                     android:textSize="14sp" />
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/skip_arrows" />
+                    android:src="@drawable/icon_right_arrow" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/colorSixA" />
+            <View style="@style/style_dividing_line" />
 
             <RelativeLayout
                 android:id="@+id/rel_share"
@@ -573,12 +561,12 @@
                     android:textSize="14sp" />
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/skip_arrows" />
+                    android:src="@drawable/icon_right_arrow" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

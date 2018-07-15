@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="5"
+            android:padding="10dp"
+            android:text="收件人"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:hint="请填写收件人姓名"
+            android:imeOptions="actionNext"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_10"
+            android:singleLine="true"
+            android:textColor="@color/second_title_text_color"
+            android:textColorHint="#b4b4b4"
+            android:textSize="@dimen/text_content" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View style="@style/style_dividing_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="5"
+            android:padding="10dp"
+            android:text="手机号"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title" />
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:hint="请填写收件人手机号"
+            android:imeOptions="actionNext"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_10"
+            android:singleLine="true"
+            android:inputType="phone"
+            android:textColor="@color/second_title_text_color"
+            android:textColorHint="#b4b4b4"
+            android:textSize="@dimen/text_content" />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View style="@style/style_dividing_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="5"
+            android:padding="10dp"
+            android:text="QQ"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title" />
+
+        <EditText
+            android:id="@+id/et_qq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:hint="用于QQ币发货"
+            android:imeOptions="actionNext"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_10"
+            android:singleLine="true"
+            android:textColor="@color/second_title_text_color"
+            android:textColorHint="#b4b4b4"
+            android:textSize="@dimen/text_content" />
+
+        <TextView
+            android:id="@+id/tv_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View style="@style/style_dividing_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="5"
+            android:padding="10dp"
+            android:text="支付宝账号"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title" />
+
+        <EditText
+            android:id="@+id/et_zfb_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:hint="只有实名验证过的账号才能通过"
+            android:imeOptions="actionNext"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_10"
+            android:singleLine="true"
+            android:textColor="@color/second_title_text_color"
+            android:textColorHint="#b4b4b4"
+            android:textSize="@dimen/text_content" />
+
+        <TextView
+            android:id="@+id/tv_zfb_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View style="@style/style_dividing_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="5"
+            android:padding="10dp"
+            android:text="支付宝姓名"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title" />
+
+        <EditText
+            android:id="@+id/et_zfb_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:hint="请填写支付宝实名认证姓名"
+            android:imeOptions="actionNext"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_10"
+            android:singleLine="true"
+            android:textColor="@color/second_title_text_color"
+            android:textColorHint="#b4b4b4"
+            android:textSize="@dimen/text_content" />
+
+        <TextView
+            android:id="@+id/tv_zfb_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View style="@style/style_dividing_line" />
+
+    <LinearLayout
+        android:id="@+id/lin_choose_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="5"
+            android:padding="10dp"
+            android:text="选择地区"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:hint="请选择"
+            android:imeOptions="actionNext"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_10"
+            android:singleLine="true"
+            android:textColor="@color/second_title_text_color"
+            android:textColorHint="#b4b4b4"
+            android:textSize="@dimen/text_content" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line_address"
+        style="@style/style_dividing_line" />
+
+    <LinearLayout
+        android:id="@+id/lin_choose_street"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="5"
+            android:padding="10dp"
+            android:text="选择街道"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title" />
+
+        <TextView
+            android:id="@+id/tv_street"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:hint="请选择"
+            android:imeOptions="actionNext"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_10"
+            android:singleLine="true"
+            android:textColor="@color/second_title_text_color"
+            android:textColorHint="#b4b4b4"
+            android:textSize="@dimen/text_content" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line_street"
+        android:visibility="gone"
+        style="@style/style_dividing_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:minEms="5"
+            android:padding="10dp"
+            android:text="具体地址"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title" />
+
+        <EditText
+            android:id="@+id/et_address_detail"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:gravity="start"
+            android:hint="请填写具体地址"
+            android:imeOptions="actionNext"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_10"
+            android:singleLine="true"
+            android:textColor="@color/second_title_text_color"
+            android:textColorHint="#b4b4b4"
+            android:textSize="@dimen/text_content" />
+
+        <TextView
+            android:id="@+id/tv_address_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View style="@style/style_dividing_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:minEms="5"
+            android:padding="10dp"
+            android:text="其他备注"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title" />
+
+        <EditText
+            android:id="@+id/et_remark"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:gravity="start"
+            android:hint="请填写备注"
+            android:imeOptions="actionNext"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_10"
+            android:singleLine="true"
+            android:textColor="@color/second_title_text_color"
+            android:textColorHint="#b4b4b4"
+            android:textSize="@dimen/text_content" />
+
+        <TextView
+            android:id="@+id/tv_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/text_title"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</LinearLayout>

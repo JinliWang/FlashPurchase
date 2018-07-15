@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.app.library.base.BaseActivity;
 import com.app.library.util.LogUtil;
+import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.adapter.RecommendMoreAdapter;
 import com.flashPurchase.app.model.request.MyRequset;
@@ -23,6 +24,8 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -38,7 +41,9 @@ public class RecommendMoreActivity extends BaseActivity {
 
     private WebSocketClient mWebSocketClient;
     private RecommendMoreAdapter mAdapter;
+    private List<RecommendMoreResponse.ResponseBean.GoodsBean> mList = new ArrayList<>();
     private int pageIndex = 0;
+    private boolean isLoadMore = false;
     private RecommendMoreResponse mHomeBean;
 
     @Override
@@ -58,6 +63,7 @@ public class RecommendMoreActivity extends BaseActivity {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
+                isLoadMore = false;
                 mAdapter.clearDatas();
                 pageIndex = 0;
                 Message msg = new Message();
@@ -69,6 +75,7 @@ public class RecommendMoreActivity extends BaseActivity {
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
                 pageIndex++;
+                isLoadMore = true;
                 Message msg = new Message();
                 msg.what = 0;
                 handler.sendMessage(msg);
@@ -90,8 +97,14 @@ public class RecommendMoreActivity extends BaseActivity {
                     mWebSocketClient.send(more.toString());
                     break;
                 case 1:
-                    mAdapter.setDataList(mHomeBean.getResponse().getGoods());
-                    mRefreshLayout.setData(mHomeBean.getResponse().getGoods());
+                    if (isLoadMore) {
+                        mList.addAll(mHomeBean.getResponse().getGoods());
+                        mAdapter.setDataList(mList);
+                        mRefreshLayout.setData(mList);
+                    }else {
+                        mAdapter.setDataList(mHomeBean.getResponse().getGoods());
+                        mRefreshLayout.setData(mHomeBean.getResponse().getGoods());
+                    }
 //                    mPhoneListAdapter.addData(mHomeBean.getResponse().getPhoneGoods());
                     break;
             }
@@ -102,7 +115,7 @@ public class RecommendMoreActivity extends BaseActivity {
     protected void initData(Bundle bundle) {
         super.initData(bundle);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=123456"), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                 }

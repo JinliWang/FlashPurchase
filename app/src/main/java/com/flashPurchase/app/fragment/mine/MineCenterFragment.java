@@ -1,9 +1,9 @@
 package com.flashPurchase.app.fragment.mine;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -11,6 +11,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.app.library.base.BaseFragment;
+import com.app.library.util.ImageLoadManager;
+import com.app.library.util.LogUtil;
+import com.app.library.view.CircleImageView;
+import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.activity.mine.AdviceActivity;
 import com.flashPurchase.app.activity.mine.CenterMessageActivity;
@@ -18,13 +22,28 @@ import com.flashPurchase.app.activity.mine.MyAuctionActivity;
 import com.flashPurchase.app.activity.mine.MyCollectActivity;
 import com.flashPurchase.app.activity.mine.MyGwbActivity;
 import com.flashPurchase.app.activity.mine.MyIncomeCenterActivity;
+import com.flashPurchase.app.activity.mine.MyInfoActivity;
 import com.flashPurchase.app.activity.mine.MyIntegralActivity;
 import com.flashPurchase.app.activity.mine.SetUpActivity;
+import com.flashPurchase.app.activity.mine.SignActivity;
 import com.flashPurchase.app.activity.mine.VoucherCenterActivity;
+import com.flashPurchase.app.event.HomeEvent;
+import com.flashPurchase.app.event.RechargeEvent;
+import com.flashPurchase.app.model.bean.MyInfo;
+import com.flashPurchase.app.model.request.MyRequset;
+import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft_17;
+import org.java_websocket.handshake.ServerHandshake;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by zms on 2018/4/7.
@@ -83,12 +102,30 @@ public class MineCenterFragment extends BaseFragment {
     ScrollView mSvMine;
     @BindView(R.id.lin_my_collect)
     RelativeLayout mLinMyCollect;
-    @BindView(R.id.lin_my_sign)
-    RelativeLayout mLinMySign;
+    @BindView(R.id.rel_my_order)
+    RelativeLayout mRelMyOrder;
     @BindView(R.id.rel_sign_in)
     RelativeLayout mRelSignIn;
     @BindView(R.id.rel_share)
     RelativeLayout mRelShare;
+    @BindView(R.id.iv_photo)
+    CircleImageView mIvPhoto;
+    @BindView(R.id.tv_nick_name)
+    TextView mTvNickName;
+    @BindView(R.id.tv_id)
+    TextView mTvId;
+    @BindView(R.id.tv_pai)
+    TextView mTvPai;
+    @BindView(R.id.tv_free)
+    TextView mTvFree;
+    @BindView(R.id.tv_shop)
+    TextView mTvShop;
+    @BindView(R.id.tv_point)
+    TextView mTvPoint;
+
+
+    private WebSocketClient mWebSocketClient;
+    private MyInfo mMyInfo;
 
     @Override
     protected int getLayoutId() {
@@ -97,10 +134,89 @@ public class MineCenterFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
+        EventBus.getDefault().register(this);
         onClick();
+        mTvNickName.setText(SpManager.getUserInfo().getResponse().getNickName());
+        ImageLoadManager.getInstance().setImage(getContext(), SpManager.getUserInfo().getResponse().getIcon(), mIvPhoto);
+        mTvId.setText(SpManager.getUserInfo().getResponse().getCode());
     }
 
+    @Override
+    protected void loadData(Bundle savedInstanceState) {
+        super.loadData(savedInstanceState);
+        try {
+            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+                @Override
+                public void onOpen(ServerHandshake handshakedata) {
+
+                }
+
+                @Override
+                public void onMessage(String message) {
+                    LogUtil.d(message);
+                    if (!message.contains("response")) {
+                        Message msg = new Message();
+                        msg.what = 0;
+                        handler.sendMessage(msg);
+                    } else {
+                        try {
+                            Gson gson = new Gson();
+                            mMyInfo = gson.fromJson(message, MyInfo.class);
+                            Message msg = new Message();
+                            msg.what = 1;
+                            handler.sendMessage(msg);
+                        } catch (Exception e) {
+                            Message msg = new Message();
+                            msg.what = 2;
+                            handler.sendMessage(msg);
+                        }
+                    }
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+
+                }
+
+                @Override
+                public void onError(Exception ex) {
+
+                }
+            };
+            mWebSocketClient.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    MyRequset more = new MyRequset();
+                    MyRequset.Parameter parameter = new MyRequset.Parameter();
+                    parameter.setToken(SpManager.getToken());
+                    more.setUrlMapping("account-myCenter");
+                    more.setParameter(parameter);
+                    mWebSocketClient.send(more.myCollect());
+                    break;
+                case 1:
+                    SpManager.setMyInfo(mMyInfo);
+                    mTvPai.setText(mMyInfo.getResponse().getPayCoin() + "");
+                    mTvFree.setText(mMyInfo.getResponse().getFreeCoin() + "");
+                    mTvShop.setText(mMyInfo.getResponse().getShopCoin() + "");
+                    mTvPoint.setText(mMyInfo.getResponse().getPoint() + "");
+                    mTvNickName.setText(mMyInfo.getResponse().getNickname());
+                    mTvId.setText(mMyInfo.getResponse().getUserId() + "");
+                    ImageLoadManager.getInstance().setImage(getContext(), mMyInfo.getResponse().getPic(), mIvPhoto);
+                    break;
+            }
+        }
+    };
+
     private void onClick() {
+        final Bundle bundle = new Bundle();
         //设置
         ivSetup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,11 +343,49 @@ public class MineCenterFragment extends BaseFragment {
         mLinMyCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(MyCollectActivity.class);
+                bundle.putString("type", "collect");
+                startActivity(MyCollectActivity.class, bundle);
             }
         });
 
+        //我的订单
+        mRelMyOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bundle.putString("type", "waitSign");
+                startActivity(MyCollectActivity.class, bundle);
+            }
+        });
 
+        mRelSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(SignActivity.class);
+            }
+        });
 
+        //我的信息
+        mLlMineData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(MyInfoActivity.class);
+            }
+        });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RechargeEvent event) {
+        MyRequset more = new MyRequset();
+        MyRequset.Parameter parameter = new MyRequset.Parameter();
+        parameter.setToken(SpManager.getToken());
+        more.setUrlMapping("account-myCenter");
+        more.setParameter(parameter);
+        mWebSocketClient.send(more.myCollect());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

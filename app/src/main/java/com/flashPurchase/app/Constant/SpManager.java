@@ -1,5 +1,7 @@
 package com.flashPurchase.app.Constant;
 
+import com.flashPurchase.app.model.bean.MyInfo;
+import com.flashPurchase.app.model.bean.UserInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.app.library.util.LogUtil;
@@ -27,47 +29,13 @@ public class SpManager {
         return SpUtil.getString("token", "");
     }
 
-    public static void setErpOrgId(String erpOrgId) {
-        SpUtil.put("erpOrgId", erpOrgId);
+    //保存clientId
+    public static void setClientId(String clientId) {
+        SpUtil.put("clientId", clientId);
     }
 
-    public static String getErpOrgId() {
-        return SpUtil.getString("erpOrgId", "");
-    }
-
-    //用户账套
-    public static void setEntId(String entId) {
-        SpUtil.put("entId", entId);
-    }
-
-    public static String getEntId() {
-        return SpUtil.getString("entId", "");
-    }
-
-    //有无sysmtd权限  1有2没有
-    public static void setRole(String role) {
-        SpUtil.put("role", role);
-    }
-
-    public static String getRole() {
-        return SpUtil.getString("role", "");
-    }
-
-
-    public static void setCompany(String company) {
-        SpUtil.put("company", company);
-    }
-
-    public static String getCompany() {
-        return SpUtil.getString("company", "");
-    }
-
-    public static void setEntName(String entName) {
-        SpUtil.put("entName", entName);
-    }
-
-    public static String getEntName() {
-        return SpUtil.getString("entName", "");
+    public static String getClientId() {
+        return SpUtil.getString("clientId", "");
     }
 
     public static void setIsFirst(boolean isFirst) {
@@ -226,17 +194,31 @@ public class SpManager {
     }
 
 //    //保存用户信息
-//    public static void setUserInfo(UserInfo user) {
-//        SpUtil.put("userInfo", new Gson().toJson(user));
-//    }
-//
-//    public static UserInfo getUserInfo() {
-//        try {
-//            UserInfo user = new Gson().fromJson(SpUtil.getString("userInfo", ""), UserInfo.class);
-//            return user == null ? new UserInfo() : user;
-//        } catch (Exception e) {
-//            return new UserInfo();
-//        }
-//    }
+    public static void setUserInfo(UserInfo user) {
+        SpUtil.put("userInfo", new Gson().toJson(user));
+    }
+
+    public static UserInfo getUserInfo() {
+        try {
+            UserInfo user = new Gson().fromJson(SpUtil.getString("userInfo", ""), UserInfo.class);
+            return user == null ? new UserInfo() : user;
+        } catch (Exception e) {
+            return new UserInfo();
+        }
+    }
+
+    //    //保存用户信息
+    public static void setMyInfo(MyInfo user) {
+        SpUtil.put("myInfo", new Gson().toJson(user));
+    }
+
+    public static MyInfo getMyInfo() {
+        try {
+            MyInfo user = new Gson().fromJson(SpUtil.getString("myInfo", ""), MyInfo.class);
+            return user == null ? new MyInfo() : user;
+        } catch (Exception e) {
+            return new MyInfo();
+        }
+    }
 
 }

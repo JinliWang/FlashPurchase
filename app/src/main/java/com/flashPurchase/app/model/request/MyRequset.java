@@ -19,17 +19,38 @@ public class MyRequset {
     public static class Parameter {
         private String pageNum;
         private String pageSize;
-        private String userId;
+        private String token;
         private String aucSt;
         private String categoryId;
         private String goodsId;
+        private String aucTime;
+        private String time;
+        private String type;
+        private String price;
+        private String orderId;
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        public void setTime(String time) {
+            time = time;
+        }
+
+        public void setAucTime(String aucTime) {
+            this.aucTime = aucTime;
+        }
 
         public void setGoodsId(String goodsId) {
             this.goodsId = goodsId;
         }
 
-        public void setUserId(String userId) {
-            this.userId = userId;
+        public void setToken(String token) {
+            this.token = token;
         }
 
         public void setAucSt(String aucSt) {
@@ -48,6 +69,10 @@ public class MyRequset {
             this.pageSize = pageSize;
         }
 
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
+        }
+
         @Override
         public String toString() {
             return "{" +
@@ -59,7 +84,7 @@ public class MyRequset {
         //我在拍
         public String myOrder() {
             return "{" +
-                    "userId:'" + userId + '\'' +
+                    "token:'" + token + '\'' +
                     ", aucSt:'" + aucSt + '\'' +
                     '}';
         }
@@ -67,7 +92,7 @@ public class MyRequset {
         //我收藏
         public String myCollect() {
             return "{" +
-                    "userId:'" + userId + '\'' +
+                    "token:'" + token + '\'' +
                     '}';
         }
 
@@ -87,6 +112,53 @@ public class MyRequset {
                     '}';
         }
 
+        public String collect() {
+            return "{" +
+                    "token:'" + token + '\'' +
+                    ", goodsId:'" + goodsId + '\'' +
+                    '}';
+        }
+
+        public String goodsDetail() {
+            return "{" +
+                    "token:'" + token + '\'' +
+                    ", goodsId:'" + goodsId + '\'' +
+                    ", time:'" + time + '\'' +
+                    '}';
+        }
+
+        public String auc() {
+            return "{" +
+                    "token:'" + token + '\'' +
+                    ", goodsId:'" + goodsId + '\'' +
+                    ", aucTime:'" + aucTime + '\'' +
+                    '}';
+        }
+
+        //充值
+        public String recharge() {
+            return "{" +
+                    "token:'" + token + '\'' +
+                    ", type:'" + type + '\'' +
+                    ", price:'" + price + '\'' +
+                    '}';
+        }
+
+        //生成订单
+        public String makeOrder() {
+            return "{" +
+                    "orderId:'" + orderId + '\'' +
+                    ", type:'" + type + '\'' +
+                    '}';
+        }
+
+    }
+
+    public String noPatameter() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + "{}" +
+                '}';
     }
 
     @Override
@@ -113,6 +185,22 @@ public class MyRequset {
                 '}';
     }
 
+    //详情
+    public String goodsDetail() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.goodsDetail() +
+                '}';
+    }
+
+    //收藏或者取消收藏或者详情页
+    public String collect() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.collect() +
+                '}';
+    }
+
     //分类商品
     public String getGoodsById() {
         return "{" +
@@ -126,6 +214,30 @@ public class MyRequset {
         return "{" +
                 "urlMapping:'" + urlMapping + '\'' +
                 ", parameter:" + mParameter.getRecent() +
+                '}';
+    }
+
+    //竞拍
+    public String auc() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.auc() +
+                '}';
+    }
+
+    //充值
+    public String recharge() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.recharge() +
+                '}';
+    }
+
+    //生成订单
+    public String makeOrder() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.makeOrder() +
                 '}';
     }
 }

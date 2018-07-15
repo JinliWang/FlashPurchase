@@ -72,7 +72,7 @@ public class CenterMessageActivity extends BaseActivity {
             switch (position) {
                 case 0:
                     //首页
-                    return new HomeFragment();
+                    return new AuctionNoticeFragment();
                 case 1:
                     //最新动态
                     return new AuctionNoticeFragment();

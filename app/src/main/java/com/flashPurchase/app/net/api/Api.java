@@ -1,9 +1,14 @@
 package com.flashPurchase.app.net.api;
 
+import com.flashPurchase.app.model.CommonResponse;
+
 import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.Single;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
@@ -32,8 +37,8 @@ public interface Api {
 
 
     //登录
-//    @POST("/api/login/onLogin")
-//    Single<CommonResponse<UserInfo>> onLogin(@Query("data_package") String data_package);
+    @GET("/login")
+    Observable<String> onLogin();
 
 
 }

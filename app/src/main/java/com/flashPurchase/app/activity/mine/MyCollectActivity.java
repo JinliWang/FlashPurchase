@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.app.library.base.BaseActivity;
 import com.app.library.util.LogUtil;
+import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.adapter.HomeListAdapter;
 import com.flashPurchase.app.adapter.MyCollectAdapter;
@@ -18,6 +19,7 @@ import com.flashPurchase.app.model.request.MyRequset;
 import com.flashPurchase.app.view.RefreshLayout;
 import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
@@ -43,6 +45,7 @@ public class MyCollectActivity extends BaseActivity {
     private MyCollectAdapter mAdapter;
     private int pageIndex = 0;
     private RecommendMoreResponse mHomeBean;
+    private String mType;
 
     @Override
     protected int getLayoutId() {
@@ -52,6 +55,7 @@ public class MyCollectActivity extends BaseActivity {
     @Override
     protected void initView() {
         initTitle("我收藏的商品");
+        mType = extraDatas.getString("type");
         mAdapter = new MyCollectAdapter();
         GridLayoutManager gridLayoutManager =
                 new GridLayoutManager(this, 2);
@@ -67,7 +71,7 @@ public class MyCollectActivity extends BaseActivity {
                 case 0:
                     MyRequset more = new MyRequset();
                     MyRequset.Parameter parameter = new MyRequset.Parameter();
-                    parameter.setUserId("123456");
+                    parameter.setToken(SpManager.getToken());
                     more.setUrlMapping("collect-myCollect");
                     more.setParameter(parameter);
                     mWebSocketClient.send(more.myCollect());
@@ -90,7 +94,7 @@ public class MyCollectActivity extends BaseActivity {
     protected void initData(Bundle bundle) {
         super.initData(bundle);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=1"), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                 }

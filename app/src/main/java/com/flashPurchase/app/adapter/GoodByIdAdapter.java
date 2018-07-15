@@ -36,7 +36,7 @@ public class GoodByIdAdapter extends BaseAdapter<GoodClassification.ResponseBean
         return new Holder();
     }
 
-    class Holder extends BaseHolder<GoodClassification.ResponseBean.GoodsBean> {
+    class Holder extends BaseHolder<GoodClassification.ResponseBean.GoodsBean> implements View.OnClickListener {
 
         @BindView(R.id.iv_goods)
         ImageView mIvGoods;
@@ -60,6 +60,12 @@ public class GoodByIdAdapter extends BaseAdapter<GoodClassification.ResponseBean
             mTvAucNum.setText(getData().getAucNum());
             mTvGoodsPrice.setText(getData().getCurrentPrice());
             mTvGoodsName.setText(getData().getName());
+            mBtnPai.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            itemClickListener.itemClick(view, getPosition());
         }
     }
 }

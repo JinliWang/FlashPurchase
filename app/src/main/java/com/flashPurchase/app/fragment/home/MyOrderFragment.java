@@ -5,16 +5,19 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.library.base.BaseFragment;
+import com.app.library.base.BaseRecyclerAdapter;
 import com.app.library.util.LogUtil;
+import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
+import com.flashPurchase.app.adapter.MyFavoriteAdapter;
 import com.flashPurchase.app.adapter.RecommendAdapter;
+import com.flashPurchase.app.model.bean.MyOrder;
 import com.flashPurchase.app.model.bean.RecommendMoreResponse;
 import com.flashPurchase.app.model.request.MyRequset;
 import com.flashPurchase.app.view.RefreshLayout;
@@ -30,14 +33,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by 10951 on 2018/7/8.
  */
 
-public class MyOrderFragment extends BaseFragment {
+public class MyOrderFragment extends BaseFragment implements BaseRecyclerAdapter.OnItemClickListener {
     @BindView(R.id.list)
     RecyclerView mList;
     @BindView(R.id.refresh_layout)
@@ -48,9 +49,9 @@ public class MyOrderFragment extends BaseFragment {
     LinearLayout mLinNoData;
 
     private WebSocketClient mWebSocketClient;
-    private RecommendAdapter mAdapter;
+    private MyFavoriteAdapter mAdapter;
     private int pageIndex = 0;
-    private RecommendMoreResponse mHomeBean;
+    private MyOrder mHomeBean;
 
     @Override
     protected int getLayoutId() {
@@ -61,8 +62,9 @@ public class MyOrderFragment extends BaseFragment {
     protected void initView(View view) {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         mList.setLayoutManager(gridLayoutManager);
-        mAdapter = new RecommendAdapter();
+        mAdapter = new MyFavoriteAdapter();
         mList.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(this);
 
         mRefreshLayout.setEnableRefresh(false);
         mRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
@@ -85,7 +87,7 @@ public class MyOrderFragment extends BaseFragment {
                 case 0:
                     MyRequset more = new MyRequset();
                     MyRequset.Parameter parameter = new MyRequset.Parameter();
-                    parameter.setUserId("123456");
+                    parameter.setToken(SpManager.getToken());
                     parameter.setAucSt("1");
                     more.setUrlMapping("goods-myAucIng");
                     more.setParameter(parameter);
@@ -94,8 +96,8 @@ public class MyOrderFragment extends BaseFragment {
                 case 1:
                     mRefreshLayout.setVisibility(View.VISIBLE);
                     mLinNoData.setVisibility(View.GONE);
-                    mAdapter.setDataList(mHomeBean.getResponse().getGoods());
-                    mRefreshLayout.setData(mHomeBean.getResponse().getGoods());
+                    mAdapter.setDataList(mHomeBean.getResponse());
+                    mRefreshLayout.setData(mHomeBean.getResponse());
                     break;
                 case 2:
                     mRefreshLayout.setVisibility(View.GONE);
@@ -109,7 +111,7 @@ public class MyOrderFragment extends BaseFragment {
     protected void loadData(Bundle savedInstanceState) {
         super.loadData(savedInstanceState);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=123456"), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                 }
@@ -124,7 +126,7 @@ public class MyOrderFragment extends BaseFragment {
                         LogUtil.d(message);
                         try {
                             Gson gson = new Gson();
-                            mHomeBean = gson.fromJson(message, RecommendMoreResponse.class);
+                            mHomeBean = gson.fromJson(message, MyOrder.class);
                             Message msg = new Message();
                             msg.what = 1;
                             handler.sendMessage(msg);
@@ -150,5 +152,13 @@ public class MyOrderFragment extends BaseFragment {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void itemClick(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putString("goodsid", mHomeBean.getResponse().get(position).getGoodsId() + "");
+        bundle.putString("time", mHomeBean.getResponse().get(position).getTime() + "");
+        startActivity(GoodsDetailActivity.class, bundle);
     }
 }

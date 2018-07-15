@@ -4,16 +4,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.app.library.base.BaseActivity;
 import com.app.library.util.ToastUtil;
+import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.activity.MainActivity;
+import com.flashPurchase.app.event.LoginSuccessEvent;
+import com.flashPurchase.app.model.request.LoginReq;
 import com.flashPurchase.app.wxapi.WXEntryActivity;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 
@@ -38,6 +46,8 @@ public class LoginActivity extends BaseActivity {
     TextView mLoginWx;
     @BindView(R.id.login_qq)
     TextView mLoginQq;
+    @BindView(R.id.progress)
+    ProgressBar mProgressBar;
 
     @Override
     protected int getLayoutId() {
@@ -46,7 +56,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        initTitle("登录","注册");
+        initTitle("登录", "注册");
         mTvForgetPwd.setOnClickListener(this);
         mTvAgreement.setOnClickListener(this);
         mLoginWx.setOnClickListener(this);
@@ -70,6 +80,7 @@ public class LoginActivity extends BaseActivity {
                 startActivity(MainActivity.class);
                 break;
             case R.id.login_wx:
+                mProgressBar.setVisibility(View.VISIBLE);
                 IWXAPI mApi = WXAPIFactory.createWXAPI(this, WXEntryActivity.WEIXIN_APP_ID, true);
                 mApi.registerApp(WXEntryActivity.WEIXIN_APP_ID);
                 if (!mApi.isWXAppInstalled()) {
@@ -82,5 +93,10 @@ public class LoginActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

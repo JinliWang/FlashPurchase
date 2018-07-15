@@ -10,11 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.library.base.BaseFragment;
+import com.app.library.base.BaseRecyclerAdapter;
 import com.app.library.util.LogUtil;
+import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
 import com.flashPurchase.app.adapter.HomeListAdapter;
-import com.flashPurchase.app.adapter.RecommendAdapter;
-import com.flashPurchase.app.model.HomeList;
 import com.flashPurchase.app.model.bean.RecommendMoreResponse;
 import com.flashPurchase.app.model.request.MyRequset;
 import com.flashPurchase.app.view.RefreshLayout;
@@ -26,8 +27,6 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -35,7 +34,7 @@ import butterknife.BindView;
  * Created by 10951 on 2018/4/6.
  */
 
-public class MyFavoriteFragment extends BaseFragment {
+public class MyFavoriteFragment extends BaseFragment implements BaseRecyclerAdapter.OnItemClickListener {
     @BindView(R.id.list)
     RecyclerView mList;
     @BindView(R.id.refresh_layout)
@@ -62,6 +61,7 @@ public class MyFavoriteFragment extends BaseFragment {
                 new GridLayoutManager(getActivity(), 2);
         mList.setAdapter(mAdapter);
         mList.setLayoutManager(gridLayoutManager);
+        mAdapter.setOnItemClickListener(this);
         mRefreshLayout.setEnableRefresh(false);
     }
 
@@ -72,7 +72,7 @@ public class MyFavoriteFragment extends BaseFragment {
                 case 0:
                     MyRequset more = new MyRequset();
                     MyRequset.Parameter parameter = new MyRequset.Parameter();
-                    parameter.setUserId("123456");
+                    parameter.setToken(SpManager.getToken());
                     more.setUrlMapping("collect-myCollect");
                     more.setParameter(parameter);
                     mWebSocketClient.send(more.myCollect());
@@ -95,7 +95,7 @@ public class MyFavoriteFragment extends BaseFragment {
     protected void loadData(Bundle savedInstanceState) {
         super.loadData(savedInstanceState);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=123456"), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                 }
@@ -136,5 +136,13 @@ public class MyFavoriteFragment extends BaseFragment {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void itemClick(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putString("goodsid", mHomeBean.getResponse().getGoods().get(position).getId());
+        bundle.putString("time", mHomeBean.getResponse().getGoods().get(position).getTime());
+        startActivity(GoodsDetailActivity.class, bundle);
     }
 }

@@ -72,8 +72,8 @@ public class ApiManager {
                             Request request = chain.request();
                             Headers.Builder builder = request.headers().newBuilder();
 
-                            builder.add("h_token", SpManager.getUserName());
-                            builder.add("h_entid", SpManager.getEntId());
+//                            builder.add("h_token", SpManager.getUserName());
+//                            builder.add("h_entid", SpManager.getEntId());
                             Headers headers = builder.build();
 
                             request = request.newBuilder().headers(headers).build();

@@ -4,15 +4,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.app.library.base.BaseFragment;
 import com.app.library.util.LogUtil;
+import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
 import com.flashPurchase.app.adapter.DynamicAdapter;
-import com.flashPurchase.app.model.Dynamics;
-import com.flashPurchase.app.model.bean.GoodClassification;
 import com.flashPurchase.app.model.bean.RecentDeal;
 import com.flashPurchase.app.model.request.MyRequset;
 import com.flashPurchase.app.view.RefreshLayout;
@@ -27,8 +28,6 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,7 +36,7 @@ import butterknife.BindView;
  * Created by 10951 on 2018/4/9.
  */
 
-public class NewNitificaDynamicFragment extends BaseFragment {
+public class NewNitificaDynamicFragment extends BaseFragment implements AdapterView.OnItemClickListener {
     @BindView(R.id.iv_left)
     ImageView mIvLeft;
     @BindView(R.id.iv_right)
@@ -70,6 +69,7 @@ public class NewNitificaDynamicFragment extends BaseFragment {
         mList = new ArrayList<>();
         mAdapter = new DynamicAdapter(mList);
         mNitificateList.setAdapter(mAdapter);
+        mNitificateList.setOnItemClickListener(this);
         mRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
@@ -96,7 +96,7 @@ public class NewNitificaDynamicFragment extends BaseFragment {
     protected void loadData(Bundle savedInstanceState) {
         super.loadData(savedInstanceState);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=123456"), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
 
@@ -155,4 +155,12 @@ public class NewNitificaDynamicFragment extends BaseFragment {
             }
         }
     };
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Bundle bundle = new Bundle();
+        bundle.putString("goodsid", mRecentDeal.getResponse().getDealRecords().get(i).getGoodsId());
+        bundle.putString("time", mRecentDeal.getResponse().getDealRecords().get(i).getTime());
+        startActivity(GoodsDetailActivity.class, bundle);
+    }
 }

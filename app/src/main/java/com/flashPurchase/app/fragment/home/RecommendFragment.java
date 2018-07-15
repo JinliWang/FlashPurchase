@@ -8,8 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.app.library.base.BaseFragment;
+import com.app.library.base.BaseRecyclerAdapter;
 import com.app.library.util.LogUtil;
+import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
 import com.flashPurchase.app.adapter.RecommendAdapter;
 import com.flashPurchase.app.model.request.MyRequset;
 import com.flashPurchase.app.model.bean.RecommendMoreResponse;
@@ -31,7 +34,7 @@ import butterknife.BindView;
  * Created by 10951 on 2018/7/8.
  */
 
-public class RecommendFragment extends BaseFragment {
+public class RecommendFragment extends BaseFragment implements BaseRecyclerAdapter.OnItemClickListener {
     @BindView(R.id.list)
     RecyclerView mList;
     @BindView(R.id.refresh_layout)
@@ -54,6 +57,7 @@ public class RecommendFragment extends BaseFragment {
         mList.setLayoutManager(gridLayoutManager);
         mAdapter = new RecommendAdapter();
         mList.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(this);
 
         mRefreshLayout.setEnableRefresh(false);
         mRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
@@ -94,7 +98,7 @@ public class RecommendFragment extends BaseFragment {
     protected void loadData(Bundle savedInstanceState) {
         super.loadData(savedInstanceState);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=123456"), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                 }
@@ -129,5 +133,13 @@ public class RecommendFragment extends BaseFragment {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void itemClick(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putString("goodsid", mHomeBean.getResponse().getGoods().get(position).getId());
+        bundle.putString("time", mHomeBean.getResponse().getGoods().get(position).getTime());
+        startActivity(GoodsDetailActivity.class, bundle);
     }
 }

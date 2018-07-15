@@ -1,5 +1,8 @@
 package com.flashPurchase.app.activity;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,12 +11,29 @@ import android.widget.Toast;
 
 import com.app.library.base.BaseActivity;
 import com.app.library.util.ActivityManager;
+import com.app.library.util.LogUtil;
 import com.app.library.view.MyViewPager;
+import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.event.HomeEvent;
+import com.flashPurchase.app.event.HomeInfo;
 import com.flashPurchase.app.fragment.classification.GoodsClassificationFragment;
 import com.flashPurchase.app.fragment.home.HomeFragment;
 import com.flashPurchase.app.fragment.mine.MineCenterFragment;
 import com.flashPurchase.app.fragment.dynamic.NewNitificaDynamicFragment;
+import com.flashPurchase.app.model.bean.RecommendMoreResponse;
+import com.flashPurchase.app.model.request.MyRequset;
+import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft_17;
+import org.java_websocket.handshake.ServerHandshake;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import butterknife.BindView;
 
@@ -27,6 +47,8 @@ public class MainActivity extends BaseActivity {
 
     // 退出时间
     private long exitTime = 0;
+    private WebSocketClient mWebSocketClient;
+    private String mMessage;
 
     @Override
     protected int getLayoutId() {
@@ -35,6 +57,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        EventBus.getDefault().register(this);
         mVpTabContent.setAdapter(mAdapter);
         mVpTabContent.setCurrentItem(0);
         mVpTabContent.setScrollable(false);
@@ -134,4 +157,71 @@ public class MainActivity extends BaseActivity {
             return "";
         }
     };
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(HomeEvent event) {
+        mVpTabContent.setCurrentItem(2);
+        mRgContainer.check(R.id.rb_goods_type);
+    }
+
+    @Override
+    protected void initData(Bundle bundle) {
+        super.initData(bundle);
+        try {
+            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+                @Override
+                public void onOpen(ServerHandshake handshakedata) {
+                }
+
+                @Override
+                public void onMessage(String message) {
+                    LogUtil.d(message);
+                    if (!message.contains("response")) {
+                        Message msg = new Message();
+                        msg.what = 0;
+                        handler.sendMessage(msg);
+                    } else {
+                        HomeInfo info = new HomeInfo();
+                        info.setInfo(message);
+                        EventBus.getDefault().post(info);
+                    }
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+
+                }
+
+                @Override
+                public void onError(Exception ex) {
+
+                }
+            };
+            mWebSocketClient.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    MyRequset requset = new MyRequset();
+                    requset.setUrlMapping("goods-index");
+                    mWebSocketClient.send(requset.noPatameter());
+                    break;
+                case 1:
+
+                    break;
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

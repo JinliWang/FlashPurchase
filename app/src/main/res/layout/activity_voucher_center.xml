@@ -155,6 +155,7 @@
             <RelativeLayout
                 android:id="@+id/wx_pay_layout"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:background="@color/white">
 
