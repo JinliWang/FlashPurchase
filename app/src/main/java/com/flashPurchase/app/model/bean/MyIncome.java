@@ -11,7 +11,7 @@ public class MyIncome {
 
     /**
      * parameter : null
-     * response : {"payCoin":666,"income":[{"coinType":1,"amount":680,"pcType":2,"createTime":"2018-07-12 22:23:58","type":1,"userId":7},{"coinType":2,"amount":100,"pcType":2,"createTime":"2018-07-12 22:25:31","type":1,"userId":7}],"cost":[{"coinType":1,"amount":10,"pcType":3,"createTime":"2018-07-12 22:24:53","type":2,"userId":7}],"shopCoin":0,"freeCoin":92,"userId":7}
+     * response : {"payCoin":3,"income":[{"coinType":1,"amount":1,"pcType":2,"createTime":"2018-07-14 16:36:51","type":1,"userId":18},{"coinType":2,"amount":5,"pcType":2,"createTime":"2018-07-14 16:36:51","type":1,"userId":18},{"coinType":1,"amount":1,"pcType":2,"createTime":"2018-07-14 16:47:34","type":1,"userId":18},{"coinType":2,"amount":5,"pcType":2,"createTime":"2018-07-14 16:47:34","type":1,"userId":18},{"coinType":1,"amount":1,"pcType":2,"createTime":"2018-07-14 16:51:53","type":1,"userId":18},{"coinType":2,"amount":5,"pcType":2,"createTime":"2018-07-14 16:51:53","type":1,"userId":18},{"coinType":2,"amount":8,"pcType":2,"createTime":"2018-07-15 00:05:00","type":1,"userId":18},{"coinType":2,"amount":5,"pcType":2,"createTime":"2018-07-16 00:05:00","type":1,"userId":18}],"cost":[],"shopCoin":0,"freeCoin":10,"userId":18}
      * urlMapping : account-myAsset
      */
 
@@ -45,12 +45,12 @@ public class MyIncome {
 
     public static class ResponseBean {
         /**
-         * payCoin : 666
-         * income : [{"coinType":1,"amount":680,"pcType":2,"createTime":"2018-07-12 22:23:58","type":1,"userId":7},{"coinType":2,"amount":100,"pcType":2,"createTime":"2018-07-12 22:25:31","type":1,"userId":7}]
-         * cost : [{"coinType":1,"amount":10,"pcType":3,"createTime":"2018-07-12 22:24:53","type":2,"userId":7}]
+         * payCoin : 3
+         * income : [{"coinType":1,"amount":1,"pcType":2,"createTime":"2018-07-14 16:36:51","type":1,"userId":18},{"coinType":2,"amount":5,"pcType":2,"createTime":"2018-07-14 16:36:51","type":1,"userId":18},{"coinType":1,"amount":1,"pcType":2,"createTime":"2018-07-14 16:47:34","type":1,"userId":18},{"coinType":2,"amount":5,"pcType":2,"createTime":"2018-07-14 16:47:34","type":1,"userId":18},{"coinType":1,"amount":1,"pcType":2,"createTime":"2018-07-14 16:51:53","type":1,"userId":18},{"coinType":2,"amount":5,"pcType":2,"createTime":"2018-07-14 16:51:53","type":1,"userId":18},{"coinType":2,"amount":8,"pcType":2,"createTime":"2018-07-15 00:05:00","type":1,"userId":18},{"coinType":2,"amount":5,"pcType":2,"createTime":"2018-07-16 00:05:00","type":1,"userId":18}]
+         * cost : []
          * shopCoin : 0
-         * freeCoin : 92
-         * userId : 7
+         * freeCoin : 10
+         * userId : 18
          */
 
         private int payCoin;
@@ -111,11 +111,11 @@ public class MyIncome {
         public static class IncomeBean {
             /**
              * coinType : 1
-             * amount : 680
+             * amount : 1
              * pcType : 2
-             * createTime : 2018-07-12 22:23:58
+             * createTime : 2018-07-14 16:36:51
              * type : 1
-             * userId : 7
+             * userId : 18
              */
 
             private int coinType;
@@ -177,11 +177,11 @@ public class MyIncome {
         public static class CostBean {
             /**
              * coinType : 1
-             * amount : 10
-             * pcType : 3
-             * createTime : 2018-07-12 22:24:53
-             * type : 2
-             * userId : 7
+             * amount : 1
+             * pcType : 2
+             * createTime : 2018-07-14 16:36:51
+             * type : 1
+             * userId : 18
              */
 
             private int coinType;

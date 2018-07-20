@@ -7,9 +7,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.app.library.base.BaseActivity;
+import com.app.library.base.BaseRecyclerAdapter;
 import com.app.library.util.LogUtil;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
 import com.flashPurchase.app.adapter.RecommendMoreAdapter;
 import com.flashPurchase.app.model.request.MyRequset;
 import com.flashPurchase.app.model.bean.RecommendMoreResponse;
@@ -42,7 +44,7 @@ public class RecommendMoreActivity extends BaseActivity {
     private WebSocketClient mWebSocketClient;
     private RecommendMoreAdapter mAdapter;
     private List<RecommendMoreResponse.ResponseBean.GoodsBean> mList = new ArrayList<>();
-    private int pageIndex = 0;
+    private int pageIndex = 1;
     private boolean isLoadMore = false;
     private RecommendMoreResponse mHomeBean;
 
@@ -58,6 +60,15 @@ public class RecommendMoreActivity extends BaseActivity {
         mRecomendList.setLayoutManager(gridLayoutManager);
         mAdapter = new RecommendMoreAdapter();
         mRecomendList.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void itemClick(int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("goodsid", mHomeBean.getResponse().getGoods().get(position).getId());
+                bundle.putString("time", mHomeBean.getResponse().getGoods().get(position).getTime());
+                startActivity(GoodsDetailActivity.class, bundle);
+            }
+        });
 
         mRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
@@ -65,7 +76,7 @@ public class RecommendMoreActivity extends BaseActivity {
                 super.onRefresh(refreshLayout);
                 isLoadMore = false;
                 mAdapter.clearDatas();
-                pageIndex = 0;
+                pageIndex = 1;
                 Message msg = new Message();
                 msg.what = 0;
                 handler.sendMessage(msg);
@@ -99,10 +110,10 @@ public class RecommendMoreActivity extends BaseActivity {
                 case 1:
                     if (isLoadMore) {
                         mList.addAll(mHomeBean.getResponse().getGoods());
-                        mAdapter.setDataList(mList);
+                        mAdapter.addData(mList);
                         mRefreshLayout.setData(mList);
                     }else {
-                        mAdapter.setDataList(mHomeBean.getResponse().getGoods());
+                        mAdapter.addData(mHomeBean.getResponse().getGoods());
                         mRefreshLayout.setData(mHomeBean.getResponse().getGoods());
                     }
 //                    mPhoneListAdapter.addData(mHomeBean.getResponse().getPhoneGoods());

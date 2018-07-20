@@ -4,15 +4,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.library.base.BaseActivity;
 import com.app.library.util.LogUtil;
+import com.app.library.util.ToastUtil;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.activity.goods.FastRechargeActivity;
+import com.flashPurchase.app.model.bean.MySignInfo;
 import com.flashPurchase.app.model.bean.Order;
 import com.flashPurchase.app.model.bean.PayResult;
 import com.flashPurchase.app.model.bean.RechargeOrder;
@@ -41,6 +44,8 @@ public class SignActivity extends BaseActivity {
     TextView mTvDay;
 
     private WebSocketClient mWebSocketClient;
+    private MySignInfo mSignInfo;
+    private boolean isSign = false;
 
     @Override
     protected int getLayoutId() {
@@ -50,6 +55,24 @@ public class SignActivity extends BaseActivity {
     @Override
     protected void initView() {
         initTitle("连续签到有好礼");
+        mBtnSign.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        if (v.getId() == R.id.btn_sign) {
+            if (isSign) {
+                ToastUtil.show("已签到");
+            } else {
+                MyRequset requset = new MyRequset();
+                MyRequset.Parameter parameter = new MyRequset.Parameter();
+                parameter.setToken(SpManager.getToken());
+                requset.setParameter(parameter);
+                requset.setUrlMapping("sign-do");
+                mWebSocketClient.send(requset.myCollect());
+            }
+        }
     }
 
     @Override
@@ -66,17 +89,15 @@ public class SignActivity extends BaseActivity {
                     LogUtil.d(message);
                     if (!message.contains("response")) {
                         Message msg = new Message();
+                        msg.what = 0;
+                        mHandler.sendMessage(msg);
+                    } else if (message.contains("sign-get")) {//返回收藏状态，判断是否收藏
+                        Gson gson = new Gson();
+                        mSignInfo = gson.fromJson(message, MySignInfo.class);
+                        Message msg = new Message();
                         msg.what = 1;
                         mHandler.sendMessage(msg);
-                    } else if (message.contains("order-recharge")) {//返回收藏状态，判断是否收藏
-                        Gson gson = new Gson();
-//                        mRechargeOrder = gson.fromJson(message, RechargeOrder.class);
-                        Message msg = new Message();
-                        msg.what = 2;
-                        mHandler.sendMessage(msg);
-                    } else if (message.contains("pay-money")) {
-                        Gson gson = new Gson();
-//                        mOrder = gson.fromJson(message, Order.class);
+                    } else if (message.contains("sign-do")) {
                         Message msg = new Message();
                         msg.what = 3;
                         mHandler.sendMessage(msg);
@@ -101,22 +122,26 @@ public class SignActivity extends BaseActivity {
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
-                    MyRequset requset = new MyRequset();
-                    MyRequset.Parameter parameter = new MyRequset.Parameter();
+            MyRequset requset = new MyRequset();
+            MyRequset.Parameter parameter = new MyRequset.Parameter();
             switch (msg.what) {
                 case 0:
                     parameter.setToken(SpManager.getToken());
                     requset.setParameter(parameter);
                     requset.setUrlMapping("sign-get");
-                    mWebSocketClient.send(requset.makeOrder());
+                    mWebSocketClient.send(requset.myCollect());
                     break;
                 case 1:
+                    if (mSignInfo.getResponse().getTodaySign() == 1) {
+                        isSign = true;
+                    } else {
+                        isSign = false;
+                    }
+                    mTvDay.setText(mSignInfo.getResponse().getSignCount() + "");
                     break;
                 case 2:
-                    parameter.setType("2");
-                    requset.setParameter(parameter);
-                    requset.setUrlMapping("pay-money");
-                    mWebSocketClient.send(requset.makeOrder());
+                    ToastUtil.show("签到成功！");
+                    mTvDay.setText(mSignInfo.getResponse().getSignCount() + 1 + "");
                     break;
             }
         }

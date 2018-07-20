@@ -6,12 +6,16 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.app.library.base.BaseAdapter;
 import com.app.library.base.BaseFragment;
 import com.app.library.util.LogUtil;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
+import com.flashPurchase.app.activity.mine.ComfirmOrderActivity;
 import com.flashPurchase.app.adapter.MyAucAdapter;
 import com.flashPurchase.app.model.bean.MyAucList;
 import com.flashPurchase.app.model.bean.RecommendMoreResponse;
@@ -45,18 +49,9 @@ public class MyAuctionFragment extends BaseFragment {
     private MyAucList mMyAucList;
     private MyAucAdapter mMyAucAdapter;
     private List<MyAucList.ResponseBean> mList;
+    private String mMessage;
 
     private WebSocketClient mWebSocketClient;
-
-    public static MyAuctionFragment getInstance(String type) {
-        MyAuctionFragment pane = new MyAuctionFragment();
-        Bundle args = new Bundle();
-        args.putString("type", type);
-        pane.setArguments(args);
-        return pane;
-    }
-
-    private String mAucSt;
 
     @Override
     protected int getLayoutId() {
@@ -65,11 +60,18 @@ public class MyAuctionFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        Bundle bundle = getArguments();
-        mAucSt = bundle.getString("type");
         mList = new ArrayList<>();
         mMyAucAdapter = new MyAucAdapter(mList);
         mMyAuctionList.setAdapter(mMyAucAdapter);
+        mMyAuctionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle bundle = new Bundle();
+                bundle.putString("goodsid", mList.get(i).getGoodsId() + "");
+                bundle.putString("time", mList.get(i).getTime() + "");
+                startActivity(GoodsDetailActivity.class, bundle);
+            }
+        });
     }
 
     @Override
@@ -91,6 +93,7 @@ public class MyAuctionFragment extends BaseFragment {
                     } else {
                         LogUtil.d(message);
                         try {
+                            mMessage = message;
                             Gson gson = new Gson();
                             mMyAucList = gson.fromJson(message, MyAucList.class);
                             Message msg = new Message();
@@ -128,13 +131,13 @@ public class MyAuctionFragment extends BaseFragment {
                     MyRequset more = new MyRequset();
                     MyRequset.Parameter parameter = new MyRequset.Parameter();
                     parameter.setToken(SpManager.getToken());
-                    parameter.setAucSt(mAucSt);
+                    parameter.setAucSt("1");
                     more.setUrlMapping("goods-myAucIng");
                     more.setParameter(parameter);
                     mWebSocketClient.send(more.myOrder());
                     break;
                 case 1:
-                   mMyAucAdapter.addData(mMyAucList.getResponse());
+                    mMyAucAdapter.addData(mMyAucList.getResponse());
                     mRefreshLayout.setVisibility(View.VISIBLE);
 //                    mRefreshLayout.setData(mHomeBean.getResponse().getGoods());
                     break;

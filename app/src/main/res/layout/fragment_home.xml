@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             android:layout_marginRight="@dimen/margin_10"
             android:src="@drawable/icon_message" />
 
@@ -51,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/main_color"
                 android:orientation="vertical"
-                app:layout_scrollFlags="scroll|snap">
+                app:layout_scrollFlags="scroll">
 
                 <com.github.wanglu1209.bannerlibrary.Banner
                     android:id="@+id/banner"

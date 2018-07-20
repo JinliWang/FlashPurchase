@@ -52,6 +52,25 @@ MobSDK {
     appKey "26bc49ae51064"
     appSecret "6cedb9634a8c003587e27759dad017a3"
     SMSSDK {}
+    ShareSDK {
+        devInfo {
+            Wechat {
+                appId "wxc1bcb659fb67c7df"
+                appSecret "0fe8e5bcf010a156a877f43a7c9d2b01"
+                userName "gh_afb25ac019c9"
+                path "pages/index/index.html?id=1"
+                withShareTicket true
+                miniprogramType 2
+                bypassApproval false
+            }
+//            QQ {
+//                appId "100371282"
+//                appKey "aed9b0303e3ed1e27bae87c33761161d"
+//                shareByAppClient true
+//                bypassApproval false
+//            }
+        }
+    }
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')

@@ -29,7 +29,7 @@ public class MyAucAdapter extends BaseAdapter<MyAucList.ResponseBean> {
         return new Holder();
     }
 
-    class Holder extends BaseHolder<MyAucList.ResponseBean> {
+    class Holder extends BaseHolder<MyAucList.ResponseBean> implements View.OnClickListener {
 
         @BindView(R.id.tv_title)
         TextView mTvTitle;
@@ -43,6 +43,12 @@ public class MyAucAdapter extends BaseAdapter<MyAucList.ResponseBean> {
         TextView mTvPaimaiPrice;
         @BindView(R.id.tv_auc_time)
         TextView mTvAucTime;
+        @BindView(R.id.tv_pai)
+        TextView mTvPai;
+        @BindView(R.id.tv_cancel)
+        TextView mTvCancel;
+        @BindView(R.id.tv_wuliu)
+        TextView mTvWuliu;
 
         @Override
         protected View initView() {
@@ -51,10 +57,21 @@ public class MyAucAdapter extends BaseAdapter<MyAucList.ResponseBean> {
 
         @Override
         protected void refreshView() {
+            mTvTitle.setText(getData().getDate());
             mTvMarketPrice.setText("市场价：￥" + getData().getMarketPrice());
             mTvPaimaiPrice.setText("￥" + getData().getCurrentPrice());
             mTvAucTime.setText("我出价：" + getData().getAucTime() + "次");
             ImageLoadManager.getInstance().setImage(getContext(), getData().getPics(), mIvPhoto);
+
+//            if (getData().getStatus().equals("auctoback")) {
+//                mTvPai.setText("差价购买");
+//                mTvPai.setOnClickListener(this);
+//            }
+        }
+
+        @Override
+        public void onClick(View view) {
+            itemClickListener.itemClick(view, getPosition());
         }
     }
 }

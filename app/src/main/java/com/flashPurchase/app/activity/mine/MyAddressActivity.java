@@ -14,6 +14,7 @@ import com.app.library.util.LogUtil;
 import com.app.library.util.ToastUtil;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.event.EditAddressEvent;
 import com.flashPurchase.app.model.bean.MyAddress;
 import com.flashPurchase.app.model.request.Address;
 import com.flashPurchase.app.model.request.MyRequset;
@@ -26,6 +27,7 @@ import com.lljjcoder.citywheel.CityConfig;
 import com.lljjcoder.style.citylist.Toast.ToastUtils;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
@@ -303,6 +305,7 @@ public class MyAddressActivity extends BaseActivity {
                     break;
                 case 1:
                     mResponseBean = mMyAddress.getResponse();
+                    SpManager.setMyAddress(mMyAddress);
                     if (mResponseBean != null) {
                         initTitle("地址信息", "编辑");
                         mId = mResponseBean.getId();
@@ -331,6 +334,7 @@ public class MyAddressActivity extends BaseActivity {
                         mEtRemark.setVisibility(View.GONE);
                         mTvRemark.setVisibility(View.VISIBLE);
                         mTvRemark.setText(mResponseBean.getRemark());
+                        EventBus.getDefault().post(new EditAddressEvent());
                     } else {
                         initTitle("地址信息", "保存");
                     }
@@ -338,4 +342,10 @@ public class MyAddressActivity extends BaseActivity {
             }
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mWebSocketClient.close();
+    }
 }

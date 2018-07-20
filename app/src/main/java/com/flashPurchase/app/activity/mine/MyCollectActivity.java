@@ -14,12 +14,15 @@ import com.flashPurchase.app.R;
 import com.flashPurchase.app.adapter.HomeListAdapter;
 import com.flashPurchase.app.adapter.MyCollectAdapter;
 import com.flashPurchase.app.adapter.RecommendMoreAdapter;
+import com.flashPurchase.app.event.RefreshGoodsEvent;
 import com.flashPurchase.app.model.bean.RecommendMoreResponse;
 import com.flashPurchase.app.model.request.MyRequset;
 import com.flashPurchase.app.view.RefreshLayout;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
@@ -43,7 +46,7 @@ public class MyCollectActivity extends BaseActivity {
 
     private WebSocketClient mWebSocketClient;
     private MyCollectAdapter mAdapter;
-    private int pageIndex = 0;
+    private int pageIndex = 1;
     private RecommendMoreResponse mHomeBean;
     private String mType;
 
@@ -54,6 +57,7 @@ public class MyCollectActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        EventBus.getDefault().register(this);
         initTitle("我收藏的商品");
         mType = extraDatas.getString("type");
         mAdapter = new MyCollectAdapter();
@@ -135,5 +139,18 @@ public class MyCollectActivity extends BaseActivity {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshGoodsEvent event) {
+        Message msg = new Message();
+        msg.what = 0;
+        handler.sendMessage(msg);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

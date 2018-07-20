@@ -1,5 +1,7 @@
 package com.flashPurchase.app.Constant;
 
+import com.flashPurchase.app.model.bean.Login;
+import com.flashPurchase.app.model.bean.MyAddress;
 import com.flashPurchase.app.model.bean.MyInfo;
 import com.flashPurchase.app.model.bean.UserInfo;
 import com.google.gson.Gson;
@@ -52,6 +54,22 @@ public class SpManager {
 
     public static void saveHost(String b) {
         SpUtil.put("host", b);
+    }
+
+    public static String getMark() {
+        return SpUtil.getString("mark",  "");
+    }
+
+    public static void setMark(String b) {
+        SpUtil.put("mark", b);
+    }
+
+    public static String getRegisterTime() {
+        return SpUtil.getString("registerTime",  "");
+    }
+
+    public static void setRegisterTime(String b) {
+        SpUtil.put("registerTime", b);
     }
 
     //保存用户token
@@ -194,16 +212,16 @@ public class SpManager {
     }
 
 //    //保存用户信息
-    public static void setUserInfo(UserInfo user) {
+    public static void setUserInfo(Login user) {
         SpUtil.put("userInfo", new Gson().toJson(user));
     }
 
-    public static UserInfo getUserInfo() {
+    public static Login getUserInfo() {
         try {
-            UserInfo user = new Gson().fromJson(SpUtil.getString("userInfo", ""), UserInfo.class);
-            return user == null ? new UserInfo() : user;
+            Login user = new Gson().fromJson(SpUtil.getString("userInfo", ""), Login.class);
+            return user == null ? new Login() : user;
         } catch (Exception e) {
-            return new UserInfo();
+            return new Login();
         }
     }
 
@@ -218,6 +236,20 @@ public class SpManager {
             return user == null ? new MyInfo() : user;
         } catch (Exception e) {
             return new MyInfo();
+        }
+    }
+
+    //    //保存用户信息
+    public static void setMyAddress(MyAddress user) {
+        SpUtil.put("address", new Gson().toJson(user));
+    }
+
+    public static MyAddress getMyAddress() {
+        try {
+            MyAddress address = new Gson().fromJson(SpUtil.getString("address", ""), MyAddress.class);
+            return address == null ? new MyAddress() : address;
+        } catch (Exception e) {
+            return new MyAddress();
         }
     }
 

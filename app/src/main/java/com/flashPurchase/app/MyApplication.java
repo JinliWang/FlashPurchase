@@ -2,8 +2,11 @@ package com.flashPurchase.app;
 
 import com.app.library.Constant;
 import com.mob.MobSDK;
+import com.mob.commons.SHARESDK;
 
 import java.io.File;
+
+import cn.sharesdk.framework.ShareSDK;
 
 /**
  * Created by Administrator on 2017/9/21 0021.

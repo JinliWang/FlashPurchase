@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.TextView;
 
 import com.app.library.base.BaseActivity;
 import com.flashPurchase.app.R;
@@ -19,6 +21,8 @@ import butterknife.ButterKnife;
  */
 
 public class DealHistoryActivity extends BaseActivity {
+    @BindView(R.id.tv_right)
+    TextView mTvRight;
     @BindView(R.id.tab_title)
     TabLayout mTabTitle;
     @BindView(R.id.vp_content)
@@ -31,9 +35,17 @@ public class DealHistoryActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        initTitle("历史交易明细","最新明细");
         mVpContent.setAdapter(new ProcessCheckAdapter(getSupportFragmentManager()));
-        mVpContent.setOffscreenPageLimit(4);
+        mVpContent.setOffscreenPageLimit(2);
         mTabTitle.setupWithViewPager(mVpContent);
+        mTvRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
     private static class ProcessCheckAdapter extends FragmentPagerAdapter {
 

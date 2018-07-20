@@ -52,7 +52,7 @@ public class MyGwb {
 
         private int totalCoin;
         private int userId;
-        private List<JaUseBean> jaExpire;
+        private List<JaExpireBean> jaExpire;
         private List<JaUseBean> jaUse;
 
         public int getTotalCoin() {
@@ -71,11 +71,11 @@ public class MyGwb {
             this.userId = userId;
         }
 
-        public List<JaUseBean> getJaExpire() {
+        public List<JaExpireBean> getJaExpire() {
             return jaExpire;
         }
 
-        public void setJaExpire(List<JaUseBean> jaExpire) {
+        public void setJaExpire(List<JaExpireBean> jaExpire) {
             this.jaExpire = jaExpire;
         }
 
@@ -102,9 +102,95 @@ public class MyGwb {
             private int goodsId;
             private String name;
             private int id;
+            private String createTime;
             private int userId;
             private String pics;
             private int status;
+
+            public String getCreateTime() {
+                return createTime;
+            }
+
+            public int getShopCoin() {
+                return shopCoin;
+            }
+
+            public void setShopCoin(int shopCoin) {
+                this.shopCoin = shopCoin;
+            }
+
+            public int getGoodsId() {
+                return goodsId;
+            }
+
+            public void setGoodsId(int goodsId) {
+                this.goodsId = goodsId;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public int getUserId() {
+                return userId;
+            }
+
+            public void setUserId(int userId) {
+                this.userId = userId;
+            }
+
+            public String getPics() {
+                return pics;
+            }
+
+            public void setPics(String pics) {
+                this.pics = pics;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
+            }
+        }
+
+        public static class JaExpireBean {
+            /**
+             * shopCoin : 120
+             * goodsId : 1
+             * name : 和田玉
+             * id : 1
+             * userId : 1
+             * pics : http://p65n22l5d.bkt.clouddn.com/59798154-8d16-4246-b86b-f84a4966419c.jpg
+             * status : 1
+             */
+
+            private int shopCoin;
+            private int goodsId;
+            private String name;
+            private int id;
+            private int userId;
+            private String pics;
+            private String createTime;
+            private int status;
+
+            public String getCreateTime() {
+                return createTime;
+            }
 
             public int getShopCoin() {
                 return shopCoin;

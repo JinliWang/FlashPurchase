@@ -14,6 +14,7 @@ import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
 import com.flashPurchase.app.adapter.DynamicAdapter;
+import com.flashPurchase.app.event.RefreshGoodsEvent;
 import com.flashPurchase.app.model.bean.RecentDeal;
 import com.flashPurchase.app.model.request.MyRequset;
 import com.flashPurchase.app.view.RefreshLayout;
@@ -21,6 +22,9 @@ import com.google.gson.Gson;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
@@ -50,7 +54,7 @@ public class NewNitificaDynamicFragment extends BaseFragment implements AdapterV
     private List<RecentDeal.ResponseBean.DealRecordsBean> mList;
 
     private WebSocketClient mWebSocketClient;
-    private int pageIndex = 0;
+    private int pageIndex = 1;
     private RecentDeal mRecentDeal;
 
     @Override
@@ -60,11 +64,9 @@ public class NewNitificaDynamicFragment extends BaseFragment implements AdapterV
 
     @Override
     protected void initView(View view) {
+        EventBus.getDefault().register(this);
         initTitle("最新动态");
         mIvLeft.setVisibility(View.GONE);
-        mIvRight.setVisibility(View.VISIBLE);
-        mIvRight.setImageDrawable(getContext().getResources().getDrawable(R.drawable.icon_message));
-
 
         mList = new ArrayList<>();
         mAdapter = new DynamicAdapter(mList);
@@ -74,7 +76,7 @@ public class NewNitificaDynamicFragment extends BaseFragment implements AdapterV
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
-                pageIndex = 0;
+                pageIndex = 1;
                 mAdapter.clearData();
                 Message msg = new Message();
                 msg.what = 0;
@@ -162,5 +164,20 @@ public class NewNitificaDynamicFragment extends BaseFragment implements AdapterV
         bundle.putString("goodsid", mRecentDeal.getResponse().getDealRecords().get(i).getGoodsId());
         bundle.putString("time", mRecentDeal.getResponse().getDealRecords().get(i).getTime());
         startActivity(GoodsDetailActivity.class, bundle);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshGoodsEvent event) {
+        if (mWebSocketClient != null) {
+            Message msg = new Message();
+            msg.what = 0;
+            handler.sendMessage(msg);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

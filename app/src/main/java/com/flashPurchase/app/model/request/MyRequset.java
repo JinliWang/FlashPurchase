@@ -28,6 +28,46 @@ public class MyRequset {
         private String type;
         private String price;
         private String orderId;
+        private String point;
+        private String isNext;
+        private String remark;
+        private String addressId;
+        private String shopCoin;
+        private String pics;
+        private String comments;
+        private String nickname;
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
+
+        public void setPics(String pics) {
+            this.pics = pics;
+        }
+
+        public void setComments(String comments) {
+            this.comments = comments;
+        }
+
+        public void setShopCoin(String shopCoin) {
+            this.shopCoin = shopCoin;
+        }
+
+        public void setAddressId(String addressId) {
+            this.addressId = addressId;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
+
+        public void setIsNext(String isNext) {
+            this.isNext = isNext;
+        }
+
+        public void setPoint(String point) {
+            this.point = point;
+        }
 
         public void setType(String type) {
             this.type = type;
@@ -38,7 +78,7 @@ public class MyRequset {
         }
 
         public void setTime(String time) {
-            time = time;
+            this.time = time;
         }
 
         public void setAucTime(String aucTime) {
@@ -89,10 +129,26 @@ public class MyRequset {
                     '}';
         }
 
+        //积分兑换
+        public String pointForCoin() {
+            return "{" +
+                    "token:'" + token + '\'' +
+                    ", point:'" + point + '\'' +
+                    '}';
+        }
+
         //我收藏
         public String myCollect() {
             return "{" +
                     "token:'" + token + '\'' +
+                    '}';
+        }
+
+        //我收藏
+        public String update() {
+            return "{" +
+                    "token:'" + token + '\'' +
+                    ", nickname:'" + nickname + '\'' +
                     '}';
         }
 
@@ -101,6 +157,14 @@ public class MyRequset {
                     "pageNum:'" + pageNum + '\'' +
                     ", pageSize:'" + pageSize + '\'' +
                     ", categoryId:'" + categoryId + '\'' +
+                    '}';
+        }
+
+        public String getTen() {
+            return "{" +
+                    "pageNum:'" + pageNum + '\'' +
+                    ", pageSize:'" + pageSize + '\'' +
+                    ", token:'" + token + '\'' +
                     '}';
         }
 
@@ -124,6 +188,7 @@ public class MyRequset {
                     "token:'" + token + '\'' +
                     ", goodsId:'" + goodsId + '\'' +
                     ", time:'" + time + '\'' +
+                    ", isNext:'" + isNext + '\'' +
                     '}';
         }
 
@@ -149,6 +214,36 @@ public class MyRequset {
             return "{" +
                     "orderId:'" + orderId + '\'' +
                     ", type:'" + type + '\'' +
+                    '}';
+        }
+
+        //物流
+        public String wuliu() {
+            return "{" +
+                    "orderId:'" + orderId + '\'' +
+                    '}';
+        }
+
+        //新增订单
+        public String addOrder() {
+            return "{" +
+                    "token:'" + token + '\'' +
+                    ", goodsId:'" + goodsId + '\'' +
+                    ", time:'" + time + '\'' +
+                    ", addressId:'" + addressId + '\'' +
+                    ", remark:'" + remark + '\'' +
+                    ", type:'" + type + '\'' +
+                    ", shopCoin:'" + shopCoin + '\'' +
+                    '}';
+        }
+
+        //新增订单
+        public String addBask() {
+            return "{" +
+                    "token:'" + token + '\'' +
+                    ", goodsId:'" + goodsId + '\'' +
+                    ", pics:'" + pics + '\'' +
+                    ", comments:'" + comments + '\'' +
                     '}';
         }
 
@@ -238,6 +333,54 @@ public class MyRequset {
         return "{" +
                 "urlMapping:'" + urlMapping + '\'' +
                 ", parameter:" + mParameter.makeOrder() +
+                '}';
+    }
+
+    //积分兑换
+    public String pointForCoin() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.pointForCoin() +
+                '}';
+    }
+
+    //物流
+    public String wuliu() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.wuliu() +
+                '}';
+    }
+
+    //新增订单
+    public String addOrder() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.addOrder() +
+                '}';
+    }
+
+    //限时秒
+    public String getTen() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.getTen() +
+                '}';
+    }
+
+    //晒单
+    public String addBask() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.addBask() +
+                '}';
+    }
+
+    //晒单
+    public String update() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.update() +
                 '}';
     }
 }

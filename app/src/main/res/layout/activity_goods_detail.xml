@@ -40,8 +40,8 @@
                     android:id="@+id/iv_no_select"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="5dp"
                     android:src="@drawable/icon_collect_no_select" />
@@ -63,8 +63,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="5dp"
-                    android:minEms="3"
                     android:gravity="center"
+                    android:minEms="3"
                     android:text="收藏"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
@@ -76,37 +76,13 @@
                 android:layout_height="match_parent" />
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.5">
-
-                <com.octopus.amountview.AmountView
-                    android:id="@+id/amount_view"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    app:maxValue="1000"
-                    app:textSize="7sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:text="次"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/lin_chujia"
+                android:id="@+id/lin_next"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:clickable="true"
+                android:visibility="gone"
                 android:background="@drawable/ripple"
+                android:clickable="true"
                 android:orientation="vertical">
 
                 <TextView
@@ -114,20 +90,73 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-                    android:text="出价"
+                    android:text="前往下期"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="1拍币/次"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_content_second" />
-
             </LinearLayout>
 
+
+            <LinearLayout
+                android:id="@+id/lin_now"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5">
+
+                    <com.octopus.amountview.AmountView
+                        android:id="@+id/amount_view"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        app:maxValue="1000"
+                        app:textSize="7sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:text="次"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lin_chujia"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/ripple"
+                    android:clickable="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:text="出价"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_paibi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="1拍币/次"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_content_second" />
+
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
     </RelativeLayout>

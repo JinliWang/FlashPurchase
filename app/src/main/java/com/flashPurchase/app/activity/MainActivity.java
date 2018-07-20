@@ -19,10 +19,12 @@ import com.flashPurchase.app.event.HomeEvent;
 import com.flashPurchase.app.event.HomeInfo;
 import com.flashPurchase.app.fragment.classification.GoodsClassificationFragment;
 import com.flashPurchase.app.fragment.home.HomeFragment;
+import com.flashPurchase.app.fragment.home.HomeFragment2;
 import com.flashPurchase.app.fragment.mine.MineCenterFragment;
 import com.flashPurchase.app.fragment.dynamic.NewNitificaDynamicFragment;
 import com.flashPurchase.app.model.bean.RecommendMoreResponse;
 import com.flashPurchase.app.model.request.MyRequset;
+import com.flashPurchase.app.util.IOnFocusListenable;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,6 +51,7 @@ public class MainActivity extends BaseActivity {
     private long exitTime = 0;
     private WebSocketClient mWebSocketClient;
     private String mMessage;
+    HomeFragment2 homeFragment2 = new HomeFragment2();
 
     @Override
     protected int getLayoutId() {
@@ -117,7 +120,7 @@ public class MainActivity extends BaseActivity {
             switch (position) {
                 case 0:
                     //首页
-                    return new HomeFragment();
+                    return homeFragment2;
                 case 1:
                     //最新动态
                     return new NewNitificaDynamicFragment();
@@ -164,64 +167,73 @@ public class MainActivity extends BaseActivity {
         mRgContainer.check(R.id.rb_goods_type);
     }
 
-    @Override
-    protected void initData(Bundle bundle) {
-        super.initData(bundle);
-        try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
-                @Override
-                public void onOpen(ServerHandshake handshakedata) {
-                }
-
-                @Override
-                public void onMessage(String message) {
-                    LogUtil.d(message);
-                    if (!message.contains("response")) {
-                        Message msg = new Message();
-                        msg.what = 0;
-                        handler.sendMessage(msg);
-                    } else {
-                        HomeInfo info = new HomeInfo();
-                        info.setInfo(message);
-                        EventBus.getDefault().post(info);
-                    }
-                }
-
-                @Override
-                public void onClose(int code, String reason, boolean remote) {
-
-                }
-
-                @Override
-                public void onError(Exception ex) {
-
-                }
-            };
-            mWebSocketClient.connect();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
-                    MyRequset requset = new MyRequset();
-                    requset.setUrlMapping("goods-index");
-                    mWebSocketClient.send(requset.noPatameter());
-                    break;
-                case 1:
-
-                    break;
-            }
-        }
-    };
+//    @Override
+//    protected void initData(Bundle bundle) {
+//        super.initData(bundle);
+//        try {
+//            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+//                @Override
+//                public void onOpen(ServerHandshake handshakedata) {
+//                }
+//
+//                @Override
+//                public void onMessage(String message) {
+//                    LogUtil.d(message);
+//                    if (!message.contains("response")) {
+//                        Message msg = new Message();
+//                        msg.what = 0;
+//                        handler.sendMessage(msg);
+//                    } else {
+//                        HomeInfo info = new HomeInfo();
+//                        info.setInfo(message);
+//                        EventBus.getDefault().post(info);
+//                    }
+//                }
+//
+//                @Override
+//                public void onClose(int code, String reason, boolean remote) {
+//
+//                }
+//
+//                @Override
+//                public void onError(Exception ex) {
+//
+//                }
+//            };
+//            mWebSocketClient.connect();
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    private Handler handler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case 0:
+//                    MyRequset requset = new MyRequset();
+//                    requset.setUrlMapping("goods-index");
+//                    mWebSocketClient.send(requset.noPatameter());
+//                    break;
+//                case 1:
+//
+//                    break;
+//            }
+//        }
+//    };
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if(homeFragment2 instanceof IOnFocusListenable) {
+            ((IOnFocusListenable) homeFragment2).onWindowFocusChanged(hasFocus);
+        }
     }
 }

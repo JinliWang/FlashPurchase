@@ -19,6 +19,7 @@ import com.app.library.util.LogUtil;
 import com.app.library.util.ToastUtil;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.event.AucSuccessEvent;
 import com.flashPurchase.app.model.bean.Order;
 import com.flashPurchase.app.model.bean.PayResult;
 import com.flashPurchase.app.model.bean.RechargeOrder;
@@ -27,6 +28,7 @@ import com.google.gson.Gson;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 
+import org.greenrobot.eventbus.EventBus;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
@@ -75,6 +77,7 @@ public class FastRechargeActivity extends BaseActivity {
     private RechargeOrder mRechargeOrder;
     private Order mOrder;
     private IWXAPI api;
+    private String mType;
 
     @Override
     protected int getLayoutId() {
@@ -84,6 +87,7 @@ public class FastRechargeActivity extends BaseActivity {
     @Override
     protected void initView() {
         initTitle("支付订单");
+        mType = extraDatas.getString("type");
         mMoney = extraDatas.getString("money");
         mTvPai.setText("￥" + mMoney);
         mTvPaiAll.setText("￥" + mMoney);
@@ -248,8 +252,18 @@ public class FastRechargeActivity extends BaseActivity {
                         Alipay(mOrder);
                     }
                     break;
+                case 4:
+                    String m = (String) msg.obj;
+                    if(m.contains("恭喜你获得拍品")) {
+                        EventBus.getDefault().post(new AucSuccessEvent());
+                    }
             }
         }
     };
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mWebSocketClient.close();
+    }
 }

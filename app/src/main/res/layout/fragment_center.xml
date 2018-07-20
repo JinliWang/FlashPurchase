@@ -35,13 +35,13 @@
                         android:id="@+id/iv_maine_setup"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:layout_marginRight="20dp"
                         android:src="@drawable/icon_setting" />
 
                     <ImageView
                         android:id="@+id/iv_maine_msg"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
+                        android:visibility="gone"
                         android:src="@drawable/icon_message" />
                 </LinearLayout>
 
@@ -435,6 +435,7 @@
                 android:id="@+id/rel_my_order"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:visibility="gone"
                 android:background="@color/colorSixF">
 
                 <ImageView

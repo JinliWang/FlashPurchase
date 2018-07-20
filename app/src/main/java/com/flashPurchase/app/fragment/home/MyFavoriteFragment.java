@@ -16,11 +16,15 @@ import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
 import com.flashPurchase.app.adapter.HomeListAdapter;
+import com.flashPurchase.app.event.RefreshGoodsEvent;
 import com.flashPurchase.app.model.bean.RecommendMoreResponse;
 import com.flashPurchase.app.model.request.MyRequset;
 import com.flashPurchase.app.view.RefreshLayout;
 import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
@@ -46,7 +50,7 @@ public class MyFavoriteFragment extends BaseFragment implements BaseRecyclerAdap
 
     private WebSocketClient mWebSocketClient;
     private HomeListAdapter mAdapter;
-    private int pageIndex = 0;
+    private int pageIndex = 1;
     private RecommendMoreResponse mHomeBean;
 
     @Override
@@ -56,6 +60,7 @@ public class MyFavoriteFragment extends BaseFragment implements BaseRecyclerAdap
 
     @Override
     protected void initView(View view) {
+        EventBus.getDefault().register(this);
         mAdapter = new HomeListAdapter();
         GridLayoutManager gridLayoutManager =
                 new GridLayoutManager(getActivity(), 2);
@@ -144,5 +149,18 @@ public class MyFavoriteFragment extends BaseFragment implements BaseRecyclerAdap
         bundle.putString("goodsid", mHomeBean.getResponse().getGoods().get(position).getId());
         bundle.putString("time", mHomeBean.getResponse().getGoods().get(position).getTime());
         startActivity(GoodsDetailActivity.class, bundle);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshGoodsEvent event) {
+        Message msg = new Message();
+        msg.what = 0;
+        handler.sendMessage(msg);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

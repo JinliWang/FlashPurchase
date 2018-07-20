@@ -30,6 +30,7 @@ import com.flashPurchase.app.adapter.PhoneListAdapter;
 import com.flashPurchase.app.adapter.RecomendListAdapter;
 import com.flashPurchase.app.event.HomeEvent;
 import com.flashPurchase.app.event.HomeInfo;
+import com.flashPurchase.app.event.RefreshGoodsEvent;
 import com.flashPurchase.app.model.HomeBanner;
 import com.flashPurchase.app.model.bean.HomeBean;
 import com.flashPurchase.app.model.bean.RecommendMoreResponse;
@@ -100,7 +101,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_home2;
     }
 
     @Override
@@ -318,6 +319,13 @@ public class HomeFragment extends BaseFragment {
         mAdapter.setDataList(mHomeBean.getResponse().getPreferGoods());
         mPhoneListAdapter.addData(mHomeBean.getResponse().getPhoneGoods());
         mComputerListAdapter.addData(mHomeBean.getResponse().getComputerGoods());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshGoodsEvent event) {
+        Message msg = new Message();
+        msg.what = 0;
+        handler.sendMessage(msg);
     }
 
     @Override

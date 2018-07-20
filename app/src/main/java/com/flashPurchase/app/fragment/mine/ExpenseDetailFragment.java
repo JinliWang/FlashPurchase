@@ -3,14 +3,21 @@ package com.flashPurchase.app.fragment.mine;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.app.library.base.BaseFragment;
 import com.app.library.util.LogUtil;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.adapter.DealDetailAdapter;
+import com.flashPurchase.app.adapter.DealDetailCostAdapter;
 import com.flashPurchase.app.model.bean.MyIncome;
 import com.flashPurchase.app.model.request.MyRequset;
+import com.flashPurchase.app.view.RefreshLayout;
 import com.google.gson.Gson;
 
 import org.java_websocket.client.WebSocketClient;
@@ -19,6 +26,12 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by 10951 on 2018/7/2.
@@ -26,8 +39,19 @@ import java.net.URISyntaxException;
 
 public class ExpenseDetailFragment extends BaseFragment {
 
+    @BindView(R.id.tv_type)
+    TextView mTvType;
+    @BindView(R.id.list)
+    ListView mList;
+    @BindView(R.id.refresh_layout)
+    RefreshLayout mRefreshLayout;
+
     private WebSocketClient mWebSocketClient;
     private MyIncome mMyIncome;
+    private List<MyIncome.ResponseBean.IncomeBean> mIncomeBeans;
+    private List<MyIncome.ResponseBean.CostBean> mCostBeans;
+    private DealDetailAdapter mAdapter;
+    private DealDetailCostAdapter mCostAdapter;
     private int p;
 
     public static ExpenseDetailFragment getInstance(int position) {
@@ -48,6 +72,21 @@ public class ExpenseDetailFragment extends BaseFragment {
     protected void initView(View view) {
         Bundle bundle = getArguments();
         p = bundle.getInt("position");
+        if (p == 0) {
+            mTvType.setText("支出");
+        } else {
+            mTvType.setText("收益");
+        }
+        mIncomeBeans = new ArrayList<>();
+        mAdapter = new DealDetailAdapter(mIncomeBeans);
+        mList.setAdapter(mAdapter);
+
+        mCostBeans = new ArrayList<>();
+        mCostAdapter = new DealDetailCostAdapter(mCostBeans);
+        mList.setAdapter(mAdapter);
+
+        mRefreshLayout.setEnableRefresh(false);
+        mRefreshLayout.setEnableLoadmore(false);
     }
 
     @Override
@@ -100,19 +139,20 @@ public class ExpenseDetailFragment extends BaseFragment {
                     MyRequset more = new MyRequset();
                     MyRequset.Parameter parameter = new MyRequset.Parameter();
                     parameter.setToken(SpManager.getToken());
-                    parameter.setPageSize("10");
                     more.setUrlMapping("account-myAsset");
                     more.setParameter(parameter);
                     mWebSocketClient.send(more.myCollect());
                     break;
                 case 1:
-                    if(p == 0) {
-
+                    if (p == 0) {
+                        mCostAdapter.addData(mMyIncome.getResponse().getCost());
+                        mRefreshLayout.setData(mMyIncome.getResponse().getCost(), mCostAdapter);
+                    } else {
+                        mAdapter.addData(mMyIncome.getResponse().getIncome());
+                        mRefreshLayout.setData(mMyIncome.getResponse().getIncome(), mAdapter);
                     }
                     break;
             }
         }
     };
-
-
 }

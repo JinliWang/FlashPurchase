@@ -8,9 +8,10 @@ import java.util.List;
 
 public class MyIntegral {
 
+
     /**
      * parameter : null
-     * response : {"income":[],"cost":[],"userId":7,"point":5}
+     * response : {"income":[{"coinType":4,"amount":5,"pcType":4,"createTime":"2018-07-15 17:29:38","type":1,"userId":18}],"cost":[],"userId":18,"point":5}
      * urlMapping : account-myPoint
      */
 
@@ -44,16 +45,16 @@ public class MyIntegral {
 
     public static class ResponseBean {
         /**
-         * income : []
+         * income : [{"coinType":4,"amount":5,"pcType":4,"createTime":"2018-07-15 17:29:38","type":1,"userId":18}]
          * cost : []
-         * userId : 7
+         * userId : 18
          * point : 5
          */
 
         private int userId;
         private int point;
-        private List<?> income;
-        private List<?> cost;
+        private List<IncomeBean> income;
+        private List<CostBean> cost;
 
         public int getUserId() {
             return userId;
@@ -71,20 +72,152 @@ public class MyIntegral {
             this.point = point;
         }
 
-        public List<?> getIncome() {
+        public List<IncomeBean> getIncome() {
             return income;
         }
 
-        public void setIncome(List<?> income) {
+        public void setIncome(List<IncomeBean> income) {
             this.income = income;
         }
 
-        public List<?> getCost() {
+        public List<CostBean> getCost() {
             return cost;
         }
 
-        public void setCost(List<?> cost) {
+        public void setCost(List<CostBean> cost) {
             this.cost = cost;
+        }
+
+        public static class IncomeBean {
+            /**
+             * coinType : 4
+             * amount : 5
+             * pcType : 4
+             * createTime : 2018-07-15 17:29:38
+             * type : 1
+             * userId : 18
+             */
+
+            private int coinType;
+            private int amount;
+            private int pcType;
+            private String createTime;
+            private int type;
+            private int userId;
+
+            public int getCoinType() {
+                return coinType;
+            }
+
+            public void setCoinType(int coinType) {
+                this.coinType = coinType;
+            }
+
+            public int getAmount() {
+                return amount;
+            }
+
+            public void setAmount(int amount) {
+                this.amount = amount;
+            }
+
+            public int getPcType() {
+                return pcType;
+            }
+
+            public void setPcType(int pcType) {
+                this.pcType = pcType;
+            }
+
+            public String getCreateTime() {
+                return createTime;
+            }
+
+            public void setCreateTime(String createTime) {
+                this.createTime = createTime;
+            }
+
+            public int getType() {
+                return type;
+            }
+
+            public void setType(int type) {
+                this.type = type;
+            }
+
+            public int getUserId() {
+                return userId;
+            }
+
+            public void setUserId(int userId) {
+                this.userId = userId;
+            }
+        }
+
+        public static class CostBean {
+            /**
+             * coinType : 4
+             * amount : 5
+             * pcType : 4
+             * createTime : 2018-07-15 17:29:38
+             * type : 1
+             * userId : 18
+             */
+
+            private int coinType;
+            private int amount;
+            private int pcType;
+            private String createTime;
+            private int type;
+            private int userId;
+
+            public int getCoinType() {
+                return coinType;
+            }
+
+            public void setCoinType(int coinType) {
+                this.coinType = coinType;
+            }
+
+            public int getAmount() {
+                return amount;
+            }
+
+            public void setAmount(int amount) {
+                this.amount = amount;
+            }
+
+            public int getPcType() {
+                return pcType;
+            }
+
+            public void setPcType(int pcType) {
+                this.pcType = pcType;
+            }
+
+            public String getCreateTime() {
+                return createTime;
+            }
+
+            public void setCreateTime(String createTime) {
+                this.createTime = createTime;
+            }
+
+            public int getType() {
+                return type;
+            }
+
+            public void setType(int type) {
+                this.type = type;
+            }
+
+            public int getUserId() {
+                return userId;
+            }
+
+            public void setUserId(int userId) {
+                this.userId = userId;
+            }
         }
     }
 }

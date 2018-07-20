@@ -51,8 +51,6 @@ public class MyIncomeCenterActivity extends BaseActivity {
     TextView mTvTitle;
     @BindView(R.id.iv_right)
     ImageView mIvRight;
-    @BindView(R.id.more_layout)
-    FrameLayout mMessageLayout;
     @BindView(R.id.pai_bi)
     TextView mPaiBi;
     @BindView(R.id.zeng_bi)
@@ -81,14 +79,14 @@ public class MyIncomeCenterActivity extends BaseActivity {
         mVpContent.setAdapter(new ProcessCheckAdapter(getSupportFragmentManager()));
         mVpContent.setOffscreenPageLimit(4);
         mTabTitle.setupWithViewPager(mVpContent);
-        mTvTitle.setText("我的财产");
+        initTitle("我的财产", R.drawable.icon_more);
         mIvLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        mMessageLayout.setOnClickListener(new View.OnClickListener() {
+        mIvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 initPop();
@@ -140,18 +138,20 @@ public class MyIncomeCenterActivity extends BaseActivity {
     private void initPop() {
         if (popupWindow == null) {
             popupView = UIUtil.inflate(R.layout.pop_sale_work);
-            FrameLayout frameLayout = (FrameLayout)popupView.findViewById(R.id.message_layout);
+            FrameLayout frameLayout = (FrameLayout) popupView.findViewById(R.id.message_layout);
             TextView textView = (TextView) popupView.findViewById(R.id.tv_deal_history);
             frameLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     startActivity(CenterMessageActivity.class);
+                    popupWindow.dismiss();
                 }
             });
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     startActivity(DealHistoryActivity.class);
+                    popupWindow.dismiss();
                 }
             });
             popupWindow = PopupUtil.showPopup(popupView, MyIncomeCenterActivity.this);

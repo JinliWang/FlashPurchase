@@ -17,6 +17,7 @@ import com.app.library.util.LogUtil;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.fragment.mine.ExpenseDetailFragment;
+import com.flashPurchase.app.fragment.mine.GwbDetailFragment;
 import com.flashPurchase.app.model.bean.MyGwb;
 import com.flashPurchase.app.model.bean.MyIncome;
 import com.flashPurchase.app.model.request.MyRequset;
@@ -37,14 +38,6 @@ import butterknife.ButterKnife;
  */
 
 public class MyGwbActivity extends BaseActivity {
-    @BindView(R.id.iv_left)
-    ImageView mIvLeft;
-    @BindView(R.id.tv_title)
-    TextView mTvTitle;
-    @BindView(R.id.iv_right)
-    ImageView mIvRight;
-    @BindView(R.id.more_layout)
-    FrameLayout mMoreLayout;
     @BindView(R.id.tv_gwb)
     TextView mTvGwb;
     @BindView(R.id.tv_user_line)
@@ -64,6 +57,7 @@ public class MyGwbActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        initTitle("我的购物币");
         mVpContent.setAdapter(new ProcessCheckAdapter(getSupportFragmentManager()));
         mVpContent.setOffscreenPageLimit(4);
         mTabTitle.setupWithViewPager(mVpContent);
@@ -79,9 +73,9 @@ public class MyGwbActivity extends BaseActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return ExpenseDetailFragment.getInstance(position);
+                    return GwbDetailFragment.getInstance(position);
                 case 1:
-                    return ExpenseDetailFragment.getInstance(position);
+                    return GwbDetailFragment.getInstance(position);
 
             }
             return null;
@@ -153,16 +147,12 @@ public class MyGwbActivity extends BaseActivity {
                     MyRequset more = new MyRequset();
                     MyRequset.Parameter parameter = new MyRequset.Parameter();
                     parameter.setToken(SpManager.getToken());
-                    parameter.setPageSize("10");
                     more.setUrlMapping("account-myShopCoin");
                     more.setParameter(parameter);
                     mWebSocketClient.send(more.myCollect());
                     break;
                 case 1:
                     mTvGwb.setText(mMyGwb.getResponse().getTotalCoin() + "购物币");
-//                    mPaiBi.setText(mMyIncome.getResponse().getPayCoin() + "");
-//                    mZengBi.setText(mMyIncome.getResponse().getFreeCoin() + "");
-//                    mBuyBi.setText(mMyIncome.getResponse().getShopCoin() + "");
                     break;
             }
         }

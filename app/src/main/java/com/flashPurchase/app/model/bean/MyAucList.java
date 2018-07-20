@@ -64,6 +64,64 @@ public class MyAucList {
         private int userId;
         private String pics;
         private String goodsName;
+        private String status;
+        private String orderSt;
+        private String actualPayment;
+        private String dealUser;
+        private double finalPrice;
+        private String orderId;
+        private double shopCoin;
+        private String id;
+        private String type;
+        private String aucSt;
+
+        public String getOrderSt() {
+            return orderSt;
+        }
+
+        public String getActualPayment() {
+            return actualPayment;
+        }
+
+        public double getShopCoin() {
+            return shopCoin;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public String getAucSt() {
+            return aucSt;
+        }
+
+        public double getShopcoin() {
+            return shopCoin;
+        }
+
+        public String getOrderId() {
+            return orderId;
+        }
+
+        public String getDealUser() {
+            return dealUser;
+        }
+
+        public double getFinalPrice() {
+            return finalPrice;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
 
         public String getDate() {
             return date;

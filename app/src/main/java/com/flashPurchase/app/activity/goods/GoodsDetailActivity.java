@@ -15,8 +15,11 @@ import android.widget.TextView;
 
 import com.app.library.base.BaseActivity;
 import com.app.library.util.LogUtil;
+import com.app.library.util.ToastUtil;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.event.AucSuccessEvent;
+import com.flashPurchase.app.event.RefreshGoodsEvent;
 import com.flashPurchase.app.model.bean.Collect;
 import com.flashPurchase.app.model.bean.GoodDetail;
 import com.flashPurchase.app.model.bean.ToRecharge;
@@ -24,6 +27,9 @@ import com.flashPurchase.app.model.request.MyRequset;
 import com.google.gson.Gson;
 import com.octopus.amountview.AmountView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
@@ -53,6 +59,14 @@ public class GoodsDetailActivity extends BaseActivity {
     AmountView mAmountView;
     @BindView(R.id.lin_collect)
     LinearLayout mLinCollect;
+    @BindView(R.id.lin_next)
+    LinearLayout mLinNext;
+    @BindView(R.id.tv_paibi)
+    TextView mTvPaibi;
+    @BindView(R.id.lin_now)
+    LinearLayout mLinNow;
+    @BindView(R.id.lin_pai)
+    LinearLayout mLinPai;
 
     private String mGoodsId;
     private String mTime;
@@ -61,8 +75,6 @@ public class GoodsDetailActivity extends BaseActivity {
     private GoodDetail mGoodDetail;
     private Collect mCollect;
     private ToRecharge mToRecharge;
-    private MyRequset more = new MyRequset();
-    private MyRequset.Parameter parameter = new MyRequset.Parameter();
 
     private boolean isCollected = false;
 
@@ -75,6 +87,7 @@ public class GoodsDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        EventBus.getDefault().register(this);
         initTitle("商品详情");
         mGoodsId = extraDatas.getString("goodsid");
         mTime = extraDatas.getString("time");
@@ -106,6 +119,7 @@ public class GoodsDetailActivity extends BaseActivity {
 
         mLinCollect.setOnClickListener(this);
         mLinChujia.setOnClickListener(this);
+        mLinNext.setOnClickListener(this);
         mAmountView.setOnChangeListener(new AmountView.OnChangeListener() {
             @Override
             public void onChanged(int value) {
@@ -131,6 +145,8 @@ public class GoodsDetailActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.lin_collect:
+                MyRequset more = new MyRequset();
+                MyRequset.Parameter parameter = new MyRequset.Parameter();
                 parameter.setGoodsId(mGoodsId);
                 parameter.setToken(SpManager.getToken());
                 more.setParameter(parameter);
@@ -142,12 +158,25 @@ public class GoodsDetailActivity extends BaseActivity {
                 mWebSocketClient.send(more.collect());
                 break;
             case R.id.lin_chujia:
-                parameter.setAucTime(mAucTime + "");
-                parameter.setGoodsId(mGoodsId);
-                parameter.setToken(SpManager.getToken());
-                more.setParameter(parameter);
-                more.setUrlMapping("auc-bid");
-                mWebSocketClient.send(more.auc());
+                MyRequset requset = new MyRequset();
+                MyRequset.Parameter parameter1 = new MyRequset.Parameter();
+                parameter1.setAucTime(mAucTime + "");
+                parameter1.setGoodsId(mGoodsId);
+                parameter1.setToken(SpManager.getToken());
+                requset.setParameter(parameter1);
+                requset.setUrlMapping("auc-bid");
+                mWebSocketClient.send(requset.auc());
+                break;
+            case R.id.lin_next:
+                MyRequset requset1 = new MyRequset();
+                MyRequset.Parameter parameter2 = new MyRequset.Parameter();
+                parameter2.setToken(SpManager.getToken());
+                parameter2.setGoodsId(mGoodsId);
+                parameter2.setTime(mTime);
+                parameter2.setIsNext("1");
+                requset1.setUrlMapping("goods-goodsDetail");
+                requset1.setParameter(parameter2);
+                mWebSocketClient.send(requset1.goodsDetail());
                 break;
         }
     }
@@ -171,9 +200,11 @@ public class GoodsDetailActivity extends BaseActivity {
                     } else if (message.contains("goods-goodsDetail")) {//返回收藏状态，判断是否收藏
                         Gson gson = new Gson();
                         mGoodDetail = gson.fromJson(message, GoodDetail.class);
-                        Message msg = new Message();
-                        msg.what = 1;
-                        handler.sendMessage(msg);
+                        if (mGoodDetail.getResponse() != null) {
+                            Message msg = new Message();
+                            msg.what = 1;
+                            handler.sendMessage(msg);
+                        }
                     } else if (message.contains("collect-add") || message.contains("collect-cancel")) {//收藏或者取消收藏结果
                         Gson gson = new Gson();
                         mCollect = gson.fromJson(message, Collect.class);
@@ -187,9 +218,16 @@ public class GoodsDetailActivity extends BaseActivity {
                             Message msg = new Message();
                             msg.what = 3;
                             handler.sendMessage(msg);
-                        } else {
-
+                        } else {//出价成功，通知刷新页面
+                            Message msg = new Message();
+                            msg.what = 4;
+                            handler.sendMessage(msg);
                         }
+                    } else if (message.contains("auc-success-user")) {
+                        Message msg = new Message();
+                        msg.what = 5;
+                        msg.obj = message;
+                        handler.sendMessage(msg);
                     }
                 }
 
@@ -214,11 +252,15 @@ public class GoodsDetailActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0://获取收藏状态
+                    MyRequset more = new MyRequset();
+                    MyRequset.Parameter parameter = new MyRequset.Parameter();
                     parameter.setToken(SpManager.getToken());
                     parameter.setGoodsId(mGoodsId);
+                    parameter.setTime(mTime);
+                    parameter.setIsNext("");
                     more.setUrlMapping("goods-goodsDetail");
                     more.setParameter(parameter);
-                    mWebSocketClient.send(more.myCollect());
+                    mWebSocketClient.send(more.goodsDetail());
                     break;
                 case 1:
                     if (mGoodDetail.getResponse().getCollect() == 0) {
@@ -226,6 +268,13 @@ public class GoodsDetailActivity extends BaseActivity {
                     } else if (mGoodDetail.getResponse().getCollect() == 1) {
                         isCollected = true;
                         collect();
+                    }
+                    mLinNow.setVisibility(View.VISIBLE);
+                    mLinNext.setVisibility(View.GONE);
+                    if(mGoodDetail.getResponse().getIsTen() == 0) {
+                        mTvPaibi.setText("1拍币/次");
+                    }else if(mGoodDetail.getResponse().getIsTen() == 1) {
+                        mTvPaibi.setText("10拍币/次");
                     }
                     break;
                 case 2:
@@ -242,6 +291,14 @@ public class GoodsDetailActivity extends BaseActivity {
                     bundle.putString("money", mToRecharge.getResponse().getNeedToPay() + "");
                     startActivity(FastRechargeActivity.class, bundle);
                     break;
+                case 4:
+                    EventBus.getDefault().post(new RefreshGoodsEvent());
+                    break;
+                case 5:
+                    ToastUtil.show("恭喜你获得拍品，前往个人中心我的竞拍中查看");
+                    mLinNow.setVisibility(View.GONE);
+                    mLinNext.setVisibility(View.VISIBLE);
+                    break;
             }
         }
     };
@@ -256,5 +313,16 @@ public class GoodsDetailActivity extends BaseActivity {
         mIvSelect.setVisibility(View.GONE);
         mIvNoSelect.setVisibility(View.VISIBLE);
         mTvCollect.setText("收藏");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(AucSuccessEvent event) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

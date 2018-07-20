@@ -38,6 +38,7 @@
             android:layout_centerInParent="true"
             android:background="@null"
             android:hint="输入密码"
+            android:inputType="textPassword"
             android:imeOptions="actionNext"
             android:orientation="horizontal"
             android:padding="@dimen/margin_10"

@@ -21,6 +21,21 @@ public class LoginReq {
         private String nickName;
         private String icon;
         private String clientId;
+        private String phone;
+        private String password;
+        private String token;
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
 
         public void setOpenId(String openId) {
             this.openId = openId;
@@ -47,6 +62,28 @@ public class LoginReq {
                     ", clientId:'" + clientId + '\'' +
                     '}';
         }
+
+        public String register() {
+            return "{" +
+                    "phone:'" + phone + '\'' +
+                    ", password:'" + password + '\'' +
+                    ", clientId:'" + clientId + '\'' +
+                    '}';
+        }
+
+        public String changePhone() {
+            return "{" +
+                    "phone:'" + phone + '\'' +
+                    ", token:'" + token + '\'' +
+                    '}';
+        }
+
+        public String changeInfo() {
+            return "{" +
+                    "nickName:'" + nickName + '\'' +
+                    ", token:'" + token + '\'' +
+                    '}';
+        }
     }
 
     @Override
@@ -54,6 +91,28 @@ public class LoginReq {
         return "{" +
                 "urlMapping:'" + urlMapping + '\'' +
                 ", parameter:" + mParameter +
+                '}';
+    }
+
+    public String register() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.register() +
+                '}';
+    }
+
+
+    public String changePhone() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.changePhone() +
+                '}';
+    }
+
+    public String changeInfo() {
+        return "{" +
+                "urlMapping:'" + urlMapping + '\'' +
+                ", parameter:" + mParameter.changeInfo() +
                 '}';
     }
 }

@@ -18,6 +18,7 @@ import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
 import com.flashPurchase.app.adapter.GoodByIdAdapter;
 import com.flashPurchase.app.adapter.ShoppingLeftAdapter;
 import com.flashPurchase.app.event.HomeEvent;
+import com.flashPurchase.app.event.RefreshGoodsEvent;
 import com.flashPurchase.app.model.bean.GoodClassification;
 import com.flashPurchase.app.model.request.MyRequset;
 import com.flashPurchase.app.view.RefreshLayout;
@@ -66,7 +67,7 @@ public class GoodsClassificationFragment extends BaseFragment implements Adapter
     private GoodByIdAdapter mGoodByIdAdapter;
     private boolean isLoadMore = false;
 
-    private int pageIndex = 0;
+    private int pageIndex = 1;
     private int p = 0;
     private String mType;
     private GoodClassification mClassification;
@@ -107,7 +108,7 @@ public class GoodsClassificationFragment extends BaseFragment implements Adapter
                 super.onRefresh(refreshLayout);
                 isLoadMore = false;
                 mGoodByIdAdapter.clearData();
-                pageIndex = 0;
+                pageIndex = 1;
                 getGoods(p);
             }
 
@@ -287,6 +288,15 @@ public class GoodsClassificationFragment extends BaseFragment implements Adapter
                 mWebSocketClient.send(more.toString());
             }
 
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshGoodsEvent event) {
+        if (mWebSocketClient != null) {
+            Message msg = new Message();
+            msg.what = 1;
+            handler.sendMessage(msg);
         }
     }
 

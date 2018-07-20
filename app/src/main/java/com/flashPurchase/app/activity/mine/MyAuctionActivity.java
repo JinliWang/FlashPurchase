@@ -16,9 +16,15 @@ import com.flashPurchase.app.fragment.home.HomeFragment;
 import com.flashPurchase.app.fragment.home.MyFavoriteFragment;
 import com.flashPurchase.app.fragment.home.MyOrderFragment;
 import com.flashPurchase.app.fragment.home.RecommendFragment;
+import com.flashPurchase.app.fragment.mine.AucOutFragment;
+import com.flashPurchase.app.fragment.mine.AucSucFragment;
+import com.flashPurchase.app.fragment.mine.AucToBaskFragment;
+import com.flashPurchase.app.fragment.mine.AucToReceiveFragment;
 import com.flashPurchase.app.fragment.mine.AuctionNoticeFragment;
+import com.flashPurchase.app.fragment.mine.MyAllAuctionFragment;
 import com.flashPurchase.app.fragment.mine.MyAuctionFragment;
 import com.flashPurchase.app.fragment.mine.SystemMessageFragment;
+import com.flashPurchase.app.fragment.mine.WaitToPayFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,8 +40,6 @@ public class MyAuctionActivity extends BaseActivity {
     TextView mTvTitle;
     @BindView(R.id.iv_right)
     ImageView mIvRight;
-    @BindView(R.id.more_layout)
-    FrameLayout mMoreLayout;
     @BindView(R.id.tab_title)
     TabLayout mTabTitle;
     @BindView(R.id.vp_content)
@@ -57,6 +61,9 @@ public class MyAuctionActivity extends BaseActivity {
         mTabTitle.setTabMode(TabLayout.MODE_SCROLLABLE);
         mTabTitle.setupWithViewPager(mVpContent);
         switch (mAucSt) {
+            case "0":
+                mVpContent.setCurrentItem(0);
+                break;
             case "1":
                 mVpContent.setCurrentItem(1);
                 break;
@@ -91,19 +98,19 @@ public class MyAuctionActivity extends BaseActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return MyAuctionFragment.getInstance("0");
+                    return new MyAllAuctionFragment();
                 case 1:
-                    return MyAuctionFragment.getInstance("1");
+                    return new MyAuctionFragment();
                 case 2:
-                    return MyAuctionFragment.getInstance("2");
+                    return new AucSucFragment();
                 case 3:
-                    return MyAuctionFragment.getInstance("3");
+                    return new AucOutFragment();
                 case 4:
-                    return MyAuctionFragment.getInstance("4");
+                    return new WaitToPayFragment();
                 case 5:
-                    return MyAuctionFragment.getInstance("5");
+                    return new AucToReceiveFragment();
                 case 6:
-                    return MyAuctionFragment.getInstance("6");
+                    return new AucToBaskFragment();
             }
             return null;
         }

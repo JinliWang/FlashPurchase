@@ -231,6 +231,48 @@
             android:screenOrientation="portrait"
             android:theme="@style/BackActivityTheme" />
 
+        <!-- 我的订单-->
+        <activity
+            android:name=".activity.mine.MyOrdersActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+        <!-- 确认订单-->
+        <activity
+            android:name=".activity.mine.ComfirmOrderActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+        <!-- 积分明细-->
+        <activity
+            android:name=".activity.mine.IntegralDetailActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+        <!-- 物流-->
+        <activity
+            android:name=".activity.goods.WuLiuActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+        <!-- 修改昵称-->
+        <activity
+            android:name=".activity.login.ChangeNameActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+        <!-- 限时秒-->
+        <activity
+            android:name=".activity.goods.TenLimitActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
         <!-- 支付宝-->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

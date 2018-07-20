@@ -1,7 +1,6 @@
 package com.flashPurchase.app.activity.login;
 
-import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -14,17 +13,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.library.base.BaseActivity;
+import com.app.library.util.LogUtil;
+import com.app.library.util.ToastUtil;
+import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.activity.MainActivity;
+import com.flashPurchase.app.model.bean.Login;
+import com.flashPurchase.app.model.bean.Register;
+import com.flashPurchase.app.model.request.LoginReq;
+import com.google.gson.Gson;
 
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft_17;
+import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
-import cn.smssdk.gui.RegisterPage;
 
 /**
  * Created by 10951 on 2018/6/10.
@@ -49,9 +60,13 @@ public class RegisterActivity extends BaseActivity {
     TextView mLoginWx;
     @BindView(R.id.login_qq)
     TextView mLoginQq;
+    @BindView(R.id.et_pwd)
+    EditText mEtPwd;
 
     private boolean isGetting = false;
     EventHandler eventHandler;
+    private Login mRegister;
+    private WebSocketClient mWebSocketClient;
 
     @Override
     protected int getLayoutId() {
@@ -84,6 +99,48 @@ public class RegisterActivity extends BaseActivity {
 //注册监听器
         SMSSDK.registerEventHandler(eventHandler);
         mTvGetCode.setOnClickListener(this);
+        mBtnRegist.setOnClickListener(this);
+    }
+
+    @Override
+    protected void initData(Bundle bundle) {
+        super.initData(bundle);
+        try {
+            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+                @Override
+                public void onOpen(ServerHandshake handshakedata) {
+                }
+
+                @Override
+                public void onMessage(String message) {
+                    LogUtil.d(message);
+                    if (!message.contains("response")) {
+                        Message msg = new Message();
+                        msg.what = 3;
+                        myHandler.sendMessage(msg);
+                    } else if (message.contains("user-register")) {//返回收藏状态，判断是否收藏
+                        Gson gson = new Gson();
+                        mRegister = gson.fromJson(message, Login.class);
+                        Message msg = new Message();
+                        msg.what = 4;
+                        myHandler.sendMessage(msg);
+                    }
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+
+                }
+
+                @Override
+                public void onError(Exception ex) {
+
+                }
+            };
+            mWebSocketClient.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -121,6 +178,26 @@ public class RegisterActivity extends BaseActivity {
                     }
                 }.start();
                 break;
+            case R.id.btn_regist:
+                String phoneNumber = mEtUsername.getText().toString();
+                if (null == phoneNumber || "".equals(phoneNumber) || phoneNumber.length() != 11) {
+                    Toast.makeText(this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(mEtPwd.getText().toString())) {
+                    ToastUtil.show("请输入密码！");
+                    return;
+                }
+                if (TextUtils.isEmpty(mEtCode.getText().toString())) {
+                    ToastUtil.show("请获取并填写验证码！");
+                    return;
+                }
+                if (!mCbAgreement.isChecked()) {
+                    ToastUtil.show("请同意用户协议！");
+                    return;
+                }
+                SMSSDK.submitVerificationCode("86", phoneNumber, mEtCode.getText().toString());
+                break;
         }
     }
 
@@ -139,9 +216,21 @@ public class RegisterActivity extends BaseActivity {
                             Log.d(TAG, "get verification code successful.");
                         } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) { //提交验证码
                             Log.d(TAG, "submit code successful");
-                            Toast.makeText(RegisterActivity.this, "提交验证码成功", Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(RegisterActivity.this, SecondActivity.class);
-//                            startActivity(intent);
+                            HashMap<String, Object> mData = (HashMap<String, Object>) data;
+                            //返回国家的编号
+                            String country = (String) mData.get("country");
+                            String phone = (String) mData.get("phone");
+                            Log.e("TAG", country + "====" + phone);
+                            if (phone.equals(mEtUsername.getText().toString())) {
+                                LoginReq loginReq = new LoginReq();
+                                LoginReq.Parameter parameter = new LoginReq.Parameter();
+                                parameter.setPhone(mEtUsername.getText().toString());
+                                parameter.setPassword(mEtPwd.getText().toString());
+                                parameter.setClientId(SpManager.getClientId());
+                                loginReq.setUrlMapping("user-register");
+                                loginReq.setParameter(parameter);
+                                mWebSocketClient.send(loginReq.register());
+                            }
                         } else {
                             Log.d(TAG, data.toString());
                         }
@@ -170,7 +259,25 @@ public class RegisterActivity extends BaseActivity {
                     mTvGetCode.setText("获取验证码");
                     mTvGetCode.setClickable(true);
                     break;
+                case 4:
+                    if (mRegister.getResponse().getSuccess() == 1) {
+                        ToastUtil.show("注册成功！");
+                        SpManager.setMark(mRegister.getResponse().getMark() + "");
+                        SpManager.setToken(mRegister.getResponse().getToken());
+                        SpManager.setRegisterTime(mRegister.getResponse().getRegisterTime());
+                        SpManager.setUserName(mEtUsername.getText().toString());
+                        startActivity(MainActivity.class);
+                    } else {
+                        ToastUtil.show("注册失败！");
+                    }
+                    break;
             }
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mWebSocketClient.close();
+    }
 }

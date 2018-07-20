@@ -3,6 +3,7 @@ package com.flashPurchase.app.fragment.mine;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,11 +25,14 @@ import com.flashPurchase.app.activity.mine.MyGwbActivity;
 import com.flashPurchase.app.activity.mine.MyIncomeCenterActivity;
 import com.flashPurchase.app.activity.mine.MyInfoActivity;
 import com.flashPurchase.app.activity.mine.MyIntegralActivity;
+import com.flashPurchase.app.activity.mine.MyOrdersActivity;
 import com.flashPurchase.app.activity.mine.SetUpActivity;
 import com.flashPurchase.app.activity.mine.SignActivity;
 import com.flashPurchase.app.activity.mine.VoucherCenterActivity;
 import com.flashPurchase.app.event.HomeEvent;
 import com.flashPurchase.app.event.RechargeEvent;
+import com.flashPurchase.app.event.SignSuccessEvent;
+import com.flashPurchase.app.event.UpdateSuccess;
 import com.flashPurchase.app.model.bean.MyInfo;
 import com.flashPurchase.app.model.request.MyRequset;
 import com.google.gson.Gson;
@@ -44,6 +48,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import butterknife.BindView;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 /**
  * Created by zms on 2018/4/7.
@@ -126,6 +131,9 @@ public class MineCenterFragment extends BaseFragment {
 
     private WebSocketClient mWebSocketClient;
     private MyInfo mMyInfo;
+    private String mPic;
+    private String mNickName;
+    private String mPhone;
 
     @Override
     protected int getLayoutId() {
@@ -136,9 +144,6 @@ public class MineCenterFragment extends BaseFragment {
     protected void initView(View view) {
         EventBus.getDefault().register(this);
         onClick();
-        mTvNickName.setText(SpManager.getUserInfo().getResponse().getNickName());
-        ImageLoadManager.getInstance().setImage(getContext(), SpManager.getUserInfo().getResponse().getIcon(), mIvPhoto);
-        mTvId.setText(SpManager.getUserInfo().getResponse().getCode());
     }
 
     @Override
@@ -203,11 +208,18 @@ public class MineCenterFragment extends BaseFragment {
                     break;
                 case 1:
                     SpManager.setMyInfo(mMyInfo);
+                    mPic = mMyInfo.getResponse().getPic();
                     mTvPai.setText(mMyInfo.getResponse().getPayCoin() + "");
                     mTvFree.setText(mMyInfo.getResponse().getFreeCoin() + "");
                     mTvShop.setText(mMyInfo.getResponse().getShopCoin() + "");
                     mTvPoint.setText(mMyInfo.getResponse().getPoint() + "");
-                    mTvNickName.setText(mMyInfo.getResponse().getNickname());
+                    if (TextUtils.isEmpty(mMyInfo.getResponse().getNickname())) {
+                        mTvNickName.setText(mMyInfo.getResponse().getID());
+                        mNickName = mMyInfo.getResponse().getID();
+                    } else {
+                        mNickName = mMyInfo.getResponse().getNickname();
+                        mTvNickName.setText(mMyInfo.getResponse().getNickname());
+                    }
                     mTvId.setText(mMyInfo.getResponse().getUserId() + "");
                     ImageLoadManager.getInstance().setImage(getContext(), mMyInfo.getResponse().getPic(), mIvPhoto);
                     break;
@@ -285,7 +297,9 @@ public class MineCenterFragment extends BaseFragment {
         mRelMyAuction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(MyAuctionActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("aucSt", "0");
+                startActivity(MyAuctionActivity.class, bundle);
             }
         });
 
@@ -352,11 +366,11 @@ public class MineCenterFragment extends BaseFragment {
         mRelMyOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bundle.putString("type", "waitSign");
-                startActivity(MyCollectActivity.class, bundle);
+                startActivity(MyOrdersActivity.class, bundle);
             }
         });
 
+        //签到
         mRelSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -368,9 +382,41 @@ public class MineCenterFragment extends BaseFragment {
         mLlMineData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(MyInfoActivity.class);
+                bundle.putString("pic", mPic);
+                bundle.putString("name", mNickName);
+                startActivity(MyInfoActivity.class, bundle);
             }
         });
+
+        //分享
+        mRelShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showShare();
+            }
+        });
+    }
+
+    private void showShare() {
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+        // title标题，微信、QQ和QQ空间等平台使用
+        oks.setTitle("微信分享");
+        // titleUrl QQ和QQ空间跳转链接
+        oks.setTitleUrl("http://sharesdk.cn");
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText("我是分享文本");
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        // url在微信、微博，Facebook等平台中使用
+        oks.setUrl("http://www.yunnandingchun.com:9999/dingchun/");
+        // comment是我对这条分享的评论，仅在人人网使用
+//        oks.setComment("我是测试评论文本");
+        // 启动分享GUI
+        oks.show(getContext());
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -381,6 +427,21 @@ public class MineCenterFragment extends BaseFragment {
         more.setUrlMapping("account-myCenter");
         more.setParameter(parameter);
         mWebSocketClient.send(more.myCollect());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SignSuccessEvent event) {
+        MyRequset more = new MyRequset();
+        MyRequset.Parameter parameter = new MyRequset.Parameter();
+        parameter.setToken(SpManager.getToken());
+        more.setUrlMapping("account-myCenter");
+        more.setParameter(parameter);
+        mWebSocketClient.send(more.myCollect());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(UpdateSuccess updateSuccess) {
+        mTvNickName.setText(SpManager.getUserName());
     }
 
     @Override

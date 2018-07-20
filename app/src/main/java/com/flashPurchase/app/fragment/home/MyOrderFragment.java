@@ -17,6 +17,7 @@ import com.flashPurchase.app.R;
 import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
 import com.flashPurchase.app.adapter.MyFavoriteAdapter;
 import com.flashPurchase.app.adapter.RecommendAdapter;
+import com.flashPurchase.app.event.RefreshGoodsEvent;
 import com.flashPurchase.app.model.bean.MyOrder;
 import com.flashPurchase.app.model.bean.RecommendMoreResponse;
 import com.flashPurchase.app.model.request.MyRequset;
@@ -25,6 +26,9 @@ import com.google.gson.Gson;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
@@ -50,7 +54,7 @@ public class MyOrderFragment extends BaseFragment implements BaseRecyclerAdapter
 
     private WebSocketClient mWebSocketClient;
     private MyFavoriteAdapter mAdapter;
-    private int pageIndex = 0;
+    private int pageIndex = 1;
     private MyOrder mHomeBean;
 
     @Override
@@ -60,6 +64,7 @@ public class MyOrderFragment extends BaseFragment implements BaseRecyclerAdapter
 
     @Override
     protected void initView(View view) {
+        EventBus.getDefault().register(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         mList.setLayoutManager(gridLayoutManager);
         mAdapter = new MyFavoriteAdapter();
@@ -160,5 +165,18 @@ public class MyOrderFragment extends BaseFragment implements BaseRecyclerAdapter
         bundle.putString("goodsid", mHomeBean.getResponse().get(position).getGoodsId() + "");
         bundle.putString("time", mHomeBean.getResponse().get(position).getTime() + "");
         startActivity(GoodsDetailActivity.class, bundle);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshGoodsEvent event) {
+        Message msg = new Message();
+        msg.what = 0;
+        handler.sendMessage(msg);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

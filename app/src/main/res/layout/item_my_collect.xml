@@ -1,60 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <View
+            style="@style/style_dividing_line"
+            android:layout_width="0.5dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="5dp"
-            android:background="@drawable/shape_collect_bg"
-            android:padding="5dp"
-            android:text="已收藏"
-            android:textColor="@color/title_color"
-            android:textSize="@dimen/text_content" />
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_goods"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_collect_bg"
+                android:padding="5dp"
+                android:text="已收藏"
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/text_content" />
 
-        <TextView
-            android:id="@+id/tv_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/iv_goods"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal" />
 
-        <TextView
-            android:id="@+id/tv_customer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/title_color"
-            android:textSize="@dimen/text_title" />
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn_pai"
-            style="@style/btn_bg_color"
-            android:layout_height="46dp"
-            android:layout_marginLeft="@dimen/margin_20"
-            android:layout_marginRight="@dimen/margin_20"
-            android:layout_marginTop="20dp"
-            android:text="参与竞拍"
-            android:textSize="@dimen/text_title" />
+            <TextView
+                android:id="@+id/tv_customer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/text_title" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_pai"
+                style="@style/btn_bg_color"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_20"
+                android:layout_marginRight="@dimen/margin_20"
+                android:layout_marginTop="20dp"
+                android:text="参与竞拍"
+                android:textSize="@dimen/text_title" />
 
+        </LinearLayout>
+
+        <View
+            style="@style/style_dividing_line"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_height="0.5dp" />
+    </RelativeLayout>
 </LinearLayout>

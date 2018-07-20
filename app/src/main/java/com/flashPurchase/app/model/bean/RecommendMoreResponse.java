@@ -77,6 +77,11 @@ public class RecommendMoreResponse {
             private String time;
             private String pics;
             private String aucSt;
+            private String goodsId;
+
+            public String getGoodsId() {
+                return goodsId;
+            }
 
             public String getAucPeopleNum() {
                 return aucPeopleNum;

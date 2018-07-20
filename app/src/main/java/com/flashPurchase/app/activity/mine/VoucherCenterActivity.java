@@ -120,7 +120,7 @@ public class VoucherCenterActivity extends BaseActivity {
                         Message msg = new Message();
                         msg.what = 1;
                         mHandler.sendMessage(msg);
-                    } else if (message.contains("order-recharge")) {//返回收藏状态，判断是否收藏
+                    } else if (message.contains("order-recharge")) {
                         Gson gson = new Gson();
                         mRechargeOrder = gson.fromJson(message, RechargeOrder.class);
                         Message msg = new Message();

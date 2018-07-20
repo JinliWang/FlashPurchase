@@ -13,6 +13,7 @@ import com.app.library.util.okhttp.OkhttpUtil;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.activity.MainActivity;
 import com.flashPurchase.app.activity.login.LoginActivity;
+import com.flashPurchase.app.model.bean.Login;
 import com.flashPurchase.app.model.bean.UserInfo;
 import com.flashPurchase.app.model.request.LoginReq;
 import com.flashPurchase.app.net.manager.ApiManager;
@@ -54,7 +55,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     private String mIcon;
     private String mNickName;
     private String mOpenId;
-    private UserInfo mUserInfo;
+    private Login mUserInfo;
 
 
     @Override
@@ -208,15 +209,13 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                                             @Override
                                             public void onMessage(String message) {
                                                 LogUtil.d(message);
-                                                if(!message.contains("response")) {
+                                                if (!message.contains("response")) {
                                                     Message msg = new Message();
                                                     msg.what = 0;
                                                     handler.sendMessage(msg);
-                                                }else if(message.contains("user-login")) {
+                                                } else if (message.contains("user-login")) {
                                                     Gson gson = new Gson();
-                                                    mUserInfo = gson.fromJson(message,UserInfo.class);
-                                                    mUserInfo.getResponse().setNickName(mNickName);
-                                                    mUserInfo.getResponse().setIcon(mIcon);
+                                                    mUserInfo = gson.fromJson(message, Login.class);
                                                     Message msg = new Message();
                                                     msg.what = 1;
                                                     handler.sendMessage(msg);
@@ -277,7 +276,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 case 1:
                     SpManager.setUserInfo(mUserInfo);
                     SpManager.setToken(mUserInfo.getResponse().getToken());
-                    Intent intent = new Intent(WXEntryActivity.this,MainActivity.class);
+                    SpManager.setRegisterTime(mUserInfo.getResponse().getRegisterTime());
+                    Intent intent = new Intent(WXEntryActivity.this, MainActivity.class);
                     startActivity(intent);
                     ActivityManager.getActivityManager().popActivityByClass(LoginActivity.class);
                     finish();

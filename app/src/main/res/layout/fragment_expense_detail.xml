@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rel_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -26,6 +27,8 @@
             android:text="支出"
             android:textColor="@color/text_color" />
     </RelativeLayout>
+
+    <View style="@style/style_dividing_line" />
 
     <com.flashPurchase.app.view.RefreshLayout
         android:id="@+id/refresh_layout"
