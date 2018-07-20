@@ -64,17 +64,17 @@ public class MyAllAuctionFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsid", mList.get(i).getGoodsId() + "");
-                bundle.putString("time", mList.get(i).getTime() + "");
                 startActivity(GoodsDetailActivity.class, bundle);
             }
         });
+        mRefreshLayout.setEnableRefresh(false);
     }
 
     @Override
     protected void loadData(Bundle savedInstanceState) {
         super.loadData(savedInstanceState);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://39.104.102.255:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
 
@@ -168,7 +168,7 @@ public class MyAllAuctionFragment extends BaseFragment {
                             mList.add(bean);
                         }
                     }
-                    mMyAucAdapter.addData(mList);
+                    mMyAucAdapter.notifyDataSetChanged();
                     mRefreshLayout.setData(mList, mMyAucAdapter);
                     break;
             }

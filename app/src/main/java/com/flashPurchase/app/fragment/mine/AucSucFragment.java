@@ -16,11 +16,15 @@ import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
 import com.flashPurchase.app.activity.mine.ComfirmOrderActivity;
 import com.flashPurchase.app.adapter.AucSucAdapter;
 import com.flashPurchase.app.adapter.MyAucAdapter;
+import com.flashPurchase.app.event.PaySuccess;
 import com.flashPurchase.app.model.bean.MyAucList;
 import com.flashPurchase.app.model.request.MyRequset;
 import com.flashPurchase.app.view.RefreshLayout;
 import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
@@ -64,6 +68,7 @@ public class AucSucFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
+        EventBus.getDefault().register(this);
         mList = new ArrayList<>();
         mMyAucAdapter = new AucSucAdapter(mList);
         mMyAuctionList.setAdapter(mMyAucAdapter);
@@ -83,9 +88,13 @@ public class AucSucFragment extends BaseFragment {
                 switch (view.getId()) {
                     case R.id.tv_pai:
                         Bundle bundle1 = new Bundle();
-                        bundle1.putString("message", mMessage);
                         bundle1.putString("type", "2");
-                        bundle1.putInt("p", position);
+                        bundle1.putString("goodsid", mMyAucList.getResponse().get(position).getGoodsId() + "");
+                        bundle1.putString("time", mMyAucList.getResponse().get(position).getTime() + "");
+                        bundle1.putDouble("marketprice", mMyAucList.getResponse().get(position).getMarketPrice());
+                        bundle1.putDouble("shopcoin", mMyAucList.getResponse().get(position).getShopCoin());
+                        bundle1.putDouble("actprice", mMyAucList.getResponse().get(position).getActualPayment());
+                        bundle1.putString("pics", mMyAucList.getResponse().get(position).getPics());
                         mWebSocketClient.close();
                         startActivity(ComfirmOrderActivity.class, bundle1);
                         break;
@@ -99,7 +108,7 @@ public class AucSucFragment extends BaseFragment {
     protected void loadData(Bundle savedInstanceState) {
         super.loadData(savedInstanceState);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://39.104.102.255:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
 
@@ -158,10 +167,27 @@ public class AucSucFragment extends BaseFragment {
                     mWebSocketClient.send(more.myOrder());
                     break;
                 case 1:
-                    mMyAucAdapter.addData(mMyAucList.getResponse());
+                    mMyAucAdapter.refreshData(mMyAucList.getResponse());
                     mRefreshLayout.setData(mMyAucList.getResponse());
                     break;
             }
         }
     };
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(PaySuccess paySuccess) {
+        MyRequset more = new MyRequset();
+        MyRequset.Parameter parameter = new MyRequset.Parameter();
+        parameter.setToken(SpManager.getToken());
+        parameter.setAucSt("2");
+        more.setUrlMapping("goods-myAucIng");
+        more.setParameter(parameter);
+        mWebSocketClient.send(more.myOrder());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

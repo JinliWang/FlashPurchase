@@ -66,7 +66,7 @@ public class MyAucList {
         private String goodsName;
         private String status;
         private String orderSt;
-        private String actualPayment;
+        private double actualPayment;
         private String dealUser;
         private double finalPrice;
         private String orderId;
@@ -79,7 +79,7 @@ public class MyAucList {
             return orderSt;
         }
 
-        public String getActualPayment() {
+        public double getActualPayment() {
             return actualPayment;
         }
 

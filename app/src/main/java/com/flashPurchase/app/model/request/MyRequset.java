@@ -242,6 +242,7 @@ public class MyRequset {
             return "{" +
                     "token:'" + token + '\'' +
                     ", goodsId:'" + goodsId + '\'' +
+                    ", orderId:'" + orderId + '\'' +
                     ", pics:'" + pics + '\'' +
                     ", comments:'" + comments + '\'' +
                     '}';

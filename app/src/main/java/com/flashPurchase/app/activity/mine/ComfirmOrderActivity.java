@@ -24,6 +24,8 @@ import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.activity.goods.FastRechargeActivity;
 import com.flashPurchase.app.event.EditAddressEvent;
+import com.flashPurchase.app.event.PayCancel;
+import com.flashPurchase.app.event.PaySuccess;
 import com.flashPurchase.app.model.bean.MyAucList;
 import com.flashPurchase.app.model.bean.Order;
 import com.flashPurchase.app.model.bean.OrderInfo;
@@ -83,18 +85,19 @@ public class ComfirmOrderActivity extends BaseActivity {
     @BindView(R.id.lin_no_address)
     LinearLayout mLinNoAddress;
 
-    private String mMessage;
     private String mType;
-    private int p;
     private WebSocketClient mWebSocketClient;
     private MyAucList mBean;
-    private RechargeOrder mRechargeOrder;
     private OrderInfo mOrderInfo;
     private Order mOrder;
-    private String mAucSt;
     private int mShopCoinShow;
     private int mShopCoin;
     private String id = "";
+    private String mGoodsId;
+    private String mTime;
+    private double mMarketP;
+    private double mActP;
+    private String mPics;
 
     @Override
     protected int getLayoutId() {
@@ -105,19 +108,16 @@ public class ComfirmOrderActivity extends BaseActivity {
     protected void initView() {
         EventBus.getDefault().register(this);
         initTitle("确认订单");
-        mMessage = extraDatas.getString("message");
         mType = extraDatas.getString("type");
         id = extraDatas.getString("id");
-        p = extraDatas.getInt("p");
-        Gson gson = new Gson();
-        mBean = gson.fromJson(mMessage, MyAucList.class);
-        if (mMessage.contains("shopcoin")) {
-            mShopCoinShow = (int) mBean.getResponse().get(p).getShopcoin();
-        } else {
-            mShopCoinShow = 0;
-        }
+        mGoodsId = extraDatas.getString("goodsid");
+        mTime = extraDatas.getString("time");
+        mMarketP = extraDatas.getDouble("marketpeice");
+        mActP = extraDatas.getDouble("actprice");
+        mShopCoinShow = extraDatas.getInt("shopcoin");
+        mPics = extraDatas.getString("pics");
         //初始化地址
-        if (SpManager.getMyAddress() != null) {
+        if (SpManager.getMyAddress().getResponse() != null) {
             mLinAddress.setVisibility(View.VISIBLE);
             mLinNoAddress.setVisibility(View.GONE);
             mTvName.setText("收件人：" + SpManager.getMyAddress().getResponse().getRecipient());
@@ -140,12 +140,12 @@ public class ComfirmOrderActivity extends BaseActivity {
             }
         });
 
-        ImageLoadManager.getInstance().setImage(this, mBean.getResponse().get(p).getPics(), mIvGoods);
+        ImageLoadManager.getInstance().setImage(this, mPics, mIvGoods);
         //商品信息展示
         mTvGwb.setText("-￥" + mShopCoinShow);
-        mTvMarketPrice.setText("￥" + mBean.getResponse().get(p).getMarketPrice());
-        mTvActMoney.setText("￥" + (mBean.getResponse().get(p).getMarketPrice() - mShopCoinShow));
-        mTvActPrice.setText("￥" + (mBean.getResponse().get(p).getMarketPrice() - mShopCoinShow));
+        mTvMarketPrice.setText("￥" + mMarketP);
+        mTvActMoney.setText("￥" + (mMarketP - mShopCoinShow));
+        mTvActPrice.setText("￥" + (mMarketP - mShopCoinShow));
         mShopCoin = mShopCoinShow;
 
         mTvPay.setOnClickListener(this);
@@ -153,12 +153,12 @@ public class ComfirmOrderActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    mTvActPrice.setText("￥" + (mBean.getResponse().get(p).getMarketPrice() - mShopCoinShow));
-                    mTvActMoney.setText("￥" + (mBean.getResponse().get(p).getMarketPrice() - mShopCoinShow));
+                    mTvActPrice.setText("￥" + (mMarketP - mShopCoinShow));
+                    mTvActMoney.setText("￥" + (mMarketP - mShopCoinShow));
                     mShopCoin = mShopCoinShow;
                 } else {
-                    mTvActPrice.setText("￥" + mBean.getResponse().get(p).getMarketPrice());
-                    mTvActMoney.setText("￥" + mBean.getResponse().get(p).getMarketPrice());
+                    mTvActPrice.setText("￥" + mMarketP);
+                    mTvActMoney.setText("￥" + mMarketP);
                     mShopCoin = 0;
                 }
             }
@@ -186,8 +186,8 @@ public class ComfirmOrderActivity extends BaseActivity {
                     MyRequset requset = new MyRequset();
                     MyRequset.Parameter parameter = new MyRequset.Parameter();
                     parameter.setToken(SpManager.getToken());
-                    parameter.setGoodsId(mBean.getResponse().get(p).getGoodsId() + "");
-                    parameter.setTime(mBean.getResponse().get(p).getTime() + "");
+                    parameter.setGoodsId(mGoodsId);
+                    parameter.setTime(mTime);
                     parameter.setAddressId(SpManager.getMyAddress().getResponse().getId());
                     parameter.setRemark(mEtMessage.getText().toString());
                     if (mType.equals("2")) {
@@ -208,7 +208,7 @@ public class ComfirmOrderActivity extends BaseActivity {
     protected void initData(Bundle bundle) {
         super.initData(bundle);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://39.104.102.255:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                 }
@@ -280,11 +280,13 @@ public class ComfirmOrderActivity extends BaseActivity {
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         Toast.makeText(ComfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        EventBus.getDefault().post(new PaySuccess());
                         setResult(1);
                         finish();
 
                     } else if (TextUtils.equals(resultStatus, "6001")) {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                        EventBus.getDefault().post(new PayCancel());
                         Toast.makeText(ComfirmOrderActivity.this, "支付取消", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(ComfirmOrderActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
@@ -313,6 +315,8 @@ public class ComfirmOrderActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(EditAddressEvent event) {
+        mLinNoAddress.setVisibility(View.GONE);
+        mLinAddress.setVisibility(View.VISIBLE);
         mTvName.setText("收件人：" + SpManager.getMyAddress().getResponse().getRecipient());
         mTvAddress.setText("收货地址：" + SpManager.getMyAddress().getResponse().getRegion() + SpManager.getMyAddress().getResponse().getSpecificAddress());
     }

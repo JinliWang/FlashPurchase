@@ -75,9 +75,13 @@ public class AucOutFragment extends BaseFragment {
                 switch (view.getId()) {
                     case R.id.tv_pai:
                         Bundle bundle1 = new Bundle();
-                        bundle1.putString("message", mMessage);
-                        bundle1.putString("type", "3");
-                        bundle1.putInt("p", position);
+                        bundle1.putString("type", "2");
+                        bundle1.putString("goodsid", mMyAucList.getResponse().get(position).getGoodsId() + "");
+                        bundle1.putString("time", mMyAucList.getResponse().get(position).getTime() + "");
+                        bundle1.putDouble("marketprice", mMyAucList.getResponse().get(position).getMarketPrice());
+                        bundle1.putDouble("shopcoin", mMyAucList.getResponse().get(position).getShopCoin());
+                        bundle1.putDouble("actprice", mMyAucList.getResponse().get(position).getActualPayment());
+                        bundle1.putString("pics", mMyAucList.getResponse().get(position).getPics());
                         mWebSocketClient.close();
                         startActivity(ComfirmOrderActivity.class, bundle1);
                         break;
@@ -90,7 +94,7 @@ public class AucOutFragment extends BaseFragment {
     protected void loadData(Bundle savedInstanceState) {
         super.loadData(savedInstanceState);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://39.104.102.255:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
 

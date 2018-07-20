@@ -10,7 +10,9 @@ import com.app.library.util.ImageLoadManager;
 import com.app.library.view.CircleImageView;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.activity.login.BindPhoneActivity;
 import com.flashPurchase.app.activity.login.ChangeNameActivity;
+import com.flashPurchase.app.event.BindSuccess;
 import com.flashPurchase.app.event.UpdateSuccess;
 
 import org.greenrobot.eventbus.EventBus;
@@ -75,6 +77,7 @@ public class MyInfoActivity extends BaseActivity {
                 startActivity(ChangeNameActivity.class, bundle);
                 break;
             case R.id.rel_phone:
+                startActivity(BindPhoneActivity.class);
                 break;
             case R.id.rel_address:
                 startActivity(MyAddressActivity.class);
@@ -85,6 +88,11 @@ public class MyInfoActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UpdateSuccess event) {
         mTvNickName.setText(SpManager.getUserName());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BindSuccess event) {
+        mTvPhone.setText(SpManager.getPhone());
     }
 
     @Override

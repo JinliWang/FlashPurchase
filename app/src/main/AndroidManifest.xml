@@ -266,9 +266,24 @@
             android:screenOrientation="portrait"
             android:theme="@style/BackActivityTheme" />
 
+        <!-- 绑定手机-->
+        <activity
+            android:name=".activity.login.BindPhoneActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+
         <!-- 限时秒-->
         <activity
             android:name=".activity.goods.TenLimitActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
+        <!-- 晒单-->
+        <activity
+            android:name=".activity.goods.AucBaskActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BackActivityTheme" />

@@ -15,6 +15,7 @@ import com.flashPurchase.app.R;
 import com.flashPurchase.app.activity.goods.AucBaskActivity;
 import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
 import com.flashPurchase.app.activity.goods.WuLiuActivity;
+import com.flashPurchase.app.activity.mine.ComfirmOrderActivity;
 import com.flashPurchase.app.model.bean.MyAllAucList;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
  * Created by 10951 on 2018/7/17.
  */
 
-public class AllAucAdapter extends BaseAdapter {
+public class AllAucAdapter extends BaseAdapter implements View.OnClickListener {
     private List<MyAllAucList.ResponseBean.AucIngBean> mList;
     private static final int TYPE_AUCING = 0;
     private static final int TYPE_AUCOUT = 1;
@@ -33,6 +34,7 @@ public class AllAucAdapter extends BaseAdapter {
     private static final int TYPE_TO_RECEIVE = 5;
     private static final int TYPE_ITEM_COUNT = 6;
     private Context mContext;
+    private String message;
 
     public AllAucAdapter(List<MyAllAucList.ResponseBean.AucIngBean> list, Context context) {
         this.mList = list;
@@ -138,9 +140,14 @@ public class AllAucAdapter extends BaseAdapter {
                 waitPayHolder.mTvPai.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(mContext, GoodsDetailActivity.class);
+                        Intent intent = new Intent(mContext, ComfirmOrderActivity.class);
                         intent.putExtra("goodsid", bean.getGoodsId() + "");
                         intent.putExtra("time", bean.getTime() + "");
+                        intent.putExtra("marketprice", bean.getMarketPrice());
+                        intent.putExtra("shopcoin", bean.getShopCoin());
+                        intent.putExtra("actprice", bean.getActualPayment());
+                        intent.putExtra("type", "3");
+                        intent.putExtra("pics", bean.getPics());
                         mContext.startActivity(intent);
 
                     }
@@ -163,9 +170,14 @@ public class AllAucAdapter extends BaseAdapter {
                 waitPayHolder.mTvPai.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(mContext, GoodsDetailActivity.class);
+                        Intent intent = new Intent(mContext, ComfirmOrderActivity.class);
                         intent.putExtra("goodsid", bean.getGoodsId() + "");
                         intent.putExtra("time", bean.getTime() + "");
+                        intent.putExtra("marketprice", bean.getMarketPrice());
+                        intent.putExtra("shopcoin", bean.getShopCoin());
+                        intent.putExtra("actprice", bean.getActualPayment());
+                        intent.putExtra("pics", bean.getPics());
+                        intent.putExtra("type", "2");
                         mContext.startActivity(intent);
 
                     }
@@ -218,12 +230,7 @@ public class AllAucAdapter extends BaseAdapter {
                 waitPayHolder.mTvWuLiu.setVisibility(View.VISIBLE);
                 waitPayHolder.mTvCancel.setVisibility(View.VISIBLE);
                 waitPayHolder.mTvPai.setText("支付差价");
-                waitPayHolder.mTvCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
+                waitPayHolder.mTvCancel.setOnClickListener(this);
                 waitPayHolder.mTvWuLiu.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -235,9 +242,8 @@ public class AllAucAdapter extends BaseAdapter {
                 waitPayHolder.mTvPai.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(mContext, GoodsDetailActivity.class);
-                        intent.putExtra("goodsid", bean.getGoodsId() + "");
-                        intent.putExtra("time", bean.getTime() + "");
+                        Intent intent = new Intent(mContext, ComfirmOrderActivity.class);
+                        intent.putExtra("id", bean.getId() + "");
                         mContext.startActivity(intent);
 
                     }
@@ -269,6 +275,11 @@ public class AllAucAdapter extends BaseAdapter {
                 break;
         }
         return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 
     class AucingHolder {

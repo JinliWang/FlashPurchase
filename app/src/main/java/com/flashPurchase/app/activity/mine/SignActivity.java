@@ -79,7 +79,7 @@ public class SignActivity extends BaseActivity {
     protected void initData(Bundle bundle) {
         super.initData(bundle);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://39.104.102.255:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                 }
@@ -139,7 +139,7 @@ public class SignActivity extends BaseActivity {
                     }
                     mTvDay.setText(mSignInfo.getResponse().getSignCount() + "");
                     break;
-                case 2:
+                case 3:
                     ToastUtil.show("签到成功！");
                     mTvDay.setText(mSignInfo.getResponse().getSignCount() + 1 + "");
                     break;

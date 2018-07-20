@@ -31,6 +31,15 @@ public class SpManager {
         return SpUtil.getString("token", "");
     }
 
+    //保存用户token
+    public static void setPhone(String phone) {
+        SpUtil.put("phone", phone);
+    }
+
+    public static String getPhone() {
+        return SpUtil.getString("phone", "");
+    }
+
     //保存clientId
     public static void setClientId(String clientId) {
         SpUtil.put("clientId", clientId);

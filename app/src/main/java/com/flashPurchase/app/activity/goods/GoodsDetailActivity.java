@@ -91,8 +91,8 @@ public class GoodsDetailActivity extends BaseActivity {
         initTitle("商品详情");
         mGoodsId = extraDatas.getString("goodsid");
         mTime = extraDatas.getString("time");
-        mUrl = "http://120.78.204.97:8089/detail?token=" + SpManager.getToken() + "&goodsId=" + mGoodsId + "&time=" + mTime;
-//        mUrl = "http://120.78.204.97:8089/detail?token=" + SpManager.getToken() + "&goodsId=" + "1" + "&time=" + "3";
+        mUrl = "http://39.104.102.255:8089/detail?token=" + SpManager.getToken() + "&goodsId=" + mGoodsId + "&time=" + mTime;
+//        mUrl = "http://39.104.102.255:8089/detail?token=" + SpManager.getToken() + "&goodsId=" + "1" + "&time=" + "3";
         // 设置可以支持缩放
         mWebView.getSettings().setSupportZoom(true);
         // 设置出现缩放工具
@@ -185,7 +185,7 @@ public class GoodsDetailActivity extends BaseActivity {
     protected void initData(Bundle bundle) {
         super.initData(bundle);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://39.104.102.255:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                 }
@@ -323,6 +323,7 @@ public class GoodsDetailActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mWebSocketClient.close();
         EventBus.getDefault().unregister(this);
     }
 }

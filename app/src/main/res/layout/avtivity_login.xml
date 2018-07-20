@@ -40,7 +40,6 @@
                     android:layout_centerInParent="true"
                     android:background="@null"
                     android:hint="输入账号"
-                    android:inputType="phone"
                     android:imeOptions="actionNext"
                     android:orientation="horizontal"
                     android:padding="@dimen/margin_10"

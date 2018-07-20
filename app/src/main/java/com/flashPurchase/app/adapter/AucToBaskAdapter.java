@@ -61,7 +61,7 @@ public class AucToBaskAdapter extends BaseAdapter<MyAucList.ResponseBean> {
             mTvStatus.setVisibility(View.GONE);
             mTvMarketPrice.setText("市场价：￥" + getData().getMarketPrice());
             mTvPaimaiPrice.setText("￥" + getData().getFinalPrice());
-            mTvAucTime.setText("成交人：" + getData().getDealUser());
+            mTvAucTime.setText("成交价格：" + getData().getActualPayment());
             ImageLoadManager.getInstance().setImage(getContext(), getData().getPics(), mIvPhoto);
             mTvPai.setText("立即晒单");
             mTvPai.setOnClickListener(this);

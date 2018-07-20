@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_color"
     android:orientation="vertical">
 
     <include layout="@layout/view_title"/>
@@ -11,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_centerInParent="true"
-        android:background="@null"
+        android:background="@drawable/shape_solid_white"
+        android:layout_margin="10dp"
         android:hint="填写内容（8~200字）"
         android:gravity="start"
         android:maxLength="200"

@@ -12,13 +12,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.library.base.BaseActivity;
+import com.app.library.util.LogUtil;
 import com.app.library.util.ToastUtil;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
-import com.flashPurchase.app.activity.MainActivity;
+import com.flashPurchase.app.event.BindSuccess;
+import com.flashPurchase.app.model.request.LoginReq;
 
+import org.greenrobot.eventbus.EventBus;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft_17;
+import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -26,31 +34,31 @@ import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
 /**
- * Created by 10951 on 2018/6/10.
+ * Created by 10951 on 2018/7/20.
  */
 
-public class FindBackPwdActivity extends BaseActivity {
+public class BindPhoneActivity extends BaseActivity {
     @BindView(R.id.et_username)
     EditText mEtUsername;
-    @BindView(R.id.tv_yzm)
-    TextView mTvYzm;
     @BindView(R.id.et_code)
     EditText mEtCode;
     @BindView(R.id.tv_get_code)
     TextView mTvGetCode;
-    @BindView(R.id.btn_next)
-    Button mBtnNext;
+    @BindView(R.id.btn_regist)
+    Button mBtnRegist;
 
     EventHandler eventHandler;
+    private WebSocketClient mWebSocketClient;
+    private String mMessage;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_forget_pwd;
+        return R.layout.activity_bind_phone;
     }
 
     @Override
     protected void initView() {
-        initTitle("找回密码");
+        initTitle("绑定手机");
         eventHandler = new EventHandler() {
 
             /**
@@ -73,7 +81,7 @@ public class FindBackPwdActivity extends BaseActivity {
 //注册监听器
         SMSSDK.registerEventHandler(eventHandler);
         mTvGetCode.setOnClickListener(this);
-        mBtnNext.setOnClickListener(this);
+        mBtnRegist.setOnClickListener(this);
     }
 
     @Override
@@ -107,10 +115,10 @@ public class FindBackPwdActivity extends BaseActivity {
                     }
                 }.start();
                 break;
-            case R.id.btn_next:
+            case R.id.btn_regist:
                 String phoneNumber = mEtUsername.getText().toString();
                 if (null == phoneNumber || "".equals(phoneNumber) || phoneNumber.length() != 11) {
-                    ToastUtil.show("请输入正确的手机号");
+                    Toast.makeText(this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(mEtCode.getText().toString())) {
@@ -118,10 +126,47 @@ public class FindBackPwdActivity extends BaseActivity {
                     return;
                 }
                 SMSSDK.submitVerificationCode("86", phoneNumber, mEtCode.getText().toString());
-//                Bundle bundle = new Bundle();
-//                bundle.putString("phone", mEtUsername.getText().toString());
-//                startActivity(ChangePwdActivity.class, bundle);
                 break;
+        }
+    }
+
+    @Override
+    protected void initData(Bundle bundle) {
+        super.initData(bundle);
+        try {
+            mWebSocketClient = new WebSocketClient(new URI("ws://39.104.102.255:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+                @Override
+                public void onOpen(ServerHandshake handshakedata) {
+                }
+
+                @Override
+                public void onMessage(String message) {
+                    LogUtil.d(message);
+                    if (!message.contains("response")) {
+                        Message msg = new Message();
+                        msg.what = 3;
+                        myHandler.sendMessage(msg);
+                    } else if (message.contains("user-changePhone")) {
+                        mMessage = message;
+                        Message msg = new Message();
+                        msg.what = 4;
+                        myHandler.sendMessage(msg);
+                    }
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+
+                }
+
+                @Override
+                public void onError(Exception ex) {
+
+                }
+            };
+            mWebSocketClient.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
     }
 
@@ -136,7 +181,7 @@ public class FindBackPwdActivity extends BaseActivity {
                     Log.e(TAG, "result : " + result + ", event: " + event + ", data : " + data);
                     if (result == SMSSDK.RESULT_COMPLETE) { //回调  当返回的结果是complete
                         if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) { //获取验证码
-                            Toast.makeText(FindBackPwdActivity.this, "发送验证码成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BindPhoneActivity.this, "发送验证码成功", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "get verification code successful.");
                         } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) { //提交验证码
                             Log.d(TAG, "submit code successful");
@@ -146,10 +191,13 @@ public class FindBackPwdActivity extends BaseActivity {
                             String phone = (String) mData.get("phone");
                             Log.e("TAG", country + "====" + phone);
                             if (phone.equals(mEtUsername.getText().toString())) {
-                                //如果返回的用户注册的手机号和用户输入的手机号相同,则代表通过验证
-                                Bundle bundle = new Bundle();
-                                bundle.putString("phone", mEtUsername.getText().toString());
-                                startActivity(ChangePwdActivity.class, bundle);
+                                LoginReq loginReq = new LoginReq();
+                                LoginReq.Parameter parameter = new LoginReq.Parameter();
+                                parameter.setPhone(mEtUsername.getText().toString());
+                                parameter.setToken(SpManager.getToken());
+                                loginReq.setUrlMapping("user-changePhone");
+                                loginReq.setParameter(parameter);
+                                mWebSocketClient.send(loginReq.changePhone());
                             }
                         } else {
                             Log.d(TAG, data.toString());
@@ -164,7 +212,7 @@ public class FindBackPwdActivity extends BaseActivity {
                             //错误代码：  http://wiki.mob.com/android-api-%E9%94%99%E8%AF%AF%E7%A0%81%E5%8F%82%E8%80%83/
                             Log.e(TAG, "status: " + status + ", detail: " + des);
                             if (status > 0 && !TextUtils.isEmpty(des)) {
-                                Toast.makeText(FindBackPwdActivity.this, des, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BindPhoneActivity.this, des, Toast.LENGTH_SHORT).show();
                                 return;
                             }
                         } catch (Exception e) {
@@ -178,6 +226,16 @@ public class FindBackPwdActivity extends BaseActivity {
                 case 0x02:
                     mTvGetCode.setText("获取验证码");
                     mTvGetCode.setClickable(true);
+                    break;
+                case 4:
+                    if (mMessage.contains("\"success\":1")) {
+                        ToastUtil.show("绑定成功！");
+                        SpManager.setPhone(mEtUsername.getText().toString());
+                        EventBus.getDefault().post(new BindSuccess());
+                        finish();
+                    } else if (mMessage.contains("\"success\":0")) {
+                        ToastUtil.show("绑定失败，请重试！");
+                    }
                     break;
             }
         }

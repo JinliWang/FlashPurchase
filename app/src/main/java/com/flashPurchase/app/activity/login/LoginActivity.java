@@ -107,7 +107,7 @@ public class LoginActivity extends BaseActivity {
                     public void onNext(String s) {
                         SpManager.setClientId(s);
                         try {
-                            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+                            mWebSocketClient = new WebSocketClient(new URI("ws://39.104.102.255:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                                 @Override
                                 public void onOpen(ServerHandshake handshakedata) {
                                 }
@@ -177,7 +177,7 @@ public class LoginActivity extends BaseActivity {
                         SpManager.setUserInfo(mLogin);
                         SpManager.setUserName(mEtUsername.getText().toString());
                         startActivity(MainActivity.class);
-                    }else {
+                    } else {
                         ToastUtil.show("手机号或者密码错误！");
                     }
                     break;
@@ -200,7 +200,7 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.btn_login:
                 String strPhoneNumber = mEtUsername.getText().toString();
-                if (null == strPhoneNumber || "".equals(strPhoneNumber) || strPhoneNumber.length() != 11) {
+                if (TextUtils.isEmpty(strPhoneNumber)) {
                     Toast.makeText(this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                     return;
                 }

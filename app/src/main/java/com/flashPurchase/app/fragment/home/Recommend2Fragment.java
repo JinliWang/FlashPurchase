@@ -176,7 +176,7 @@ public class Recommend2Fragment extends BaseFragment implements BaseRecyclerAdap
     protected void loadData(Bundle savedInstanceState) {
         super.loadData(savedInstanceState);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://39.104.102.255:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                 }

@@ -14,11 +14,14 @@ import com.app.library.util.ToastUtil;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
 import com.flashPurchase.app.activity.MainActivity;
+import com.flashPurchase.app.event.AucBaskSuccess;
+import com.flashPurchase.app.model.bean.AucBask;
 import com.flashPurchase.app.model.bean.Login;
 import com.flashPurchase.app.model.request.LoginReq;
 import com.flashPurchase.app.model.request.MyRequset;
 import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
@@ -40,8 +43,10 @@ public class AucBaskActivity extends BaseActivity {
     EditText mEtPwd;
 
     private String goodsid;
+    private String orderId;
 
     private WebSocketClient mWebSocketClient;
+    private AucBask mAucBask;
 
     @Override
     protected int getLayoutId() {
@@ -52,13 +57,19 @@ public class AucBaskActivity extends BaseActivity {
     protected void initView() {
         initTitle("发布晒单", "提交");
         goodsid = extraDatas.getString("id");
+        orderId = extraDatas.getString("orderid");
         mRelTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mEtPwd.getText().length() < 8 || mEtPwd.getText().length() > 200) {
+                    ToastUtil.show("填写内容请控制在8~200字！");
+                    return;
+                }
                 MyRequset loginReq = new MyRequset();
                 MyRequset.Parameter parameter = new MyRequset.Parameter();
                 parameter.setToken(SpManager.getToken());
                 parameter.setGoodsId(goodsid);
+                parameter.setOrderId(orderId);
                 parameter.setPics("");
                 parameter.setComments(mEtPwd.getText().toString());
                 loginReq.setUrlMapping("comment-save");
@@ -72,7 +83,7 @@ public class AucBaskActivity extends BaseActivity {
     protected void initData(Bundle bundle) {
         super.initData(bundle);
         try {
-            mWebSocketClient = new WebSocketClient(new URI("ws://120.78.204.97:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
+            mWebSocketClient = new WebSocketClient(new URI("ws://39.104.102.255:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                 }
@@ -85,15 +96,11 @@ public class AucBaskActivity extends BaseActivity {
                         msg.what = 0;
                         mHandler.sendMessage(msg);
                     } else if (message.contains("comment-save")) {//返回收藏状态，判断是否收藏
-                        if (message.contains("\"success\":1")) {
-                            Message msg = new Message();
-                            msg.what = 1;
-                            mHandler.sendMessage(msg);
-                        }else if(message.contains("\"success\":0")) {
-                            Message msg = new Message();
-                            msg.what = 2;
-                            mHandler.sendMessage(msg);
-                        }
+                        Gson gson = new Gson();
+                        mAucBask = gson.fromJson(message, AucBask.class);
+                        Message msg = new Message();
+                        msg.what = 1;
+                        mHandler.sendMessage(msg);
                     }
                 }
 
@@ -120,11 +127,13 @@ public class AucBaskActivity extends BaseActivity {
 
                     break;
                 case 1:
-                    ToastUtil.show("晒单成功！");
-                    finish();
-                    break;
-                case 2:
-                    ToastUtil.show("晒单失败，请重试！");
+                    if (mAucBask.getResponse().getComments().equals(mEtPwd.getText().toString())) {
+                        ToastUtil.show("恭喜您，完成晒单！");
+                        EventBus.getDefault().post(new AucBaskSuccess());
+                        finish();
+                    }else {
+                        ToastUtil.show("晒单失败，请重试！");
+                    }
                     break;
             }
         }
