@@ -64,6 +64,11 @@ public class TenLimitActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsid", mTenLimit.getResponse().getGoods().get(position).getId() + "");
                 bundle.putString("time", mTenLimit.getResponse().getGoods().get(position).getTime() + "");
+                if (mTenLimit.getResponse().getGoods().get(position).getStatus() == 1) {
+                    bundle.putString("isnext", "0");
+                }else {
+                    bundle.putString("isnext", "1");
+                }
                 startActivity(GoodsDetailActivity.class, bundle);
             }
         });
@@ -143,7 +148,7 @@ public class TenLimitActivity extends BaseActivity {
                     break;
                 case 1:
                     mLimittAdapter.addData(mTenLimit.getResponse().getGoods());
-                    mRefreshLayout.setData2(mTenLimit.getResponse().getGoods(),mLimittAdapter);
+                    mRefreshLayout.setData2(mTenLimit.getResponse().getGoods(), mLimittAdapter);
                     break;
             }
         }

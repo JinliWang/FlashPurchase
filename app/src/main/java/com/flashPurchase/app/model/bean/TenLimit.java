@@ -113,6 +113,11 @@ public class TenLimit {
             private int aucSt;
             private String pics;
             private int collect;
+            private int status;
+
+            public int getStatus() {
+                return status;
+            }
 
             public double getCurrentPrice() {
                 return currentPrice;
