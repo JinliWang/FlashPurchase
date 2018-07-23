@@ -149,9 +149,9 @@ public class WuLiuActivity extends BaseActivity {
                     mTvMarketPrice.setText("￥" + mWuliuDetail.getResponse().getMarketPrice());
                     mTvGwb.setText("￥" + mWuliuDetail.getResponse().getShopCoin());
                     mTvActPrice.setText("￥" + mWuliuDetail.getResponse().getActualPayment());
-                    mTvName.setText(mWuliuDetail.getResponse().getNickname());
+                    mTvName.setText("收件人：" + mWuliuDetail.getResponse().getNickname());
                     mTvPhone.setText(mWuliuDetail.getResponse().getPhone());
-                    mTvAddress.setText(mWuliuDetail.getResponse().getRegion() + mWuliuDetail.getResponse().getSpecificAddress());
+                    mTvAddress.setText("收货地址：" + mWuliuDetail.getResponse().getRegion() + mWuliuDetail.getResponse().getSpecificAddress());
                     break;
             }
         }

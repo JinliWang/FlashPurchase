@@ -9,13 +9,13 @@
     <com.flashPurchase.app.view.RefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recomend_list"
+        <ListView
+            android:id="@+id/bask_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:divider="@null"></ListView>
     </com.flashPurchase.app.view.RefreshLayout>
 
 </LinearLayout>

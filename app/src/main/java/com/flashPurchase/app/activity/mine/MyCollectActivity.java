@@ -8,9 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.app.library.base.BaseActivity;
+import com.app.library.base.BaseRecyclerAdapter;
 import com.app.library.util.LogUtil;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
 import com.flashPurchase.app.adapter.HomeListAdapter;
 import com.flashPurchase.app.adapter.MyCollectAdapter;
 import com.flashPurchase.app.adapter.RecommendMoreAdapter;
@@ -57,8 +59,8 @@ public class MyCollectActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        initTitle("我的收藏");
         EventBus.getDefault().register(this);
-        initTitle("我收藏的商品");
         mType = extraDatas.getString("type");
         mAdapter = new MyCollectAdapter();
         GridLayoutManager gridLayoutManager =
@@ -66,6 +68,17 @@ public class MyCollectActivity extends BaseActivity {
         mRecomendList.setAdapter(mAdapter);
         mRecomendList.setLayoutManager(gridLayoutManager);
         mRefreshLayout.setEnableRefresh(false);
+        mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void itemClick(int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("goodsid", mAdapter.getDataList().get(position).getGoodsId());
+                bundle.putString("time", mAdapter.getDataList().get(position).getTime());
+                bundle.putString("isnext", "0");
+                startActivity(GoodsDetailActivity.class, bundle);
+            }
+        });
+
     }
 
     private Handler handler = new Handler() {

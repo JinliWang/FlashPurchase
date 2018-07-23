@@ -1,6 +1,7 @@
 package com.flashPurchase.app.fragment.mine;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import com.app.library.util.LogUtil;
 import com.app.library.view.CircleImageView;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
+import com.flashPurchase.app.activity.goods.MyAucBaskActivity;
 import com.flashPurchase.app.activity.mine.AdviceActivity;
 import com.flashPurchase.app.activity.mine.CenterMessageActivity;
 import com.flashPurchase.app.activity.mine.MyAuctionActivity;
@@ -163,7 +165,7 @@ public class MineCenterFragment extends BaseFragment {
                         Message msg = new Message();
                         msg.what = 0;
                         handler.sendMessage(msg);
-                    } else {
+                    } else if (message.contains("account-myCenter")) {
                         try {
                             Gson gson = new Gson();
                             mMyInfo = gson.fromJson(message, MyInfo.class);
@@ -213,13 +215,8 @@ public class MineCenterFragment extends BaseFragment {
                     mTvFree.setText(mMyInfo.getResponse().getFreeCoin() + "");
                     mTvShop.setText(mMyInfo.getResponse().getShopCoin() + "");
                     mTvPoint.setText(mMyInfo.getResponse().getPoint() + "");
-                    if (TextUtils.isEmpty(mMyInfo.getResponse().getNickname())) {
-                        mTvNickName.setText(mMyInfo.getResponse().getID());
-                        mNickName = mMyInfo.getResponse().getID();
-                    } else {
-                        mNickName = mMyInfo.getResponse().getNickname();
-                        mTvNickName.setText(mMyInfo.getResponse().getNickname());
-                    }
+                    mTvNickName.setText(mMyInfo.getResponse().getNickname());
+                    mNickName = mMyInfo.getResponse().getNickname();
                     mTvId.setText(mMyInfo.getResponse().getUserId() + "");
                     ImageLoadManager.getInstance().setImage(getContext(), mMyInfo.getResponse().getPic(), mIvPhoto);
                     break;
@@ -362,11 +359,11 @@ public class MineCenterFragment extends BaseFragment {
             }
         });
 
-        //我的订单
+        //我的晒单
         mRelMyOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(MyOrdersActivity.class, bundle);
+                startActivity(MyAucBaskActivity.class, bundle);
             }
         });
 
@@ -403,15 +400,15 @@ public class MineCenterFragment extends BaseFragment {
         oks.disableSSOWhenAuthorize();
 
         // title标题，微信、QQ和QQ空间等平台使用
-        oks.setTitle("微信分享");
+        oks.setTitle("一起分享");
         // titleUrl QQ和QQ空间跳转链接
-        oks.setTitleUrl("http://sharesdk.cn");
+        oks.setTitleUrl("http://www.tutuwork.com");
         // text是分享文本，所有平台都需要这个字段
-        oks.setText("我是分享文本");
+        oks.setText("雅德拍卖");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        oks.setImagePath(Environment.getExternalStorageDirectory() + "ic_launcher.jpg");//确保SDcard下面存在此张图片
         // url在微信、微博，Facebook等平台中使用
-        oks.setUrl("http://www.yunnandingchun.com:9999/dingchun/");
+        oks.setUrl("http://www.tutuwork.com");
         // comment是我对这条分享的评论，仅在人人网使用
 //        oks.setComment("我是测试评论文本");
         // 启动分享GUI
@@ -441,7 +438,7 @@ public class MineCenterFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UpdateSuccess updateSuccess) {
-        mTvNickName.setText(SpManager.getUserName());
+        mTvNickName.setText(SpManager.getName());
     }
 
     @Override

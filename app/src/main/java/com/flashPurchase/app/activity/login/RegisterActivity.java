@@ -213,6 +213,7 @@ public class RegisterActivity extends BaseActivity {
                     if (result == SMSSDK.RESULT_COMPLETE) { //回调  当返回的结果是complete
                         if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) { //获取验证码
                             Toast.makeText(RegisterActivity.this, "发送验证码成功", Toast.LENGTH_SHORT).show();
+                            mTvGetCode.setClickable(false);
                             Log.d(TAG, "get verification code successful.");
                         } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) { //提交验证码
                             Log.d(TAG, "submit code successful");
@@ -253,6 +254,7 @@ public class RegisterActivity extends BaseActivity {
                     }
                     break;
                 case 0x01:
+                    mTvGetCode.setClickable(false);
                     mTvGetCode.setText("重新发送(" + msg.arg1 + ")");
                     break;
                 case 0x02:

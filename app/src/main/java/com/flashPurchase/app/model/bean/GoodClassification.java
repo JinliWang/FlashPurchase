@@ -85,6 +85,11 @@ public class GoodClassification {
             private String pics;
             private String aucSt;
             private String categoryId;
+            private String status;
+
+            public String getStatus() {
+                return status;
+            }
 
             public String getAucNum() {
                 return aucNum;

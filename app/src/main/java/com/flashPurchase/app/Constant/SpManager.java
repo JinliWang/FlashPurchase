@@ -168,6 +168,20 @@ public class SpManager {
         return SpUtil.getString("sysUserName", "");
     }
 
+
+    /**
+     * 保存用户名
+     *
+     * @param userName
+     */
+    public static void setName(String userName) {
+        SpUtil.put("Name", userName);
+    }
+
+    public static String getName() {
+        return SpUtil.getString("Name", "");
+    }
+
     /**
      * 保存密码
      *

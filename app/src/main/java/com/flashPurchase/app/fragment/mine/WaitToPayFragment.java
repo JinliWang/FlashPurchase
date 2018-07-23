@@ -73,6 +73,7 @@ public class WaitToPayFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsid", mList.get(i).getGoodsId() + "");
                 bundle.putString("time", mList.get(i).getTime() + "");
+                bundle.putString("isnext", "1");
                 startActivity(GoodsDetailActivity.class, bundle);
             }
         });

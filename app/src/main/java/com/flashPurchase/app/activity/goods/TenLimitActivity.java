@@ -143,7 +143,7 @@ public class TenLimitActivity extends BaseActivity {
                     break;
                 case 1:
                     mLimittAdapter.addData(mTenLimit.getResponse().getGoods());
-                    mRefreshLayout.setData(mTenLimit.getResponse().getGoods());
+                    mRefreshLayout.setData2(mTenLimit.getResponse().getGoods(),mLimittAdapter);
                     break;
             }
         }

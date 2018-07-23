@@ -113,7 +113,7 @@ public class ChangeNameActivity extends BaseActivity {
                     break;
                 case 1:
                     ToastUtil.show("修改成功！");
-                    SpManager.setUserName(mEtUsername.getText().toString());
+                    SpManager.setName(mEtUsername.getText().toString());
                     EventBus.getDefault().post(new UpdateSuccess());
                     finish();
                     break;

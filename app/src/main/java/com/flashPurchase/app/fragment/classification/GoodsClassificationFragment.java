@@ -99,6 +99,11 @@ public class GoodsClassificationFragment extends BaseFragment implements Adapter
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsid", mGoods.get(position).getId());
                 bundle.putString("time", mGoods.get(position).getTime());
+                if (mGoods.get(position).getStatus().equals("2")) {
+                    bundle.putString("isnext", "1");
+                } else {
+                    bundle.putString("isnext", "0");
+                }
                 startActivity(GoodsDetailActivity.class, bundle);
             }
         });

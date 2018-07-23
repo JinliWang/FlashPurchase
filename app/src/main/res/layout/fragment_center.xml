@@ -41,8 +41,8 @@
                         android:id="@+id/iv_maine_msg"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:visibility="gone"
-                        android:src="@drawable/icon_message" />
+                        android:src="@drawable/icon_message"
+                        android:visibility="gone" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -435,7 +435,6 @@
                 android:id="@+id/rel_my_order"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:visibility="gone"
                 android:background="@color/colorSixF">
 
                 <ImageView
@@ -452,7 +451,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/iv_iv4"
-                    android:text="我的订单"
+                    android:text="我的晒单"
                     android:textColor="@color/text_color"
                     android:textSize="14sp" />
 
@@ -471,7 +470,8 @@
                 android:id="@+id/rel_sign_in"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@color/colorSixF">
+                android:background="@color/colorSixF"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_iv5"
@@ -500,7 +500,9 @@
                     android:src="@drawable/icon_right_arrow" />
             </RelativeLayout>
 
-            <View style="@style/style_dividing_line" />
+            <View
+                style="@style/style_dividing_line"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:id="@+id/lin_advice"

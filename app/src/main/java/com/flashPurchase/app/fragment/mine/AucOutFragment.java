@@ -65,6 +65,7 @@ public class AucOutFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsid", mList.get(i).getGoodsId() + "");
                 bundle.putString("time", mList.get(i).getTime() + "");
+                bundle.putString("isnext", "1");
                 startActivity(GoodsDetailActivity.class, bundle);
             }
         });
@@ -75,7 +76,7 @@ public class AucOutFragment extends BaseFragment {
                 switch (view.getId()) {
                     case R.id.tv_pai:
                         Bundle bundle1 = new Bundle();
-                        bundle1.putString("type", "2");
+                        bundle1.putString("type", "3");
                         bundle1.putString("goodsid", mMyAucList.getResponse().get(position).getGoodsId() + "");
                         bundle1.putString("time", mMyAucList.getResponse().get(position).getTime() + "");
                         bundle1.putDouble("marketprice", mMyAucList.getResponse().get(position).getMarketPrice());

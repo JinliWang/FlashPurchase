@@ -73,11 +73,21 @@ public class RecommendMoreResponse {
             private String aucPeopleNum;
             private String name;
             private String currentPrice;
+            private String goodsName;
             private String id;
             private String time;
             private String pics;
             private String aucSt;
             private String goodsId;
+            private String status;
+
+            public String getStatus() {
+                return status;
+            }
+
+            public String getGoodsName() {
+                return goodsName;
+            }
 
             public String getGoodsId() {
                 return goodsId;

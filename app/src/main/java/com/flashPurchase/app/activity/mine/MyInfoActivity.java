@@ -42,9 +42,6 @@ public class MyInfoActivity extends BaseActivity {
     @BindView(R.id.iv_photo)
     CircleImageView mIvPhoto;
 
-    private String mPic;
-    private String mNickName;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_info;
@@ -54,11 +51,9 @@ public class MyInfoActivity extends BaseActivity {
     protected void initView() {
         initTitle("我的信息");
         EventBus.getDefault().register(this);
-        mPic = extraDatas.getString("pic");
-        mNickName = extraDatas.getString("name");
 
-        ImageLoadManager.getInstance().setImage(this, mPic, mIvPhoto);
-        mTvNickName.setText(mNickName);
+        ImageLoadManager.getInstance().setImage(this, SpManager.getMyInfo().getResponse().getPic(), mIvPhoto);
+        mTvNickName.setText(SpManager.getMyInfo().getResponse().getNickname());
         mRelPhoto.setOnClickListener(this);
         mRelNickName.setOnClickListener(this);
         mRelAddress.setOnClickListener(this);
@@ -73,7 +68,7 @@ public class MyInfoActivity extends BaseActivity {
                 break;
             case R.id.rel_nick_name:
                 Bundle bundle = new Bundle();
-                bundle.putString("name", mNickName);
+                bundle.putString("name", mTvNickName.getText().toString());
                 startActivity(ChangeNameActivity.class, bundle);
                 break;
             case R.id.rel_phone:
@@ -87,7 +82,7 @@ public class MyInfoActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UpdateSuccess event) {
-        mTvNickName.setText(SpManager.getUserName());
+        mTvNickName.setText(SpManager.getName());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

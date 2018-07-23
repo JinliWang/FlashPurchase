@@ -78,6 +78,7 @@ public class AucSucFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsid", mList.get(i).getGoodsId() + "");
                 bundle.putString("time", mList.get(i).getTime() + "");
+                bundle.putString("isnext", "1");
                 startActivity(GoodsDetailActivity.class, bundle);
             }
         });
@@ -93,7 +94,7 @@ public class AucSucFragment extends BaseFragment {
                         bundle1.putString("time", mMyAucList.getResponse().get(position).getTime() + "");
                         bundle1.putDouble("marketprice", mMyAucList.getResponse().get(position).getMarketPrice());
                         bundle1.putDouble("shopcoin", mMyAucList.getResponse().get(position).getShopCoin());
-                        bundle1.putDouble("actprice", mMyAucList.getResponse().get(position).getActualPayment());
+                        bundle1.putDouble("actprice", mMyAucList.getResponse().get(position).getFinalPrice());
                         bundle1.putString("pics", mMyAucList.getResponse().get(position).getPics());
                         mWebSocketClient.close();
                         startActivity(ComfirmOrderActivity.class, bundle1);

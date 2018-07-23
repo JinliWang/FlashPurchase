@@ -176,6 +176,8 @@ public class LoginActivity extends BaseActivity {
                         SpManager.setRegisterTime(mLogin.getResponse().getRegisterTime());
                         SpManager.setUserInfo(mLogin);
                         SpManager.setUserName(mEtUsername.getText().toString());
+                        SpManager.setName(mEtUsername.getText().toString());
+                        SpManager.setUserPwd(mEtPwd.getText().toString());
                         startActivity(MainActivity.class);
                     } else {
                         ToastUtil.show("手机号或者密码错误！");

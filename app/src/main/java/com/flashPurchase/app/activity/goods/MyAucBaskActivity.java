@@ -1,30 +1,26 @@
-package com.flashPurchase.app.fragment.dynamic;
+package com.flashPurchase.app.activity.goods;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
-import com.app.library.base.BaseFragment;
+import com.app.library.base.BaseActivity;
 import com.app.library.util.LogUtil;
 import com.flashPurchase.app.Constant.SpManager;
 import com.flashPurchase.app.R;
-import com.flashPurchase.app.activity.goods.GoodsDetailActivity;
-import com.flashPurchase.app.adapter.DynamicAdapter;
-import com.flashPurchase.app.event.RefreshGoodsEvent;
-import com.flashPurchase.app.model.bean.RecentDeal;
+import com.flashPurchase.app.adapter.MyAucBaskAdapter;
+import com.flashPurchase.app.model.bean.AucBask;
+import com.flashPurchase.app.model.bean.MyBask;
 import com.flashPurchase.app.model.request.MyRequset;
 import com.flashPurchase.app.view.RefreshLayout;
 import com.google.gson.Gson;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
@@ -37,66 +33,66 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * Created by 10951 on 2018/4/9.
+ * Created by 10951 on 2018/7/20.
  */
 
-public class NewNitificaDynamicFragment extends BaseFragment implements AdapterView.OnItemClickListener {
-    @BindView(R.id.iv_left)
-    ImageView mIvLeft;
-    @BindView(R.id.iv_right)
-    ImageView mIvRight;
-    @BindView(R.id.nitificate_list)
-    ListView mNitificateList;
+public class MyAucBaskActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+    @BindView(R.id.bask_list)
+    ListView mBaskList;
     @BindView(R.id.refresh_layout)
     RefreshLayout mRefreshLayout;
 
-    private DynamicAdapter mAdapter;
-    private List<RecentDeal.ResponseBean.DealRecordsBean> mList;
-
     private WebSocketClient mWebSocketClient;
     private int pageIndex = 1;
-    private RecentDeal mRecentDeal;
+    private MyAucBaskAdapter mAdapter;
+    private List<MyBask.ResponseBean.CommentsBean> mList;
+    private MyBask mAucBask;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_new_dynamic;
+        return R.layout.activity_my_bask;
     }
 
     @Override
-    protected void initView(View view) {
-        EventBus.getDefault().register(this);
-        initTitle("最新动态");
-        mIvLeft.setVisibility(View.GONE);
-
+    protected void initView() {
+        initTitle("我的晒单");
         mList = new ArrayList<>();
-        mAdapter = new DynamicAdapter(mList);
-        mNitificateList.setAdapter(mAdapter);
-        mNitificateList.setOnItemClickListener(this);
+        mAdapter = new MyAucBaskAdapter(mList);
+        mBaskList.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
-                pageIndex = 1;
                 mAdapter.clearData();
-                Message msg = new Message();
-                msg.what = 0;
-                handler.sendMessage(msg);
+                pageIndex = 1;
+                getList();
             }
 
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
                 pageIndex++;
-                Message msg = new Message();
-                msg.what = 0;
-                handler.sendMessage(msg);
+                getList();
             }
         });
+
+        mBaskList.setOnItemClickListener(this);
+    }
+
+    private void getList() {
+        MyRequset more = new MyRequset();
+        MyRequset.Parameter parameter = new MyRequset.Parameter();
+        parameter.setToken(SpManager.getToken());
+        parameter.setPageSize("10");
+        parameter.setPageNum(String.valueOf(pageIndex));
+        more.setUrlMapping("comment-getMyComments");
+        more.setParameter(parameter);
+        mWebSocketClient.send(more.getTen());
     }
 
     @Override
-    protected void loadData(Bundle savedInstanceState) {
-        super.loadData(savedInstanceState);
+    protected void initData(Bundle bundle) {
+        super.initData(bundle);
         try {
             mWebSocketClient = new WebSocketClient(new URI("ws://39.104.102.255:8086/auction?user=" + SpManager.getClientId()), new Draft_17()) {
                 @Override
@@ -111,9 +107,9 @@ public class NewNitificaDynamicFragment extends BaseFragment implements AdapterV
                         Message msg = new Message();
                         msg.what = 0;
                         handler.sendMessage(msg);
-                    } else {
+                    } else if (message.contains("comment-getMyComments")) {
                         Gson gson = new Gson();
-                        mRecentDeal = gson.fromJson(message, RecentDeal.class);
+                        mAucBask = gson.fromJson(message, MyBask.class);
                         Message msg = new Message();
                         msg.what = 1;
                         handler.sendMessage(msg);
@@ -141,18 +137,11 @@ public class NewNitificaDynamicFragment extends BaseFragment implements AdapterV
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    MyRequset more = new MyRequset();
-                    MyRequset.Parameter parameter = new MyRequset.Parameter();
-                    parameter.setPageNum(String.valueOf(pageIndex));
-                    parameter.setPageSize("10");
-                    parameter.setGoodsId("0");
-                    more.setUrlMapping("goods-recentDeal");
-                    more.setParameter(parameter);
-                    mWebSocketClient.send(more.getRecent());
+                    getList();
                     break;
                 case 1:
-                    mAdapter.addData(mRecentDeal.getResponse().getDealRecords());
-                    mRefreshLayout.setData(mRecentDeal.getResponse().getDealRecords());
+                    mAdapter.addData(mAucBask.getResponse().getComments());
+                    mRefreshLayout.setData(mAucBask.getResponse().getComments(), mAdapter);
                     break;
             }
         }
@@ -161,24 +150,9 @@ public class NewNitificaDynamicFragment extends BaseFragment implements AdapterV
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Bundle bundle = new Bundle();
-        bundle.putString("goodsid", mRecentDeal.getResponse().getDealRecords().get(i).getGoodsId());
-        bundle.putString("time", mRecentDeal.getResponse().getDealRecords().get(i).getTime());
-        bundle.putString("isnext", "1");
+        bundle.putString("goodsid", mList.get(i).getGoodsId() + "");
+        bundle.putString("time", mList.get(i).getTime() + "");
+        bundle.putString("isnext", "0");
         startActivity(GoodsDetailActivity.class, bundle);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefreshGoodsEvent event) {
-        if (mWebSocketClient != null) {
-            Message msg = new Message();
-            msg.what = 0;
-            handler.sendMessage(msg);
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }

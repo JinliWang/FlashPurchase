@@ -32,6 +32,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
+import org.java_websocket.exceptions.WebsocketNotConnectedException;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
@@ -72,6 +73,7 @@ public class GoodsDetailActivity extends BaseActivity {
     private String mTime;
     private String mUrl;
     private int mAucTime = 1;
+    private String isNext;
     private GoodDetail mGoodDetail;
     private Collect mCollect;
     private ToRecharge mToRecharge;
@@ -91,6 +93,14 @@ public class GoodsDetailActivity extends BaseActivity {
         initTitle("商品详情");
         mGoodsId = extraDatas.getString("goodsid");
         mTime = extraDatas.getString("time");
+        isNext = extraDatas.getString("isnext");
+        if(isNext.equals("1")) {
+            mLinNext.setVisibility(View.VISIBLE);
+            mLinNow.setVisibility(View.GONE);
+        }else {
+            mLinNext.setVisibility(View.GONE);
+            mLinNow.setVisibility(View.VISIBLE);
+        }
         mUrl = "http://39.104.102.255:8089/detail?token=" + SpManager.getToken() + "&goodsId=" + mGoodsId + "&time=" + mTime;
 //        mUrl = "http://39.104.102.255:8089/detail?token=" + SpManager.getToken() + "&goodsId=" + "1" + "&time=" + "3";
         // 设置可以支持缩放
@@ -155,7 +165,11 @@ public class GoodsDetailActivity extends BaseActivity {
                 } else {
                     more.setUrlMapping("collect-add");
                 }
-                mWebSocketClient.send(more.collect());
+                try {
+                    mWebSocketClient.send(more.collect());
+                } catch (WebsocketNotConnectedException e) {
+                    ToastUtil.show("操作失败！");
+                }
                 break;
             case R.id.lin_chujia:
                 MyRequset requset = new MyRequset();
@@ -165,7 +179,11 @@ public class GoodsDetailActivity extends BaseActivity {
                 parameter1.setToken(SpManager.getToken());
                 requset.setParameter(parameter1);
                 requset.setUrlMapping("auc-bid");
-                mWebSocketClient.send(requset.auc());
+                try {
+                    mWebSocketClient.send(requset.auc());
+                } catch (WebsocketNotConnectedException e) {
+                    ToastUtil.show("操作出现问题，请稍后重试！");
+                }
                 break;
             case R.id.lin_next:
                 MyRequset requset1 = new MyRequset();
@@ -177,6 +195,8 @@ public class GoodsDetailActivity extends BaseActivity {
                 requset1.setUrlMapping("goods-goodsDetail");
                 requset1.setParameter(parameter2);
                 mWebSocketClient.send(requset1.goodsDetail());
+                mLinNext.setVisibility(View.GONE);
+                mLinNow.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -257,7 +277,7 @@ public class GoodsDetailActivity extends BaseActivity {
                     parameter.setToken(SpManager.getToken());
                     parameter.setGoodsId(mGoodsId);
                     parameter.setTime(mTime);
-                    parameter.setIsNext("");
+                    parameter.setIsNext(isNext);
                     more.setUrlMapping("goods-goodsDetail");
                     more.setParameter(parameter);
                     mWebSocketClient.send(more.goodsDetail());
@@ -271,9 +291,9 @@ public class GoodsDetailActivity extends BaseActivity {
                     }
                     mLinNow.setVisibility(View.VISIBLE);
                     mLinNext.setVisibility(View.GONE);
-                    if(mGoodDetail.getResponse().getIsTen() == 0) {
+                    if (mGoodDetail.getResponse().getIsTen() == 0) {
                         mTvPaibi.setText("1拍币/次");
-                    }else if(mGoodDetail.getResponse().getIsTen() == 1) {
+                    } else if (mGoodDetail.getResponse().getIsTen() == 1) {
                         mTvPaibi.setText("10拍币/次");
                     }
                     break;

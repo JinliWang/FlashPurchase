@@ -64,6 +64,12 @@ public class MyAllAuctionFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsid", mList.get(i).getGoodsId() + "");
+                bundle.putString("time", mList.get(i).getTime() + "");
+                if (mList.get(i).getStatus().equals("aucing")) {
+                    bundle.putString("isnext", "0");
+                } else {
+                    bundle.putString("isnext", "1");
+                }
                 startActivity(GoodsDetailActivity.class, bundle);
             }
         });

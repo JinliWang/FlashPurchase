@@ -129,7 +129,7 @@ public class HomeFragment2 extends BaseFragment implements IOnFocusListenable, M
 
     private List<String> mTitles;
     private FragmentManager mFragmentManager = null;
-    private SparseArray<WeakReference<Recommend2Fragment>> childFragments;
+    private SparseArray<WeakReference<RecommendFragment3>> childFragments;
     private static int headHeight, headAndTabHeight, tabHeight;
 
 
@@ -159,6 +159,11 @@ public class HomeFragment2 extends BaseFragment implements IOnFocusListenable, M
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsid", mHomeBean.getResponse().getPreferGoods().get(position).getId());
                 bundle.putString("time", mHomeBean.getResponse().getPreferGoods().get(position).getTime());
+                if (mHomeBean.getResponse().getPreferGoods().get(position).getStatus().equals("2")) {
+                    bundle.putString("isnext", "1");
+                }else {
+                    bundle.putString("isnext", "0");
+                }
                 startActivity(GoodsDetailActivity.class, bundle);
             }
         });
@@ -206,6 +211,11 @@ public class HomeFragment2 extends BaseFragment implements IOnFocusListenable, M
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsid", mHomeBean.getResponse().getPhoneGoods().get(i).getId());
                 bundle.putString("time", mHomeBean.getResponse().getPhoneGoods().get(i).getTime());
+                if (mHomeBean.getResponse().getPhoneGoods().get(i).getStatus().equals("2")) {
+                    bundle.putString("isnext", "1");
+                }else {
+                    bundle.putString("isnext", "0");
+                }
                 startActivity(GoodsDetailActivity.class, bundle);
             }
         });
@@ -220,6 +230,11 @@ public class HomeFragment2 extends BaseFragment implements IOnFocusListenable, M
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsid", mHomeBean.getResponse().getComputerGoods().get(i).getId());
                 bundle.putString("time", mHomeBean.getResponse().getComputerGoods().get(i).getTime());
+                if (mHomeBean.getResponse().getComputerGoods().get(i).getStatus().equals("2")) {
+                    bundle.putString("isnext", "1");
+                }else {
+                    bundle.putString("isnext", "0");
+                }
                 startActivity(GoodsDetailActivity.class, bundle);
             }
         });
@@ -253,11 +268,14 @@ public class HomeFragment2 extends BaseFragment implements IOnFocusListenable, M
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int p = tab.getPosition();
-                Recommend2Fragment fragment = Recommend2Fragment.getIntance(p);
+                RecommendFragment3 fragment = RecommendFragment3.getIntance(p);
                 addFragment(fragment, R.id.siness_fragment);
                 ChangeTabEvent event = new ChangeTabEvent();
                 event.setP(p);
                 EventBus.getDefault().post(event);
+                if (mTabLayout2.getTabAt(p) != null) {
+                    mTabLayout2.getTabAt(p).select();
+                }
             }
 
             @Override
@@ -275,11 +293,14 @@ public class HomeFragment2 extends BaseFragment implements IOnFocusListenable, M
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int p = tab.getPosition();
-                Recommend2Fragment fragment = Recommend2Fragment.getIntance(p);
+                RecommendFragment3 fragment = RecommendFragment3.getIntance(p);
                 addFragment(fragment, R.id.siness_fragment);
                 ChangeTabEvent event = new ChangeTabEvent();
                 event.setP(p);
                 EventBus.getDefault().post(event);
+                if (mTabLayout.getTabAt(p) != null) {
+                    mTabLayout.getTabAt(p).select();
+                }
             }
 
             @Override
@@ -445,8 +466,8 @@ public class HomeFragment2 extends BaseFragment implements IOnFocusListenable, M
         mWebSocketClient.close();
     }
 
-    private WeakReference<Recommend2Fragment> providerSellerListFragment(int p) {
-        Recommend2Fragment busnissReportFragment = Recommend2Fragment.getIntance(p);
+    private WeakReference<RecommendFragment3> providerSellerListFragment(int p) {
+        RecommendFragment3 busnissReportFragment = RecommendFragment3.getIntance(p);
         return new WeakReference<>(busnissReportFragment);
     }
 

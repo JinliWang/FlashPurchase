@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.app.library.Constant;
+import com.app.library.base.BaseRecyclerAdapter;
 import com.app.library.util.UIUtil;
 import com.flashPurchase.app.R;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
@@ -78,6 +79,10 @@ public class RefreshLayout extends TwinklingRefreshLayout {
         setData(data, "", adapter);
     }
 
+    public void setData2(List data, BaseRecyclerAdapter adapter) {
+        setData2(data, "", adapter);
+    }
+
     public void setData(List data) {
         setData(data, "", null);
     }
@@ -90,10 +95,30 @@ public class RefreshLayout extends TwinklingRefreshLayout {
         setData(data, strNoData, adapter, true);
     }
 
+    public void setData2(List data, String strNoData, BaseRecyclerAdapter adapter) {
+        setData2(data, strNoData, adapter, true);
+    }
+
     public void setData(List data, String strNoData, BaseAdapter adapter, boolean isShowEmpty) {
         hideEmptyView();
         if (data == null || data.size() < Constant.PAGESIZE) {
             if ((adapter == null || adapter.getCount() == 0)) {
+                if ((data == null || data.size() == 0) && isShowEmpty)
+                    showEmptyView(strNoData);
+            }
+            setEnableLoadmore(false);
+        } else {
+            if (data.size() == Constant.PAGESIZE)
+                setEnableLoadmore(true);
+        }
+        finishLoadmore();
+        finishRefreshing();
+    }
+
+    public void setData2(List data, String strNoData, BaseRecyclerAdapter adapter, boolean isShowEmpty) {
+        hideEmptyView();
+        if (data == null || data.size() < Constant.PAGESIZE) {
+            if ((adapter == null || adapter.getItemCount() == 0)) {
                 if ((data == null || data.size() == 0) && isShowEmpty)
                     showEmptyView(strNoData);
             }

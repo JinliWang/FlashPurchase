@@ -112,7 +112,7 @@ public class ComfirmOrderActivity extends BaseActivity {
         id = extraDatas.getString("id");
         mGoodsId = extraDatas.getString("goodsid");
         mTime = extraDatas.getString("time");
-        mMarketP = extraDatas.getDouble("marketpeice");
+        mMarketP = extraDatas.getDouble("marketprice");
         mActP = extraDatas.getDouble("actprice");
         mShopCoinShow = extraDatas.getInt("shopcoin");
         mPics = extraDatas.getString("pics");
@@ -144,22 +144,33 @@ public class ComfirmOrderActivity extends BaseActivity {
         //商品信息展示
         mTvGwb.setText("-￥" + mShopCoinShow);
         mTvMarketPrice.setText("￥" + mMarketP);
-        mTvActMoney.setText("￥" + (mMarketP - mShopCoinShow));
-        mTvActPrice.setText("￥" + (mMarketP - mShopCoinShow));
+        if (mType.equals("2")) {
+            mTvActMoney.setText("￥" + (mActP));
+            mTvActPrice.setText("￥" + (mActP));
+        } else if (mType.equals("3")) {
+            mTvActMoney.setText("￥" + (mMarketP - mShopCoinShow));
+            mTvActPrice.setText("￥" + (mMarketP - mShopCoinShow));
+        }
         mShopCoin = mShopCoinShow;
 
         mTvPay.setOnClickListener(this);
         mCbGwb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    mTvActPrice.setText("￥" + (mMarketP - mShopCoinShow));
-                    mTvActMoney.setText("￥" + (mMarketP - mShopCoinShow));
-                    mShopCoin = mShopCoinShow;
-                } else {
-                    mTvActPrice.setText("￥" + mMarketP);
-                    mTvActMoney.setText("￥" + mMarketP);
+                if (mType.equals("2")) {
+                    mTvActPrice.setText("￥" + mActP);
+                    mTvActMoney.setText("￥" + mActP);
                     mShopCoin = 0;
+                } else if (mType.equals("3")) {
+                    if (b) {
+                        mTvActPrice.setText("￥" + (mMarketP - mShopCoinShow));
+                        mTvActMoney.setText("￥" + (mMarketP - mShopCoinShow));
+                        mShopCoin = mShopCoinShow;
+                    } else {
+                        mTvActPrice.setText("￥" + mMarketP);
+                        mTvActMoney.setText("￥" + mMarketP);
+                        mShopCoin = 0;
+                    }
                 }
             }
         });
@@ -172,6 +183,10 @@ public class ComfirmOrderActivity extends BaseActivity {
             case R.id.tv_pay:
                 if (!mCbAgreement.isChecked()) {
                     ToastUtil.show("请确认您已同意用户协议！");
+                    return;
+                }
+                if (SpManager.getMyAddress().getResponse() == null) {
+                    ToastUtil.show("请完善收货信息！！");
                     return;
                 }
                 if (!TextUtils.isEmpty(id)) {

@@ -118,6 +118,8 @@ public class AllAucAdapter extends BaseAdapter implements View.OnClickListener {
                         Intent intent = new Intent(mContext, GoodsDetailActivity.class);
                         intent.putExtra("goodsid", bean.getGoodsId() + "");
                         intent.putExtra("time", bean.getTime() + "");
+                        intent.putExtra("innext", "0");
+
                         mContext.startActivity(intent);
 
                     }
@@ -162,8 +164,8 @@ public class AllAucAdapter extends BaseAdapter implements View.OnClickListener {
                     waitPayHolder = (WaitPayHolder) view.getTag();
                 }
                 waitPayHolder.mTvTime.setText(bean.getDate());
-                waitPayHolder.mTvMarketPrice.setText("市场价：￥" + bean.getMarketPrice());
-                waitPayHolder.mTvPaimaiPrice.setText("￥" + bean.getActualPayment());
+                waitPayHolder.mTvMarketPrice.setText("商品名称：￥" + bean.getGoodsName());
+                waitPayHolder.mTvPaimaiPrice.setText("￥" + bean.getFinalPrice());
                 waitPayHolder.mTvAucTime.setText("成交人：￥" + bean.getDealUser());
                 ImageLoadManager.getInstance().setImage(mContext, bean.getPics(), waitPayHolder.mIvPhoto);
                 waitPayHolder.mTvPai.setText("立即付款");
@@ -175,7 +177,7 @@ public class AllAucAdapter extends BaseAdapter implements View.OnClickListener {
                         intent.putExtra("time", bean.getTime() + "");
                         intent.putExtra("marketprice", bean.getMarketPrice());
                         intent.putExtra("shopcoin", bean.getShopCoin());
-                        intent.putExtra("actprice", bean.getActualPayment());
+                        intent.putExtra("actprice", bean.getFinalPrice());
                         intent.putExtra("pics", bean.getPics());
                         intent.putExtra("type", "2");
                         mContext.startActivity(intent);

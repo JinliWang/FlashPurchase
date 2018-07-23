@@ -1,6 +1,7 @@
 package com.flashPurchase.app.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,7 +25,7 @@ public class MyCollectAdapter extends BaseRecyclerAdapter<RecommendMoreResponse.
         return new Holder(parent.getContext(), parent);
     }
 
-    class Holder extends BaseRecycleHolder<RecommendMoreResponse.ResponseBean.GoodsBean> {
+    class Holder extends BaseRecycleHolder<RecommendMoreResponse.ResponseBean.GoodsBean> implements View.OnClickListener {
 
 
         @BindView(R.id.iv_goods)
@@ -45,7 +46,12 @@ public class MyCollectAdapter extends BaseRecyclerAdapter<RecommendMoreResponse.
             ImageLoadManager.getInstance().setImage(getContext(), preferGoodsBean.getPics(), mIvGoods);
             mTvCustomer.setText(preferGoodsBean.getName());
             mTvPrice.setText(preferGoodsBean.getCurrentPrice());
+            mBtnPai.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View view) {
+            itemClickListener.itemClick(getPosition());
         }
     }
 }

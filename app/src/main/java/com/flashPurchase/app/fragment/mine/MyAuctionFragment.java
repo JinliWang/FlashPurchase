@@ -69,6 +69,7 @@ public class MyAuctionFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsid", mList.get(i).getGoodsId() + "");
                 bundle.putString("time", mList.get(i).getTime() + "");
+                bundle.putString("isnext", "0");
                 startActivity(GoodsDetailActivity.class, bundle);
             }
         });

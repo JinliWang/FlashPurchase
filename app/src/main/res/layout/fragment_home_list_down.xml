@@ -4,18 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/view_title" />
-
     <com.flashPurchase.app.view.RefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recomend_list"
+        <com.app.library.view.ScrollGridView
+            android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:numColumns="2"/>
+
     </com.flashPurchase.app.view.RefreshLayout>
+
+
 
 </LinearLayout>

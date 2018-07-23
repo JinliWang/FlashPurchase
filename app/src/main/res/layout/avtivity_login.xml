@@ -92,7 +92,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:background="@null"
-                    android:inputType="numberPassword"
                     android:hint="输入密码"
                     android:imeOptions="actionNext"
                     android:orientation="horizontal"

@@ -288,6 +288,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/BackActivityTheme" />
 
+        <!-- 我的晒单-->
+        <activity
+            android:name=".activity.goods.MyAucBaskActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackActivityTheme" />
+
         <!-- 支付宝-->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

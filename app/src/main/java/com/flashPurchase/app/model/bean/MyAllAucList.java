@@ -114,6 +114,11 @@ public class MyAllAucList {
             private String type;
             private String aucSt;
             private String dealUser;
+            private double finalPrice;
+
+            public double getFinalPrice() {
+                return finalPrice;
+            }
 
             public String getDealUser() {
                 return dealUser;
