@@ -7,7 +7,7 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 
 /**
  * Description:适用于ScrollView下的ListView
- * Create By: MLS Co,Ltd
+ *
  * e-mail:wxdingcn@gmail.com
  */
 

@@ -5,7 +5,7 @@ import com.app.library.util.ToastUtil;
 
 /**
  * Description:只需处理成功回调弹出msg的observer
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class SimpleHttpObserver extends HttpObserver<Object> {

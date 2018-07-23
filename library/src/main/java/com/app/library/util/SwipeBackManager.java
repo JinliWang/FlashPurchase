@@ -11,7 +11,7 @@ import com.r0adkll.slidr.model.SlidrPosition;
 
 /**
  * Description:滑动返回帮助类
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class SwipeBackManager {

@@ -7,7 +7,7 @@ import java.text.DecimalFormat;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class NumUtil {

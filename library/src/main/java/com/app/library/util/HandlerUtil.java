@@ -9,7 +9,7 @@ import com.app.library.base.BaseActivity;
 
 /**
  * Description: Handler 帮助类
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class HandlerUtil {

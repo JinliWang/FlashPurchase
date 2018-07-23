@@ -19,7 +19,7 @@ import okhttp3.Response;
 
 /**
  * Description: 专门处理文件下载回调
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class CommonFileCallback implements Callback {

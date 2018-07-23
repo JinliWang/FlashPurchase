@@ -11,7 +11,7 @@ public class MyBask {
 
     /**
      * parameter : null
-     * response : {"total":3,"comments":[{"comments":"123456789","createTime":"2018-07-20 16:13:57","goodsId":3,"name":"小米8 全面屏游戏智能手机","nickname":"王金礼","updateTime":"2018-07-20 16:13:57","id":3,"userId":18,"pics":" "},{"comments":"123456789","createTime":"2018-07-20 16:03:41","goodsId":3,"name":"小米8 全面屏游戏智能手机","nickname":"王金礼","updateTime":"2018-07-20 16:03:41","id":2,"userId":18,"pics":" "},{"comments":"12356789","createTime":"2018-07-20 15:55:48","goodsId":3,"name":"小米8 全面屏游戏智能手机","nickname":"王金礼","updateTime":"2018-07-20 15:55:48","id":1,"userId":18,"pics":" "}],"pageSize":10,"pageNum":1}
+     * response : {"total":3,"comments":[{"comments":"123456789","createTime":"2018-07-20 16:13:57","goodsId":3,"name":"小米8 全面屏游戏智能手机","nickname":"","updateTime":"2018-07-20 16:13:57","id":3,"userId":18,"pics":" "},{"comments":"123456789","createTime":"2018-07-20 16:03:41","goodsId":3,"name":"小米8 全面屏游戏智能手机","nickname":"","updateTime":"2018-07-20 16:03:41","id":2,"userId":18,"pics":" "},{"comments":"12356789","createTime":"2018-07-20 15:55:48","goodsId":3,"name":"小米8 全面屏游戏智能手机","nickname":"","updateTime":"2018-07-20 15:55:48","id":1,"userId":18,"pics":" "}],"pageSize":10,"pageNum":1}
      * urlMapping : comment-getMyComments
      */
 
@@ -46,7 +46,7 @@ public class MyBask {
     public static class ResponseBean {
         /**
          * total : 3
-         * comments : [{"comments":"123456789","createTime":"2018-07-20 16:13:57","goodsId":3,"name":"小米8 全面屏游戏智能手机","nickname":"王金礼","updateTime":"2018-07-20 16:13:57","id":3,"userId":18,"pics":" "},{"comments":"123456789","createTime":"2018-07-20 16:03:41","goodsId":3,"name":"小米8 全面屏游戏智能手机","nickname":"王金礼","updateTime":"2018-07-20 16:03:41","id":2,"userId":18,"pics":" "},{"comments":"12356789","createTime":"2018-07-20 15:55:48","goodsId":3,"name":"小米8 全面屏游戏智能手机","nickname":"王金礼","updateTime":"2018-07-20 15:55:48","id":1,"userId":18,"pics":" "}]
+         * comments : [{"comments":"123456789","createTime":"2018-07-20 16:13:57","goodsId":3,"name":"小米8 全面屏游戏智能手机","nickname":"","updateTime":"2018-07-20 16:13:57","id":3,"userId":18,"pics":" "},{"comments":"123456789","createTime":"2018-07-20 16:03:41","goodsId":3,"name":"小米8 全面屏游戏智能手机","nickname":"","updateTime":"2018-07-20 16:03:41","id":2,"userId":18,"pics":" "},{"comments":"12356789","createTime":"2018-07-20 15:55:48","goodsId":3,"name":"小米8 全面屏游戏智能手机","nickname":"","updateTime":"2018-07-20 15:55:48","id":1,"userId":18,"pics":" "}]
          * pageSize : 10
          * pageNum : 1
          */
@@ -94,7 +94,7 @@ public class MyBask {
              * createTime : 2018-07-20 16:13:57
              * goodsId : 3
              * name : 小米8 全面屏游戏智能手机
-             * nickname : 王金礼
+             * nickname :
              * updateTime : 2018-07-20 16:13:57
              * id : 3
              * userId : 18

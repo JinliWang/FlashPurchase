@@ -8,7 +8,7 @@ import android.widget.ScrollView;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class WebViewScrollView extends ScrollView {

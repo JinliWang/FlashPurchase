@@ -5,7 +5,7 @@ import com.app.library.base.BaseConstant;
 
 /**
  * Description:打印日志帮助类
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class LogUtil {

@@ -10,7 +10,7 @@ import java.util.GregorianCalendar;
 
 /**
  * Description: date帮助类
- * Create By: MLS Co,Ltd
+ *
  */
 public class DateUtil {
 

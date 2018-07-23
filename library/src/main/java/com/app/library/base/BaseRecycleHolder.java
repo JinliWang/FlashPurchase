@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 
 /**
  * Description:基类RecycleView Holder
- * Create By: MLS Co,Ltd
+ *
  */
 public abstract class BaseRecycleHolder<T> extends RecyclerView.ViewHolder {
 

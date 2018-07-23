@@ -12,7 +12,7 @@ import okhttp3.RequestBody;
 
 /**
  * Description: okHttp Request创建帮助类
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class CommonRequest {

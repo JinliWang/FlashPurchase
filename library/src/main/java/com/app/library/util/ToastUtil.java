@@ -9,7 +9,7 @@ import com.app.library.base.BaseConstant;
 
 /**
  * Description: Toast管理类
- * Create By: MLS Co,Ltd
+ *
  */
 public class ToastUtil {
     private static Context context = BaseConstant.getInstance();

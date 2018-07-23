@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * Description: SharedPreferences帮助类
- * Create By: MLS Co,Ltd
+ *
  */
 public class SpUtil {
     static SharedPreferences mShared = PreferenceManager.getDefaultSharedPreferences(BaseConstant.getInstance());

@@ -9,7 +9,7 @@ import butterknife.ButterKnife;
 
 /**
  * Description:BaseHolder 处理页面数据
- * Create By: MLS Co,Ltd
+ *
  */
 public abstract class BaseHolder<T> {
 

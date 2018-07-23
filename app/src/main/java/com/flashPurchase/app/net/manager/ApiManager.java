@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Description: 网络管理
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class ApiManager {

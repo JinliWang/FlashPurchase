@@ -8,7 +8,7 @@ import static com.app.library.util.UIUtil.getResources;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class TextViewUtil {

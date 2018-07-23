@@ -21,7 +21,7 @@ import okhttp3.Response;
 
 /**
  * Description:OkHttpClient管理类
- * Create By: MLS Co,Ltd
+ *
  */
 public class CommonOkHttpClient {
     private static final int TIME_OUT = 30;

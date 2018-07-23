@@ -8,7 +8,6 @@ public class AucBask {
 
     /**
      * parameter : null
-     * response : {"comments":"12356789","createTime":{"date":20,"hours":15,"seconds":48,"month":6,"timezoneOffset":-480,"year":118,"minutes":55,"time":1532073348657,"day":5},"goodsId":3,"id":1,"name":"小米8 全面屏游戏智能手机","nickname":"王金礼","pics":" ","status":1,"type":0,"updateTime":{"date":20,"hours":15,"seconds":48,"month":6,"timezoneOffset":-480,"year":118,"minutes":55,"time":1532073348657,"day":5},"userId":18}
      * urlMapping : comment-save
      */
 
@@ -47,7 +46,7 @@ public class AucBask {
          * goodsId : 3
          * id : 1
          * name : 小米8 全面屏游戏智能手机
-         * nickname : 王金礼
+         * nickname :
          * pics :
          * status : 1
          * type : 0

@@ -21,7 +21,7 @@ import java.util.TimerTask;
 
 /**
  * Description: UI帮助类
- * Create By: MLS Co,Ltd
+ *
  */
 public class UIUtil {
 

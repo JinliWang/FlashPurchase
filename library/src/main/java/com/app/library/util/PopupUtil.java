@@ -10,7 +10,7 @@ import android.widget.PopupWindow;
 
 /**
  * Description:popup util
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class PopupUtil {

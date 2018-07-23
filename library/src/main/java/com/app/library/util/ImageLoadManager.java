@@ -11,7 +11,7 @@ import com.mls.library.R;
 
 /**
  * Description: 图片加载帮助类
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class ImageLoadManager {

@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class PermissionUtil extends Activity {

@@ -22,7 +22,7 @@ import javax.net.ssl.X509TrustManager;
 
 /**
  * Description: https帮助类
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class HttpsUtils {

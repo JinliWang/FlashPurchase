@@ -5,7 +5,7 @@ import android.content.Intent;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class SystemUtil {

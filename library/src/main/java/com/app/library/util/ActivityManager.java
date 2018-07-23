@@ -6,7 +6,7 @@ import java.util.Stack;
 
 /**
  * Description:Activity栈管理类
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class ActivityManager {

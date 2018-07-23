@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class ComFragmentAdapter extends FragmentPagerAdapter {

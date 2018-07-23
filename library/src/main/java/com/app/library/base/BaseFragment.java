@@ -22,7 +22,7 @@ import butterknife.Unbinder;
 
 /**
  * Description:基类Fragment 处理公用逻辑
- * Create By: MLS Co,Ltd
+ *
  */
 
 public abstract class BaseFragment extends Fragment {

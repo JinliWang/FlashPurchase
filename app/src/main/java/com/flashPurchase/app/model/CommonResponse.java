@@ -2,7 +2,7 @@ package com.flashPurchase.app.model;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class CommonResponse<T> {

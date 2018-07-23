@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Description: SP管理类
- * Create By: MLS Co,Ltd
+ *
  * e-mail:wxdingcn@gmail.com
  */
 

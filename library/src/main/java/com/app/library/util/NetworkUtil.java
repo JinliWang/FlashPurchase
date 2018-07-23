@@ -13,7 +13,7 @@ import java.util.Enumeration;
 
 /**
  * Description:获取网络状况
- * Create By: MLS Co,Ltd
+ *
  */
 public class NetworkUtil {
 

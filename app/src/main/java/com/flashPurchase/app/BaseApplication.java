@@ -8,7 +8,7 @@ import com.app.library.base.BaseConstant;
 
 /**
  * Description: 基类Application
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class BaseApplication extends Application {

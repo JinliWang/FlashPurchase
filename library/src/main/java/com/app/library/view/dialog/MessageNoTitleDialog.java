@@ -16,7 +16,7 @@ import com.mls.library.R;
 
 /**
  * Description:无标题栏的消息弹窗
- * Create By: MLS Co,Ltd
+ *
  */
 public class MessageNoTitleDialog extends Dialog {
     public static MessageDialogListener messageDialogListener;

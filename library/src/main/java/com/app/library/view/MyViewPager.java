@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class MyViewPager extends ViewPager {

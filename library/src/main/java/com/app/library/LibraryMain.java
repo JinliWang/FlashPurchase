@@ -6,7 +6,7 @@ import com.mls.library.R;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class LibraryMain extends BaseActivity {

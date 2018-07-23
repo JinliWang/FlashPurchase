@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class FullGridLayoutManager extends GridLayoutManager {

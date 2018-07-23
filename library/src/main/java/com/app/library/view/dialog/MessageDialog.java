@@ -13,7 +13,7 @@ import com.mls.library.R;
 
 /**
  * Description:有标题栏的消息弹窗
- * Create By: MLS Co,Ltd
+ *
  */
 public class MessageDialog extends Dialog {
 

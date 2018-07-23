@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 
 /**
  * Description:基类Activity 处理公用逻辑
- * Create By: MLS Co,Ltd
+ *
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
@@ -46,7 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     protected Context mContext;
     protected TextView tvTitle;
-    public static final String TAG = "JSTI_TAG";
+    public static final String TAG = "YD_TAG";
     protected Bundle extraDatas;
     private LoadingDialog loadingDialog;
 

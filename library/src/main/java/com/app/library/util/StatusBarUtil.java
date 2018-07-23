@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 
 /**
  * Description: 状态栏帮助类
- * Create By: MLS Co,Ltd
+ *
  */
 public class StatusBarUtil {
 

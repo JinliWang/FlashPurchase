@@ -16,7 +16,7 @@ import com.app.library.util.LogUtil;
 
 /**
  * Description:loading弹窗
- * Create By: MLS Co,Ltd
+ *
  */
 public class LoadingDialog extends Dialog {
     private LoadingDialog dialog;

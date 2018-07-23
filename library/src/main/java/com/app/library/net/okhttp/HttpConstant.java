@@ -2,7 +2,7 @@ package com.app.library.net.okhttp;
 
 /**
  * Description:常量
- * Create By: MLS Co,Ltd
+ *
  */
 public class HttpConstant {
 

@@ -20,7 +20,7 @@ import com.mls.library.R;
 
 /**
  * Description:带有清除按钮的ET
- * Create By: MLS Co,Ltd
+ *
  */
 @SuppressLint("AppCompatCustomView")
 public class ClearEditText extends EditText implements View.OnTouchListener,

@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * Description:上拉刷新 下拉加载 Layout
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class RefreshLoadLayout extends TwinklingRefreshLayout {

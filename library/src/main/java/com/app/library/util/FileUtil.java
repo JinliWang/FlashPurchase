@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * Description: 文件管理工具类
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class FileUtil {
@@ -401,7 +401,6 @@ public class FileUtil {
 
     private static Uri getFileUri(File file) {
 //        Uri.fromFile(file);
-//        Uri uri = FileProvider.getUriForFile(BaseConstant.getInstance(), "mls.jsti.meet.fileprovider", file);    //第二个参数是manifest中定义的`authorities`
         return Uri.fromFile(file);
     }
 }

@@ -4,7 +4,7 @@ import android.os.Environment;
 
 /**
  * Description: 常量
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class Constant {
@@ -14,13 +14,13 @@ public class Constant {
 
     public static final String DIR = Environment.getExternalStorageDirectory() + "";
     //文件存放路径
-    public final static String DIR_FILE = DIR + "/JSTI/.File";
+    public final static String DIR_FILE = DIR + "/YD/.File";
     //文件存放路径
-    public final static String DIR_CACHE = DIR + "/JSTI/Cache";
+    public final static String DIR_CACHE = DIR + "/YD/Cache";
     //app存放路径
-    public final static String DIR_UPDATE_TYPE = "/JSTI/Update";
+    public final static String DIR_UPDATE_TYPE = "/YD/Update";
     public final static String DIR_UPDATE = DIR + DIR_UPDATE_TYPE;
-    public final static String DIR_UPDATE_NAME = "jsti.apk";
+    public final static String DIR_UPDATE_NAME = "yd.apk";
 
     //bugly appKey
     public final static String BUGLY_APPKEY = "6ce1a2e78d";

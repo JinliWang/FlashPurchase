@@ -7,9 +7,6 @@ package com.flashPurchase.app.model.bean;
 public class WuliuDetail {
 
     /**
-     * parameter : null
-     * response : {"specificAddress":"铁心桥","marketPrice":3299,"orderSt":1,"shopCoin":0,"goodsId":3,"remark":" ","type":2,"userId":18,"addressId":8,"actualPayment":3299,"createTime":"2018-07-20 02:44:08","phone":"17626011217","street":" ","name":"小米8 全面屏游戏智能手机","nickname":"A good name makes it easier...","recipient":"王金礼","region":"江苏省南京市雨花台区","pics":"http://p65n22l5d.bkt.clouddn.com/3762f7c3-cb7f-4dfd-89c9-3adc5a019e97.jpg"}
-     * urlMapping : order-orderLogisticsDetail
      */
 
     private Object parameter;
@@ -56,9 +53,6 @@ public class WuliuDetail {
          * phone : 17626011217
          * street :
          * name : 小米8 全面屏游戏智能手机
-         * nickname : A good name makes it easier...
-         * recipient : 王金礼
-         * region : 江苏省南京市雨花台区
          * pics : http://p65n22l5d.bkt.clouddn.com/3762f7c3-cb7f-4dfd-89c9-3adc5a019e97.jpg
          */
 

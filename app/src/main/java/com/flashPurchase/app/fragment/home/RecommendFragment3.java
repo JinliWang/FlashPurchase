@@ -42,7 +42,6 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * Created by 王金礼 on 2018/7/22.
  */
 
 public class RecommendFragment3 extends BaseFragment implements AdapterView.OnItemClickListener {

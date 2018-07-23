@@ -7,7 +7,7 @@ import android.widget.HorizontalScrollView;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  * e-mail:wxdingcn@gmail.com
  */
 

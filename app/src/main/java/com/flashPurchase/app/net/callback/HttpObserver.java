@@ -16,7 +16,7 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public abstract class HttpObserver<T> implements SingleObserver<CommonResponse<T>>, LoadingDialog.onLoadingCancelListener {

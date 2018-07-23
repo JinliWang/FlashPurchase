@@ -3,7 +3,7 @@ package com.flashPurchase.app.Constant;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class Host {

@@ -21,7 +21,7 @@ import okhttp3.Response;
 
 /**
  * Description: 专门处理JSON的回调
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class CommonJsonCallback implements Callback {

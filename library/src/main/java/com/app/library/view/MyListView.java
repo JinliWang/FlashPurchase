@@ -14,7 +14,7 @@ import com.app.library.util.LogUtil;
 
 /**
  * Description:监听滚动变化的ScrollView
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class MyListView extends ListView implements AbsListView.OnScrollListener {

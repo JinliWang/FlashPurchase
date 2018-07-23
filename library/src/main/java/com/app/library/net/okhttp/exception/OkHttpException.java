@@ -2,7 +2,7 @@ package com.app.library.net.okhttp.exception;
 
 /**
  * Description: 网络异常类
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class OkHttpException extends Exception {

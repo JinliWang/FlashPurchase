@@ -4,7 +4,7 @@ import com.flashPurchase.app.net.api.Api;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class ComApiManager extends ApiManager {

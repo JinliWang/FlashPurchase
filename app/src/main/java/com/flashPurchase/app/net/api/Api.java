@@ -15,7 +15,7 @@ import retrofit2.http.Url;
 
 /**
  * Description: 接口api
- * Create By: MLS Co,Ltd
+ *
  */
 
 public interface Api {

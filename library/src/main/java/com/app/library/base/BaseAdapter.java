@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Description:基类ListView Adapter
- * Create By: MLS Co,Ltd
+ *
  */
 public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
 

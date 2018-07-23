@@ -8,7 +8,7 @@ import android.widget.ScrollView;
 
 /**
  * Description:监听滚动变化的ScrollView
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class MyScrollView extends ScrollView {

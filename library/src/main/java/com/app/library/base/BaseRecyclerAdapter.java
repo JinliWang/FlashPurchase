@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * Description:基类RecycleView  Adapter
- * Create By: MLS Co,Ltd
+ *
  */
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements BaseRecycleHolder.OnNotifyChangeListener {
     protected List<T> dataList = new ArrayList<>();

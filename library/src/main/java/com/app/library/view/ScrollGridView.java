@@ -6,7 +6,7 @@ import android.widget.GridView;
 
 /**
  * Description:适用于ScrollView下的GridView
- * Create By: MLS Co,Ltd
+ *
  * e-mail:wxdingcn@gmail.com
  */
 

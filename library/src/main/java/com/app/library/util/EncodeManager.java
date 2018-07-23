@@ -6,7 +6,7 @@ import java.security.PublicKey;
 
 /**
  * Description:
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class EncodeManager {

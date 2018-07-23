@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Description: okHttp 发送request参数封装
- * Create By: MLS Co,Ltd
+ *
  */
 
 public class RequestParams {

@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 /**
  * Description: String帮助类
- * Create By: MLS Co,Ltd
+ *
  */
 public class StringUtil {
 
